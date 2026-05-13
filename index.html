@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Miraverde – Benissa · Costa Blanca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--b0:#FDFAF5;--b1:#F5F0E8;--b2:#EDE5D8;--b3:#D9CEBC;--b4:#C2B59E;--ink:#1E1812;--ink2:#3A3028;--ink3:#6B5F50;--teal:#2A6B6B;--teal2:#1F5252;--teal3:#E0EEEE;--gold:#B8924A;--gold2:#96773A;--gold3:#FBF3E4;--r:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}img{display:block;max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:all .35s ease}
+nav.scrolled{background:rgba(29,23,15,.95);backdrop-filter:blur(16px);padding:.85rem 4rem}
+.nav-logo{display:flex;flex-direction:column;line-height:1;text-decoration:none}
+.nav-logo-top{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:#fff;letter-spacing:.18em}
+.nav-logo-top span{color:var(--gold);font-style:italic}
+.nav-logo-sub{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:2px}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.73rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--teal)!important;color:#fff!important;padding:.5rem 1.4rem;border-radius:var(--r)}
+.nav-cta:hover{background:var(--teal2)!important}
+#hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800&q=85') center/cover no-repeat;animation:hzoom 20s ease-in-out infinite alternate}
+@keyframes hzoom{from{transform:scale(1)}to{transform:scale(1.07)}}
+.hero-veil{position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.15) 0%,rgba(18,30,28,.45) 45%,rgba(15,20,14,.88) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 4rem 5.5rem;max-width:760px;animation:risein 1.1s cubic-bezier(.16,1,.3,1) both}
+@keyframes risein{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.8rem;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.hero-h1{font-size:clamp(3.2rem,7.5vw,5.8rem);font-weight:300;line-height:1.05;color:#fff;letter-spacing:.03em;margin-bottom:.6rem}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-tagline{font-size:.95rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.8;margin-bottom:2.5rem;max-width:440px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-solid{background:var(--teal);color:#fff;padding:.9rem 2.2rem;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s;text-decoration:none;display:inline-block}
+.btn-solid:hover{background:var(--teal2);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#fff;padding:.9rem 2.2rem;border:1px solid rgba(255,255,255,.35);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-pills{position:absolute;right:4rem;bottom:5.5rem;z-index:2;display:flex;flex-direction:column;gap:1.2rem;animation:risein 1.1s .2s cubic-bezier(.16,1,.3,1) both}
+.pill{display:flex;align-items:center;gap:.8rem;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:.55rem 1rem .55rem .55rem}
+.pill-num{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#fff;line-height:1;background:rgba(184,146,74,.22);border-radius:30px;padding:.1rem .6rem}
+.pill-txt{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;animation:breathe 3s infinite}
+@keyframes breathe{0%,100%{opacity:.4}50%{opacity:.9}}
+.scroll-cue-line{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.55))}
+.scroll-cue-txt{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+#qbar{background:var(--ink)}
+.qbar-inner{display:flex;align-items:stretch;border-top:1px solid rgba(255,255,255,.06)}
+.qf{flex:1;min-width:140px;padding:1.1rem 1.6rem;border-right:1px solid rgba(255,255,255,.06);transition:background .15s;cursor:pointer}
+.qf:hover{background:rgba(255,255,255,.04)}
+.qf label{display:block;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;cursor:pointer}
+.qf input,.qf select{background:none;border:none;outline:none;width:100%;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer}
+.qf select option{background:var(--ink2)}
+.qbar-btn{background:var(--teal);border:none;padding:0 2.2rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap;font-weight:500}
+.qbar-btn:hover{background:var(--teal2)}
+section{padding:8rem 4rem}.container{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem}
+.eyebrow::after{content:'';display:block;width:36px;height:1px;background:var(--teal)}
+.section-h{font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.18;color:var(--ink)}
+.section-h em{font-style:italic;color:var(--teal)}
+.section-p{font-size:.92rem;color:var(--ink3);line-height:1.85;max-width:500px;margin-top:1rem}
+#highlights{background:var(--b0);padding:5rem 4rem}
+.hl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--b3)}
+.hl-card{background:var(--b0);padding:2.5rem 2rem;transition:background .2s}
+.hl-card:hover{background:var(--b1)}
+.hl-icon{font-size:1.8rem;margin-bottom:1rem}
+.hl-card h3{font-size:1.05rem;color:var(--ink);font-weight:500;margin-bottom:.35rem}
+.hl-card p{font-size:.82rem;color:var(--ink3);line-height:1.65}
+#viewer{background:var(--b1)}
+.viewer-wrap{display:grid;grid-template-columns:1fr 1.7fr;gap:5rem;align-items:center}
+.viewer-canvas-box{border-radius:10px;overflow:hidden;box-shadow:0 24px 64px rgba(30,24,18,.16)}
+#c3d{width:100%;height:430px;display:block;background:#87CEEB;cursor:grab}
+#c3d:active{cursor:grabbing}
+.vctrl{display:flex;gap:6px;padding:10px 12px;background:var(--ink);flex-wrap:wrap;align-items:center}
+.vbtn{padding:5px 13px;border-radius:4px;border:none;background:transparent;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.vbtn:hover{color:#fff}.vbtn.on{background:var(--teal);color:#fff}
+.vhint{font-size:.65rem;color:rgba(255,255,255,.3);margin-left:auto}
+.viewer-feats{display:flex;flex-direction:column;gap:1.6rem;margin-top:2.8rem}
+.vfeat{display:flex;gap:1.1rem;align-items:flex-start}
+.vfeat-dot{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:var(--teal3);border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.vfeat h4{font-size:.9rem;font-weight:500;color:var(--ink);margin-bottom:.18rem}
+.vfeat p{font-size:.8rem;color:var(--ink3);line-height:1.6}
+#gallery{background:var(--b0);padding-bottom:0}
+.gal-head{max-width:1200px;margin:0 auto 3rem;padding:0 4rem}
+.gal-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:300px 300px;gap:4px}
+.gi{overflow:hidden;cursor:pointer;position:relative;background:var(--b2)}
+.gi::after{content:'';position:absolute;inset:0;background:rgba(30,24,18,0);transition:background .3s}
+.gi:hover::after{background:rgba(30,24,18,.28)}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.gi:hover img{transform:scale(1.06)}
+.gi-lbl{position:absolute;bottom:0;left:0;right:0;z-index:1;padding:.9rem 1.1rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,250,245,.9);background:linear-gradient(to top,rgba(30,24,18,.75),transparent);opacity:0;transition:opacity .3s;font-family:'DM Sans',sans-serif}
+.gi:hover .gi-lbl{opacity:1}
+.gi:nth-child(1){grid-column:1/6;grid-row:1/2}.gi:nth-child(2){grid-column:6/9;grid-row:1/2}.gi:nth-child(3){grid-column:9/13;grid-row:1/2}
+.gi:nth-child(4){grid-column:1/5;grid-row:2/3}.gi:nth-child(5){grid-column:5/9;grid-row:2/3}.gi:nth-child(6){grid-column:9/13;grid-row:2/3}
+#lb{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);align-items:center;justify-content:center}
+#lb.open{display:flex}#lb img{max-width:92vw;max-height:92vh;object-fit:contain;border-radius:4px}
+#lb-x{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:#fff;font-size:2.2rem;cursor:pointer;opacity:.7}
+#lb-x:hover{opacity:1}
+#floorplan{background:var(--b1)}
+.fp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.fp-card{background:var(--b0);border-radius:10px;overflow:hidden;border:1px solid var(--b3);transition:transform .2s,box-shadow .2s}
+.fp-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,24,18,.1)}
+.fp-head{background:var(--ink);padding:1.3rem 1.6rem}
+.fp-head h3{font-size:1.05rem;color:#fff;font-weight:400;margin-bottom:.22rem}
+.fp-head p{font-size:.7rem;color:var(--gold);letter-spacing:.1em}
+.fp-body{padding:1.4rem 1.6rem}
+.fp-list{list-style:none}
+.fp-list li{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--b2);font-size:.83rem}
+.fp-list li:last-child{border-bottom:none}
+.fp-list .rn{color:var(--ink2)}.fp-list .rs{color:var(--teal);font-weight:500;font-size:.78rem}
+.fp-foot{background:var(--b2);padding:.75rem 1.6rem;display:flex;justify-content:space-between;font-size:.78rem;font-weight:500}
+.fp-foot span:last-child{color:var(--teal)}
+
+/* ===== LUXURY AMENITIES ===== */
+#amenities{background:var(--ink);padding:9rem 4rem;position:relative;overflow:hidden}
+#amenities::before{content:'';position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,146,74,.08) 0%,transparent 70%);pointer-events:none}
+#amenities::after{content:'';position:absolute;bottom:-80px;left:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(42,107,107,.1) 0%,transparent 70%);pointer-events:none}
+.am-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem;margin-bottom:5rem}
+.am-header-left .eyebrow{color:var(--gold)}.am-header-left .eyebrow::after{background:var(--gold)}
+.am-header-left .section-h{color:#fff}.am-header-left .section-h em{color:var(--gold)}
+.am-header-right{font-size:.82rem;color:rgba(253,250,245,.42);max-width:300px;line-height:1.8;text-align:right;font-style:italic}
+.am-featured{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2px;margin-bottom:2px}
+.am-feat-main{background:linear-gradient(145deg,rgba(42,107,107,.22) 0%,rgba(30,24,18,.4) 100%);border:1px solid rgba(184,146,74,.25);padding:3rem 2.8rem;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:300px}
+.am-feat-main::before{content:'';position:absolute;top:-30px;right:-30px;width:200px;height:200px;background:radial-gradient(circle,rgba(184,146,74,.14) 0%,transparent 65%)}
+.am-feat-main .am-big-icon{font-size:3.2rem;margin-bottom:1.6rem;display:block}
+.am-feat-main h3{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:300;color:#fff;margin-bottom:.7rem;letter-spacing:.02em}
+.am-feat-main p{font-size:.83rem;color:rgba(253,250,245,.55);line-height:1.75;max-width:320px}
+.am-feat-main .am-tag{display:inline-flex;align-items:center;gap:.4rem;background:rgba(184,146,74,.18);border:1px solid rgba(184,146,74,.35);color:var(--gold);font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:3px;margin-top:1.4rem;align-self:flex-start}
+.am-feat-side{display:flex;flex-direction:column;gap:2px}
+.am-feat-card{flex:1;background:rgba(253,250,245,.03);border:1px solid rgba(253,250,245,.07);padding:2.2rem 2rem;display:flex;flex-direction:column;justify-content:space-between;transition:background .25s,border-color .25s;position:relative;overflow:hidden}
+.am-feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--teal),transparent);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.am-feat-card:hover{background:rgba(184,146,74,.06);border-color:rgba(184,146,74,.2)}
+.am-feat-card:hover::after{transform:scaleX(1)}
+.am-feat-card .am-ic{font-size:1.7rem;margin-bottom:.9rem;display:block}
+.am-feat-card h4{font-size:.95rem;color:#fff;font-weight:400;margin-bottom:.35rem;letter-spacing:.01em}
+.am-feat-card p{font-size:.76rem;color:rgba(253,250,245,.42);line-height:1.6}
+.am-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(184,146,74,.35),rgba(184,146,74,.15),transparent);margin:3.5rem 0}
+.am-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2px}
+.am-cell{background:rgba(253,250,245,.022);border:1px solid rgba(253,250,245,.052);padding:1.9rem 1.7rem;transition:background .2s,border-color .2s;position:relative}
+.am-cell:hover{background:rgba(253,250,245,.055);border-color:rgba(184,146,74,.2)}
+.am-cell::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--gold);transition:height .3s}
+.am-cell:hover::before{height:100%}
+.am-cell-ic{font-size:1.3rem;margin-bottom:.7rem;display:block}
+.am-cell h4{font-size:.83rem;color:rgba(253,250,245,.9);font-weight:400;margin-bottom:.25rem}
+.am-cell p{font-size:.72rem;color:rgba(253,250,245,.37);line-height:1.55}
+.am-promise{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(184,146,74,.15);margin-top:3.5rem}
+.am-promise-item{background:rgba(30,24,18,.8);padding:2.2rem 2.5rem;display:flex;align-items:center;gap:1.4rem;transition:background .2s}
+.am-promise-item:hover{background:rgba(42,107,107,.12)}
+.am-promise-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--gold);line-height:1;opacity:.55;flex-shrink:0}
+.am-promise-txt h5{font-size:.8rem;color:#fff;font-weight:500;margin-bottom:.22rem;letter-spacing:.07em;text-transform:uppercase}
+.am-promise-txt p{font-size:.73rem;color:rgba(253,250,245,.4);line-height:1.55}
+
+/* BOOKING */
+#booking{background:var(--b0)}
+.book-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
+.price-stack{display:flex;flex-direction:column;gap:.9rem;margin-top:2.8rem}
+.pc{padding:1.5rem 1.6rem;border-radius:8px;border:1.5px solid var(--b3);position:relative;transition:border-color .2s}
+.pc:hover{border-color:var(--b4)}.pc.hot{border-color:var(--teal)}
+.pc-badge{position:absolute;top:-11px;left:1.3rem;background:var(--teal);color:#fff;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:3px}
+.pc-season{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.45rem}
+.pc-price{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--ink);line-height:1}
+.pc-price span{font-size:1rem;color:var(--ink3)}
+.pc-detail{font-size:.78rem;color:var(--ink3);margin-top:.35rem}
+.pc-inc{font-size:.76rem;color:var(--teal);margin-top:.7rem}
+.book-form{background:var(--b1);border-radius:12px;padding:2.6rem;border:1px solid var(--b3)}
+.book-form h3{font-size:1.7rem;color:var(--ink);font-weight:400;margin-bottom:.4rem}
+.book-form>p{font-size:.83rem;color:var(--ink3);margin-bottom:2rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+.fg{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.9rem}
+.fg label{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.fg input,.fg select,.fg textarea{padding:.78rem 1rem;border:1.5px solid var(--b3);border-radius:6px;background:var(--b0);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.88rem;transition:border-color .2s,box-shadow .2s;outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,107,107,.1)}
+.fg textarea{resize:vertical;min-height:85px}
+.price-calc{background:var(--b0);border-radius:6px;padding:1rem 1.2rem;margin-bottom:1.2rem;border:1px solid var(--b3)}
+.pc-row{display:flex;justify-content:space-between;padding:.32rem 0;font-size:.82rem;color:var(--ink3)}
+.pc-row.tot{color:var(--ink);font-weight:500;border-top:1px solid var(--b3);margin-top:.28rem;padding-top:.55rem;font-size:.92rem}
+.btn-book{width:100%;padding:1.05rem;background:var(--teal);color:#fff;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background .2s,transform .15s}
+.btn-book:hover{background:var(--teal2);transform:translateY(-1px)}
+.book-trust{display:flex;gap:.5rem;align-items:center;margin-top:.9rem;font-size:.7rem;color:var(--ink3);justify-content:center;flex-wrap:wrap}
+
+/* ===== RESTAURANT GUIDE ===== */
+#restaurants{background:var(--b0);padding:8rem 4rem}
+.rest-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:4rem}
+.rest-filter{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.8rem}
+.rf-btn{padding:.48rem 1.2rem;border-radius:30px;border:1.5px solid var(--b3);background:transparent;color:var(--ink3);font-family:'DM Sans',sans-serif;font-size:.73rem;cursor:pointer;transition:all .2s;letter-spacing:.04em}
+.rf-btn:hover,.rf-btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.rest-note{font-size:.82rem;color:var(--ink3);line-height:1.8;padding:1.6rem;border:1px solid var(--b3);border-radius:8px;background:var(--b1)}
+.rest-note strong{color:var(--teal);font-weight:500}
+.rest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rest-card{background:var(--b1);border-radius:12px;overflow:hidden;border:1px solid var(--b3);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.rest-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(30,24,18,.13)}
+.rest-card-top{height:170px;position:relative;overflow:hidden;background:var(--b2)}
+.rest-card-top img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rest-card:hover .rest-card-top img{transform:scale(1.08)}
+.rest-dist{position:absolute;top:.75rem;right:.75rem;background:rgba(30,24,18,.85);backdrop-filter:blur(6px);color:#fff;font-size:.64rem;letter-spacing:.1em;padding:4px 10px;border-radius:20px;font-family:'DM Sans',sans-serif}
+.rest-stars{position:absolute;bottom:.75rem;left:.75rem;background:rgba(30,24,18,.85);backdrop-filter:blur(6px);color:var(--gold);font-size:.73rem;padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif}
+.rest-stars span{color:rgba(255,255,255,.6);font-size:.65rem}
+.rest-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.rest-cat{font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.45rem}
+.rest-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:.55rem;line-height:1.2}
+.rest-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem}
+.rest-tag{font-size:.62rem;background:var(--teal3);color:var(--teal2);padding:3px 9px;border-radius:3px;letter-spacing:.06em;border:1px solid rgba(42,107,107,.12)}
+.rest-desc{font-size:.8rem;color:var(--ink3);line-height:1.7;margin-bottom:1.2rem;flex:1}
+.rest-meta{display:flex;flex-direction:column;gap:.45rem;border-top:1px solid var(--b3);padding-top:1.1rem;margin-top:auto}
+.rest-meta-row{display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:var(--ink3)}
+.rm-ic{font-size:.85rem;width:16px;text-align:center;flex-shrink:0}
+.rest-meta-row a{color:var(--teal);text-decoration:none;font-weight:500;letter-spacing:.02em}
+.rest-meta-row a:hover{color:var(--teal2);text-decoration:underline}
+.rest-price{display:inline-flex;gap:2px;margin-left:auto;flex-shrink:0}
+.rest-price span{font-size:.72rem;color:var(--gold)}
+.rest-price span.off{opacity:.22}
+.rest-special{margin-top:.8rem;padding:.6rem .9rem;background:var(--gold3);border:1px solid rgba(184,146,74,.2);border-radius:5px;font-size:.72rem;color:var(--gold2);font-style:italic;line-height:1.5}
+
+/* REVIEWS */
+#reviews{background:var(--b1)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem;margin-top:3rem}
+.rev{background:var(--b0);border-radius:10px;padding:2rem;border:1px solid var(--b2)}
+.rev-stars{color:var(--gold);font-size:.85rem;margin-bottom:.9rem;letter-spacing:2px}
+.rev-txt{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--ink2);line-height:1.75;margin-bottom:1.3rem}
+.rev-auth{display:flex;align-items:center;gap:.8rem}
+.rev-av{width:38px;height:38px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.78rem;font-weight:500;flex-shrink:0}
+.rev-name{font-size:.83rem;font-weight:500;color:var(--ink)}.rev-date{font-size:.73rem;color:var(--ink3)}
+.rev-score{display:inline-flex;align-items:center;gap:4px;background:var(--teal3);color:var(--teal2);font-size:.65rem;font-weight:500;padding:3px 8px;border-radius:4px;margin-left:auto}
+#location{background:var(--b0)}
+.loc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.loc-facts{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.3rem}
+.loc-item{display:flex;gap:1rem}
+.loc-mark{width:32px;height:32px;border-radius:50%;background:var(--teal3);border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;margin-top:2px}
+.loc-item h4{font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:.18rem}
+.loc-item p{font-size:.8rem;color:var(--ink3);line-height:1.6}
+.map-box{border-radius:10px;overflow:hidden;box-shadow:0 10px 40px rgba(30,24,18,.1)}
+.map-box iframe{display:block;width:100%;height:440px;border:none}
+#host{background:var(--b1)}
+.host-wrap{display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:center;max-width:900px;margin:0 auto}
+.host-avatar{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--teal) 0%,var(--teal2) 100%);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:#fff;flex-shrink:0;box-shadow:0 8px 32px rgba(42,107,107,.3)}
+.host-info h2{font-size:2.4rem;font-weight:300;color:var(--ink);margin-bottom:.8rem}
+.host-info h2 em{font-style:italic;color:var(--teal)}
+.host-info p{font-size:.9rem;color:var(--ink3);line-height:1.85;margin-bottom:1.2rem}
+.host-badges{display:flex;gap:.6rem;flex-wrap:wrap}
+.hbadge{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:var(--teal3);color:var(--teal2);padding:4px 12px;border-radius:4px;border:1px solid rgba(42,107,107,.2)}
+#contact{background:var(--ink)}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem}
+#contact .eyebrow{color:var(--gold)}#contact .eyebrow::after{background:var(--gold)}
+#contact .section-h{color:#fff}#contact .section-h em{color:var(--gold)}
+#contact .section-p{color:rgba(253,250,245,.5)}
+.contact-ways{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.2rem}
+.cway{display:flex;gap:1rem;align-items:center}
+.cway-ic{width:46px;height:46px;border-radius:50%;background:rgba(253,250,245,.06);border:1px solid rgba(253,250,245,.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.cway-lbl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.18rem}
+.cway-val{font-size:.88rem;color:#fff}
+.cf-wrap{background:rgba(253,250,245,.04);border:1px solid rgba(253,250,245,.08);border-radius:10px;padding:2.6rem}
+.cf-wrap .fg input,.cf-wrap .fg select,.cf-wrap .fg textarea{background:rgba(253,250,245,.06);border-color:rgba(253,250,245,.1);color:#fff}
+.cf-wrap .fg input::placeholder,.cf-wrap .fg textarea::placeholder{color:rgba(253,250,245,.3)}
+.cf-wrap .fg label{color:var(--gold)}
+.cf-wrap .fg input:focus,.cf-wrap .fg textarea:focus{border-color:var(--teal)}
+footer{background:#0E0C08;padding:3rem 4rem}
+.ft-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.ft-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#fff;letter-spacing:.15em}
+.ft-logo span{color:var(--gold);font-style:italic}
+.ft-links{display:flex;gap:1.8rem;list-style:none}
+.ft-links a{color:rgba(253,250,245,.35);font-size:.73rem;text-decoration:none;letter-spacing:.08em;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
+.ft-copy{color:rgba(253,250,245,.25);font-size:.7rem}
+#modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:2rem}
+#modal.open{display:flex}
+.modal-box{background:var(--b0);border-radius:10px;max-width:460px;width:100%;padding:2.8rem;text-align:center;position:relative;animation:risein .3s ease}
+.modal-box h3{font-size:1.9rem;color:var(--ink);margin-bottom:.5rem}
+.modal-box p{color:var(--ink3);font-size:.88rem;line-height:1.7;margin-bottom:1.5rem}
+.modal-close{position:absolute;top:1rem;right:1.3rem;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--b4)}
+.modal-ic{font-size:2.8rem;margin-bottom:1rem}
+@media(max-width:960px){
+  nav,nav.scrolled{padding-left:1.6rem;padding-right:1.6rem}.nav-links{display:none}
+  section,#highlights,#amenities,#restaurants{padding:5rem 1.6rem}
+  .hl-grid{grid-template-columns:1fr 1fr}.viewer-wrap{grid-template-columns:1fr}
+  .gal-head{padding:0 1.6rem}.gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gi{grid-column:auto!important;grid-row:auto!important;height:200px}
+  .fp-grid,.book-wrap,.loc-wrap,.contact-wrap,.rest-grid,.rest-intro{grid-template-columns:1fr}
+  .am-featured{grid-template-columns:1fr}.am-grid{grid-template-columns:1fr 1fr}
+  .am-promise{grid-template-columns:1fr}.hero-pills{display:none}
+  .hero-content{padding:0 1.6rem 4.5rem}.qbar-inner{flex-direction:column}
+  .qf{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .host-wrap{grid-template-columns:1fr;text-align:center}.host-avatar{margin:0 auto}
+  .host-badges{justify-content:center}.frow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-top">Villa <span>Miraverde</span></span>
+    <span class="nav-logo-sub">Benissa · Costa Blanca</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#viewer">3D Tour</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#amenities">Ausstattung</a></li>
+    <li><a href="#restaurants">Restaurants</a></li>
+    <li><a href="#location">Lage</a></li>
+    <li><a href="#host">Gastgeber</a></li>
+    <li><a href="#booking" class="nav-cta">Buchen</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div><div class="hero-veil"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Benissa · Costa Blanca · Spanien</div>
+    <h1 class="hero-h1">Villa<br><em>Miraverde</em></h1>
+    <p class="hero-tagline">Eine außergewöhnliche Architektenvilla hoch über dem Mittelmeer – mit atemberaubendem Meerblick, privatem Pool und der einzigartigen Gastfreundschaft der Familie Wunsch.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-solid">Verfügbarkeit prüfen</a>
+      <a href="#viewer" class="btn-ghost">3D-Tour erleben</a>
+    </div>
+  </div>
+  <div class="hero-pills">
+    <div class="pill"><div class="pill-num">4</div><div class="pill-txt">Schlafzimmer</div></div>
+    <div class="pill"><div class="pill-num">4</div><div class="pill-txt">Bäder en-suite</div></div>
+    <div class="pill"><div class="pill-num">240<small style="font-size:.85rem">m²</small></div><div class="pill-txt">Wohnfläche</div></div>
+    <div class="pill"><div class="pill-num">∞</div><div class="pill-txt">Meerblick</div></div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-cue-line"></div><span class="scroll-cue-txt">Entdecken</span></div>
+</section>
+
+<div id="qbar">
+  <div class="qbar-inner">
+    <div class="qf"><label for="qi">Anreise</label><input type="date" id="qi"></div>
+    <div class="qf"><label for="qo">Abreise</label><input type="date" id="qo"></div>
+    <div class="qf"><label>Gäste</label><select id="qg"><option>2 Personen</option><option>4 Personen</option><option>6 Personen</option><option>8 Personen</option></select></div>
+    <div class="qf"><label>Nationalität</label><input type="text" placeholder="z. B. Deutschland"></div>
+    <button class="qbar-btn" onclick="quickCheck()">Verfügbarkeit prüfen →</button>
+  </div>
+</div>
+
+<div id="highlights">
+  <div class="hl-grid">
+    <div class="hl-card"><div class="hl-icon">🌊</div><h3>Panorama-Meerblick</h3><p>Unverbaubarer Blick auf das türkisblaue Mittelmeer aus allen Haupträumen</p></div>
+    <div class="hl-card"><div class="hl-icon">🏊</div><h3>Privatpool 32 m²</h3><p>Beheizter Pool, exklusiv für Ihre Gruppe – täglich gepflegt, nie geteilt</p></div>
+    <div class="hl-card"><div class="hl-icon">🛏️</div><h3>4 En-Suite-Suiten</h3><p>Jedes Schlafzimmer mit eigenem Bad – maximale Privatsphäre für alle</p></div>
+    <div class="hl-card"><div class="hl-icon">🍽️</div><h3>Kulinarischer Guide</h3><p>Michelin-verdächtige Restaurants direkt vor der Tür – unser exklusiver Guide hilft</p></div>
+  </div>
+</div>
+
+<section id="viewer">
+  <div class="container">
+    <div class="viewer-wrap">
+      <div>
+        <div class="eyebrow">Virtuelle Tour</div>
+        <h2 class="section-h">Erkunden Sie die Villa<br><em>in 3D</em></h2>
+        <p class="section-p">Drehen, zoomen und jede Ebene erkunden – so als wären Sie schon vor Ort.</p>
+        <div class="viewer-feats">
+          <div class="vfeat"><div class="vfeat-dot">🏠</div><div><h4>Drei Ebenen</h4><p>Wohnbereich, 4 Suiten, Dachterrasse mit Pool</p></div></div>
+          <div class="vfeat"><div class="vfeat-dot">🛋️</div><div><h4>Vollmöbliert</h4><p>Lounge, Gourmetküche, alle 4 Schlafzimmer</p></div></div>
+          <div class="vfeat"><div class="vfeat-dot">🌿</div><div><h4>Mediterrane Anlage</h4><p>1.079 m² Garten, Pool und Panoramaterrassen</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="viewer-canvas-box">
+          <canvas id="c3d"></canvas>
+          <div class="vctrl">
+            <button class="vbtn on" onclick="setFloor(0,this)">Gesamt</button>
+            <button class="vbtn" onclick="setFloor(1,this)">Erdgeschoss</button>
+            <button class="vbtn" onclick="setFloor(2,this)">Obergeschoss</button>
+            <button class="vbtn" onclick="setFloor(3,this)">Dach + Pool</button>
+            <span class="vhint">Ziehen · Zoomen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="gal-head"><div class="eyebrow">Impressionen</div><h2 class="section-h">Die Villa <em>in Bildern</em></h2></div>
+  <div class="gal-grid">
+    <div class="gi" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&q=80" alt="Villa"><div class="gi-lbl">Außenansicht</div></div>
+    <div class="gi" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80" alt="Pool"><div class="gi-lbl">Privatpool</div></div>
+    <div class="gi" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Meer"><div class="gi-lbl">Meerblick</div></div>
+    <div class="gi" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Wohnzimmer"><div class="gi-lbl">Wohnzimmer</div></div>
+    <div class="gi" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt="Schlafzimmer"><div class="gi-lbl">Master Suite</div></div>
+    <div class="gi" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80" alt="Küche"><div class="gi-lbl">Küche</div></div>
+  </div>
+</section>
+
+<section id="floorplan">
+  <div class="container">
+    <div class="eyebrow">Grundriss</div>
+    <h2 class="section-h">Raumaufteilung & <em>Flächen</em></h2>
+    <p class="section-p">240 m² auf zwei Wohnetagen plus Dachterrasse – großzügig, lichtdurchflutet, Meerblick aus jedem Zimmer.</p>
+    <div class="fp-grid">
+      <div class="fp-card"><div class="fp-head"><h3>Erdgeschoss</h3><p>Nivel 1 · 64 m²</p></div><div class="fp-body"><ul class="fp-list"><li><span class="rn">🛋️ Salon & Esszimmer</span><span class="rs">45,6 m²</span></li><li><span class="rn">🍳 Gourmetküche</span><span class="rs">13,8 m²</span></li><li><span class="rn">🚿 Gäste-WC</span><span class="rs">2,4 m²</span></li><li><span class="rn">🧺 Hauswirtschaft</span><span class="rs">2,6 m²</span></li><li><span class="rn">🌿 Meerblick-Terrasse</span><span class="rs">35 m²</span></li></ul></div><div class="fp-foot"><span>Wohnfläche</span><span>64 m²</span></div></div>
+      <div class="fp-card"><div class="fp-head"><h3>Obergeschoss</h3><p>Nivel 0 · 4 Suiten · 117 m²</p></div><div class="fp-body"><ul class="fp-list"><li><span class="rn">🛏️ Master Suite</span><span class="rs">18,0 m²</span></li><li><span class="rn">🛏️ Suite 2</span><span class="rs">16,0 m²</span></li><li><span class="rn">🛏️ Suite 3</span><span class="rs">14,0 m²</span></li><li><span class="rn">🛏️ Suite 4</span><span class="rs">12,5 m²</span></li><li><span class="rn">🚿 4 en-suite Bäder</span><span class="rs">je 6–8 m²</span></li><li><span class="rn">👗 2 Ankleidezimmer</span><span class="rs">13,2 m²</span></li></ul></div><div class="fp-foot"><span>Wohnfläche</span><span>117 m²</span></div></div>
+      <div class="fp-card"><div class="fp-head"><h3>Dachterrasse & Außen</h3><p>Pool · 1.079 m² Grundstück</p></div><div class="fp-body"><ul class="fp-list"><li><span class="rn">☀️ Panorama-Dachterrasse</span><span class="rs">80 m²</span></li><li><span class="rn">🏊 Privatpool</span><span class="rs">32 m²</span></li><li><span class="rn">🌳 Mediterraner Garten</span><span class="rs">177 m²</span></li><li><span class="rn">🚗 Stellplätze</span><span class="rs">2 Plätze</span></li><li><span class="rn">⚡ Solaranlage</span><span class="rs">inkl.</span></li></ul></div><div class="fp-foot"><span>Gesamtgrundstück</span><span>1.079 m²</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LUXURY AMENITIES -->
+<section id="amenities">
+  <div class="container">
+    <div class="am-header">
+      <div class="am-header-left">
+        <div class="eyebrow">Ausstattung</div>
+        <h2 class="section-h">Alles für Ihren<br><em>perfekten Aufenthalt</em></h2>
+      </div>
+      <div class="am-header-right">„Villa Miraverde vereint modernes Architektendesign mit höchstem Komfort – sorgfältig ausgewählt für unvergessliche Aufenthalte an der Costa Blanca."</div>
+    </div>
+    <div class="am-featured">
+      <div class="am-feat-main">
+        <span class="am-big-icon">🌊</span>
+        <h3>Panorama-Meerblick</h3>
+        <p>Unverbaubarer Blick auf das türkisblaue Mittelmeer – aus Wohnzimmer, Küche, allen Suiten und der 80 m² Dachterrasse.</p>
+        <span class="am-tag">★ Highlight der Villa</span>
+      </div>
+      <div class="am-feat-side">
+        <div class="am-feat-card"><span class="am-ic">🏊</span><h4>Beheizter Privatpool</h4><p>32 m² Infinity-Pool, exklusiv – täglich gepflegt, Gegenstromanlage, niemals geteilt.</p></div>
+        <div class="am-feat-card"><span class="am-ic">☀️</span><h4>Panorama-Dachterrasse</h4><p>80 m² Loungefläche, Sonnenliegen, 360°-Blick über Mittelmeer und Berglandschaft.</p></div>
+      </div>
+      <div class="am-feat-side">
+        <div class="am-feat-card"><span class="am-ic">🛁</span><h4>4 en-suite Bäder</h4><p>Jede Suite mit eigenem Bad – Regendusche, Marmordekor, Fußbodenheizung.</p></div>
+        <div class="am-feat-card"><span class="am-ic">🍽️</span><h4>Gourmetküche</h4><p>Einbauküche mit Kücheninsel, Induktion, Weinkühlschrank, Nespresso.</p></div>
+      </div>
+    </div>
+    <div class="am-divider"></div>
+    <div class="am-grid">
+      <div class="am-cell"><span class="am-cell-ic">📶</span><h4>Glasfaser-WLAN</h4><p>Highspeed Internet überall im Haus und auf der Terrasse</p></div>
+      <div class="am-cell"><span class="am-cell-ic">❄️</span><h4>Klimaanlage</h4><p>Inverter-Klimaanlage in allen Räumen, individuell regelbar</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🚗</span><h4>2 Privatstellplätze</h4><p>Geschützte Parkplätze direkt am Haus, inklusive</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🌿</span><h4>Mediterraner Garten</h4><p>177 m² mit Oliven, Lavendel, Zitrusbäumen</p></div>
+      <div class="am-cell"><span class="am-cell-ic">📺</span><h4>Smart-TV</h4><p>65" Smart-TV im Salon, weitere Screens in den Suiten</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🧺</span><h4>Waschmaschine</h4><p>Waschmaschine & Trockner, Bügeleisen inklusive</p></div>
+      <div class="am-cell"><span class="am-cell-ic">⚡</span><h4>Solaranlage</h4><p>Eigene Photovoltaikanlage für nachhaltige Energie</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🔒</span><h4>Sicherheit</h4><p>Alarmanlage, Sicherheitsschlösser, beleuchtetes Grundstück</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🍷</span><h4>Weinkühlschrank</h4><p>Eingebauter Weinkühlschrank für bis zu 36 Flaschen</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🎵</span><h4>Soundsystem</h4><p>Multiroom-Audio innen & außen, Bluetooth-kompatibel</p></div>
+      <div class="am-cell"><span class="am-cell-ic">🏓</span><h4>Freizeitausstattung</h4><p>Liegestühle, Sonnenschirme, Strandausrüstung</p></div>
+      <div class="am-cell"><span class="am-cell-ic">👶</span><h4>Kinderfreundlich</h4><p>Kinderbett, Hochstuhl, Treppengitter auf Anfrage</p></div>
+    </div>
+    <div class="am-divider"></div>
+    <div class="am-promise">
+      <div class="am-promise-item"><div class="am-promise-num">24h</div><div class="am-promise-txt"><h5>Persönlicher Service</h5><p>Familie Wunsch ist jederzeit für Sie erreichbar</p></div></div>
+      <div class="am-promise-item"><div class="am-promise-num">5★</div><div class="am-promise-txt"><h5>Durchgängig top bewertet</h5><p>Alle Gäste bewerteten ihren Aufenthalt mit 5 Sternen</p></div></div>
+      <div class="am-promise-item"><div class="am-promise-num">0€</div><div class="am-promise-txt"><h5>Keine versteckten Kosten</h5><p>Endreinigung & WLAN inklusive – keine Überraschungen</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="book-wrap">
+      <div>
+        <div class="eyebrow">Preise & Buchung</div>
+        <h2 class="section-h">Transparente Preise,<br><em>einfache Buchung</em></h2>
+        <p class="section-p">Keine Buchungsgebühren. Direkt bei Familie Wunsch – persönlich und ohne Zwischenhändler.</p>
+        <div class="price-stack">
+          <div class="pc"><div class="pc-season">Nebensaison · Oktober – April</div><div class="pc-price">€ 380 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 2.450 · min. 4 Nächte</div><div class="pc-inc">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+          <div class="pc hot"><div class="pc-badge">Beliebt</div><div class="pc-season">Zwischensaison · Mai, Jun, Sep, Okt</div><div class="pc-price">€ 620 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 3.990 · min. 5 Nächte</div><div class="pc-inc">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+          <div class="pc"><div class="pc-season">Hochsaison · Juli – August</div><div class="pc-price">€ 980 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 6.500 · min. 7 Nächte</div><div class="pc-inc">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+        </div>
+      </div>
+      <div class="book-form">
+        <h3>Anfrage stellen</h3><p>Familie Wunsch antwortet persönlich innerhalb von 24 Stunden.</p>
+        <div class="frow"><div class="fg"><label>Anreise</label><input type="date" id="fi" oninput="calcP()"></div><div class="fg"><label>Abreise</label><input type="date" id="fo" oninput="calcP()"></div></div>
+        <div class="frow"><div class="fg"><label>Vorname</label><input type="text" placeholder="Maria"></div><div class="fg"><label>Nachname</label><input type="text" placeholder="Müller"></div></div>
+        <div class="fg"><label>E-Mail</label><input type="email" placeholder="ihre@email.de"></div>
+        <div class="fg"><label>Telefon</label><input type="tel" placeholder="+49 …"></div>
+        <div class="frow">
+          <div class="fg"><label>Gäste</label><select id="fg-guests" onchange="calcP()"><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8" selected>8 Personen</option></select></div>
+          <div class="fg"><label>Sprache</label><select><option>Deutsch</option><option>English</option><option>Español</option></select></div>
+        </div>
+        <div class="fg"><label>Nachricht</label><textarea placeholder="Besondere Wünsche, Fragen…"></textarea></div>
+        <div class="price-calc">
+          <div class="pc-row"><span>Nächte</span><span id="pn">– –</span></div>
+          <div class="pc-row"><span>Mietpreis</span><span id="pr">– –</span></div>
+          <div class="pc-row"><span>Endreinigung</span><span>€ 250</span></div>
+          <div class="pc-row tot"><span>Gesamtpreis</span><span id="pt">– –</span></div>
+        </div>
+        <button class="btn-book" onclick="sendBooking()">Verbindliche Anfrage senden →</button>
+        <div class="book-trust">🔒 SSL-verschlüsselt · ✓ Keine Buchungsgebühr · ✓ Direkt bei Familie Wunsch</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESTAURANT GUIDE -->
+<section id="restaurants">
+  <div class="container">
+    <div class="rest-intro">
+      <div>
+        <div class="eyebrow">Kulinarischer Guide</div>
+        <h2 class="section-h">Die besten Restaurants<br><em>in der Umgebung</em></h2>
+        <div class="rest-filter">
+          <button class="rf-btn on" onclick="filterRest('all',this)">Alle (6)</button>
+          <button class="rf-btn" onclick="filterRest('benissa',this)">Benissa</button>
+          <button class="rf-btn" onclick="filterRest('moraira',this)">Moraira</button>
+          <button class="rf-btn" onclick="filterRest('fine',this)">Fine Dining</button>
+        </div>
+      </div>
+      <div class="rest-note"><strong>Empfehlung von Familie Wunsch:</strong> Die Gegend um Benissa und Moraira gehört zu den kulinarisch spannendsten Ecken der gesamten Costa Blanca. Tisch-Reservierungen – besonders im Sommer – empfehlen wir dringend. Wir helfen Ihnen gerne dabei.</div>
+    </div>
+
+    <div class="rest-grid" id="rest-grid">
+
+      <div class="rest-card" data-cat="benissa fine">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&q=75" alt="Cuina de Dos">
+          <span class="rest-dist">📍 2 km · 5 Min.</span>
+          <span class="rest-stars">★ 4.7 <span>680 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Mediterran · Kreative Küche · Benissa</div>
+          <div class="rest-name">Cuina de Dos</div>
+          <div class="rest-tags"><span class="rest-tag">Fine Dining</span><span class="rest-tag">Reservierung empf.</span></div>
+          <p class="rest-desc">„Michelin-Niveau in Benissa" – kreative mediterrane Küche mit außergewöhnlicher Weinauswahl. Kleines, intimes Restaurant im Herzen von Benissa.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965730789">+34 965 73 07 89</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C/ Sant Nicolau, 6 · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mi–Fr 13:30 & 19:30 · Sa 13:30 & 20:00 · So 13:30</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-cat="benissa fine">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=75" alt="Casa Bernardi">
+          <span class="rest-dist">📍 5 km · 8 Min.</span>
+          <span class="rest-stars">★ 4.7 <span>339 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Italienisch · Gourmet · Benissa</div>
+          <div class="rest-name">Casa Bernardi</div>
+          <div class="rest-tags"><span class="rest-tag">Fine Dining</span><span class="rest-tag">Hausgemachtes Brot</span><span class="rest-tag">Meerblick</span></div>
+          <p class="rest-desc">Intimes Gourmetrestaurant mit atemberaubendem Ausblick. Hausgemachtes Focaccia, exquisite Risottos und ein Sommelier der Extraklasse.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34622308625">+34 622 30 86 25</a><div class="rest-price"><span>€</span><span>€</span><span>€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Partida Pedramala, 60C · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mi ab 19:30 · Do–So 13:00–14:30 & 19:30–21:30</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Focaccia und Spezialbrote zum Mitnehmen erhältlich</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-cat="moraira fine">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=500&q=75" alt="Carvón">
+          <span class="rest-dist">📍 12 km · 15 Min.</span>
+          <span class="rest-stars">★ 4.9 <span>501 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Modern · Kreativ · Moraira</div>
+          <div class="rest-name">Carvón</div>
+          <div class="rest-tags"><span class="rest-tag">Fine Dining</span><span class="rest-tag">4,9 ★ Bestbewertet</span></div>
+          <p class="rest-desc">Verborgenes Juwel in Morairas Altstadt. 4,9 Sterne aus über 500 Bewertungen sprechen für sich. Kreative Küche mit lokalen Zutaten, perfekte Weinbegleitung.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34633125381">+34 633 12 53 81</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. de la Iglesia, 12 · Moraira</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Di–Fr ab 19:00 · Sa 13:00–17:00 & ab 19:00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-cat="benissa">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=75" alt="Bravura">
+          <span class="rest-dist">📍 2 km · 5 Min.</span>
+          <span class="rest-stars">★ 4.6 <span>305 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Französisch-Mediterran · Fusion · Benissa</div>
+          <div class="rest-name">Restaurant Bravura</div>
+          <div class="rest-tags"><span class="rest-tag">Tasting Menu ab €27</span><span class="rest-tag">Livemusik</span></div>
+          <p class="rest-desc">Modernes Bistro mit Livemusik, herzlichen Gastgebern und einem unschlagbaren Tasting Menu. Für die Qualität absolut unschlagbar im Preis.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34623248551">+34 623 24 85 51</a><div class="rest-price"><span>€</span><span class="off">€</span><span class="off">€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. del País Valencià, 106 · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mi–Sa 13:00–16:00 & 19:00–22:30 · So 13:00–18:00</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Tasting Menu Mi–Sa mittags – 4 Gänge für nur €27</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-cat="moraira">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=75" alt="Kosta">
+          <span class="rest-dist">📍 13 km · 16 Min.</span>
+          <span class="rest-stars">★ 4.8 <span>1.059 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Mediterran · Italienisch · Moraira</div>
+          <div class="rest-name">Kosta</div>
+          <div class="rest-tags"><span class="rest-tag">Sehr beliebt</span><span class="rest-tag">Cocktails</span><span class="rest-tag">Täglich geöffnet</span></div>
+          <p class="rest-desc">Über 1.000 Bewertungen, fast alle 5 Sterne. Außergewöhnliche Präsentation, freundliches Team – täglich geöffnet, Reservierung sehr empfohlen.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34865778300">+34 865 77 83 00</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe · Moraira</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Di–So 12:30–16:00 & 18:30–23:30</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-cat="benissa">
+        <div class="rest-card-top">
+          <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500&q=75" alt="Casa Cantó">
+          <span class="rest-dist">📍 2 km · 5 Min.</span>
+          <span class="rest-stars">★ 4.5 <span>630 Bewertungen</span></span>
+        </div>
+        <div class="rest-body">
+          <div class="rest-cat">Mediterran · Spanisch · Benissa</div>
+          <div class="rest-name">Restaurant Casa Cantó</div>
+          <div class="rest-tags"><span class="rest-tag">Beste Fideuà</span><span class="rest-tag">Meeresfrüchte</span></div>
+          <p class="rest-desc">Institution in Benissa seit Jahrzehnten. Die beste Fideuà de Marisco der Region, Blick auf den Peñón de Ifach – ausgezeichnetes Preis-Leistungs-Verhältnis.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965730629">+34 965 73 06 29</a><div class="rest-price"><span>€</span><span>€</span><span>€</span></div></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. del País Valencià, 223 · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Di–So 13:00–16:00 (nur Mittagessen)</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Tisch mit Fensterblick auf Ifach & Calpe reservieren</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="container">
+    <div class="eyebrow">Gästestimmen</div>
+    <h2 class="section-h">Was unsere Gäste <em>sagen</em></h2>
+    <div class="rev-grid">
+      <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">„Die Villa Miraverde ist ein absoluter Traum. Der Blick aufs Meer beim Frühstück auf der Terrasse – unbezahlbar. Familie Wunsch hat alles perfekt vorbereitet."</p><div class="rev-auth"><div class="rev-av">SK</div><div><div class="rev-name">Stefan & Kathrin B.</div><div class="rev-date">August 2024 · Deutschland</div></div><div class="rev-score">⭐ 5,0</div></div></div>
+      <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">„Stunning villa with breathtaking sea views. The pool, the rooms – everything is top quality. The Wunsch family were incredibly welcoming. We'll definitely be back!"</p><div class="rev-auth"><div class="rev-av">JL</div><div><div class="rev-name">James & Laura T.</div><div class="rev-date">July 2024 · United Kingdom</div></div><div class="rev-score">⭐ 5,0</div></div></div>
+      <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">„Une villa exceptionnelle avec une vue imprenable sur la Méditerranée. La famille Wunsch est adorable – merci pour ce séjour inoubliable à Benissa!"</p><div class="rev-auth"><div class="rev-av">MF</div><div><div class="rev-name">Marie & François D.</div><div class="rev-date">Juin 2024 · France</div></div><div class="rev-score">⭐ 5,0</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="container">
+    <div class="loc-wrap">
+      <div>
+        <div class="eyebrow">Lage</div>
+        <h2 class="section-h">Benissa,<br><em>Costa Blanca</em></h2>
+        <p class="section-p">Hoch über dem Mittelmeer, in Benissa – einer der schönsten und authentischsten Gemeinden der Costa Blanca.</p>
+        <div class="loc-facts">
+          <div class="loc-item"><div class="loc-mark">🏖️</div><div><h4>Strand</h4><p>Cala Advocat & Cala del Moraig in nur 8 Minuten erreichbar</p></div></div>
+          <div class="loc-item"><div class="loc-mark">🏘️</div><div><h4>Benissa</h4><p>Charmantes Ortszentrum mit Restaurants & Märkten in 10 Min.</p></div></div>
+          <div class="loc-item"><div class="loc-mark">✈️</div><div><h4>Flughafen Alicante</h4><p>Ca. 80 km – etwa 55 Minuten Fahrtzeit</p></div></div>
+          <div class="loc-item"><div class="loc-mark">🏄</div><div><h4>Freizeitangebote</h4><p>Wandern, Tauchen, Segeln, Weintouren – alles in der Nähe</p></div></div>
+        </div>
+      </div>
+      <div class="map-box"><iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.12,38.65,0.08,38.75&layer=mapnik&marker=38.710,-0.025" title="Benissa"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section id="host">
+  <div class="container">
+    <div class="host-wrap">
+      <div class="host-avatar">W</div>
+      <div class="host-info">
+        <div class="eyebrow">Ihre Gastgeber</div>
+        <h2>Familie <em>Wunsch</em></h2>
+        <p>Wir sind Familie Wunsch und freuen uns, Ihnen unsere Villa Miraverde öffnen zu dürfen. Dieses Haus liegt uns sehr am Herzen – wir haben es mit größter Sorgfalt gestaltet und pflegen es mit Liebe. Unser Ziel ist es, dass Sie sich von der ersten Minute an wie zuhause fühlen – nur mit Meerblick.</p>
+        <p>Wir sind jederzeit für Sie erreichbar, helfen bei Restaurantreservierungen, Ausflugstipps und allem was Ihren Aufenthalt in Benissa unvergesslich macht.</p>
+        <div class="host-badges"><span class="hbadge">Superhost</span><span class="hbadge">5★ Bewertungen</span><span class="hbadge">Antwortet in &lt; 24h</span><span class="hbadge">Deutsch · English · Español</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div>
+        <div class="eyebrow">Kontakt</div>
+        <h2 class="section-h">Wir sind für<br><em>Sie da</em></h2>
+        <p class="section-p">Fragen zur Verfügbarkeit, Anreise oder besonderen Wünschen? Familie Wunsch antwortet persönlich.</p>
+        <div class="contact-ways">
+          <div class="cway"><div class="cway-ic">📞</div><div><div class="cway-lbl">Telefon</div><div class="cway-val">+34 600 000 000</div></div></div>
+          <div class="cway"><div class="cway-ic">✉️</div><div><div class="cway-lbl">E-Mail</div><div class="cway-val">info@villa-miraverde.com</div></div></div>
+          <div class="cway"><div class="cway-ic">💬</div><div><div class="cway-lbl">WhatsApp</div><div class="cway-val">Schnell & direkt</div></div></div>
+          <div class="cway"><div class="cway-ic">📍</div><div><div class="cway-lbl">Adresse</div><div class="cway-val">Benissa, Alicante, España</div></div></div>
+        </div>
+      </div>
+      <div class="cf-wrap">
+        <div class="fg"><label>Ihr Name</label><input type="text" placeholder="Vorname Nachname"></div>
+        <div class="fg"><label>E-Mail</label><input type="email" placeholder="ihre@email.de"></div>
+        <div class="fg"><label>Betreff</label><select><option>Allgemeine Anfrage</option><option>Verfügbarkeit prüfen</option><option>Preisfrage</option><option>Nach der Buchung</option><option>Sonstiges</option></select></div>
+        <div class="fg"><label>Nachricht</label><textarea placeholder="Wie können wir Ihnen helfen?" style="min-height:120px"></textarea></div>
+        <button class="btn-solid" style="width:100%" onclick="sendContact()">Nachricht senden →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-logo">Villa <span>Miraverde</span></div>
+    <ul class="ft-links">
+      <li><a href="#viewer">3D Tour</a></li><li><a href="#gallery">Galerie</a></li>
+      <li><a href="#amenities">Ausstattung</a></li><li><a href="#restaurants">Restaurants</a></li>
+      <li><a href="#booking">Buchen</a></li><li><a href="#contact">Kontakt</a></li>
+      <li><a href="#" onclick="showLegal('impressum')">Impressum</a></li>
+      <li><a href="#" onclick="showLegal('datenschutz')">Datenschutz</a></li>
+    </ul>
+    <div class="ft-copy">© 2025 Villa Miraverde · Familie Wunsch · Benissa, Costa Blanca</div>
+  </div>
+</footer>
+
+<div id="lb" onclick="closeLb()"><button id="lb-x">×</button><img id="lb-img" src="" alt=""></div>
+<div id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-ic" id="mic">✅</div>
+    <h3 id="mtitle">Vielen Dank!</h3>
+    <p id="mtext">Ihre Anfrage wurde gesendet. Familie Wunsch meldet sich persönlich innerhalb von 24 Stunden.</p>
+    <button class="btn-solid" style="margin-top:1rem" onclick="closeModal()">Schließen</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>70);});
+var imgs=document.querySelectorAll('.gi img');
+function openLb(i){document.getElementById('lb').classList.add('open');document.getElementById('lb-img').src=imgs[i].src.replace('w=600','w=1400').replace('w=900','w=1600');}
+function closeLb(){document.getElementById('lb').classList.remove('open');}
+function quickCheck(){var d1=document.getElementById('qi').value,d2=document.getElementById('qo').value;if(!d1||!d2){alert('Bitte Datum auswählen.');return;}document.getElementById('fi').value=d1;document.getElementById('fo').value=d2;calcP();document.getElementById('booking').scrollIntoView({behavior:'smooth'});}
+function calcP(){var d1=new Date(document.getElementById('fi').value),d2=new Date(document.getElementById('fo').value);if(!d1||!d2||isNaN(d1)||isNaN(d2)||d2<=d1){document.getElementById('pn').textContent='--';document.getElementById('pr').textContent='--';document.getElementById('pt').textContent='--';return;}var n=Math.round((d2-d1)/86400000),m=d1.getMonth(),r=(m>=6&&m<=7)?980:(m>=4&&m<=5||m===8||m===9)?620:380,rent=n*r,total=rent+250;document.getElementById('pn').textContent=n+' Naechte x EUR '+r;document.getElementById('pr').textContent='EUR '+rent.toLocaleString('de-DE');document.getElementById('pt').textContent='EUR '+total.toLocaleString('de-DE');}
+function sendBooking(){var d1=document.getElementById('fi').value,d2=document.getElementById('fo').value;if(!d1||!d2){alert('Bitte Datum waehlen.');return;}document.getElementById('mic').textContent='checkmark';document.getElementById('mtitle').textContent='Anfrage gesendet!';document.getElementById('mtext').textContent='Vielen Dank! Familie Wunsch bestaetigt die Verfuegbarkeit und meldet sich persoenlich innerhalb von 24 Stunden.';document.getElementById('modal').classList.add('open');}
+function sendContact(){document.getElementById('mic').textContent='mail';document.getElementById('mtitle').textContent='Nachricht erhalten!';document.getElementById('mtext').textContent='Herzlichen Dank. Familie Wunsch meldet sich innerhalb von 24 Stunden persoenlich bei Ihnen.';document.getElementById('modal').classList.add('open');}
+function showLegal(t){document.getElementById('mic').textContent=t==='impressum'?'doc':'lock';document.getElementById('mtitle').textContent=t==='impressum'?'Impressum':'Datenschutz';document.getElementById('mtext').textContent=t==='impressum'?'Villa Miraverde - Inhaber: Familie Wunsch - Benissa, Alicante, Espana - E-Mail: info@villa-miraverde.com':'Ihre Daten werden ausschliesslich zur Bearbeitung Ihrer Anfrage genutzt und nicht an Dritte weitergegeben (DSGVO).';document.getElementById('modal').classList.add('open');}
+function closeModal(e){if(!e||e.target===document.getElementById('modal')||!e.target)document.getElementById('modal').classList.remove('open');}
+function filterRest(cat,btn){document.querySelectorAll('.rf-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');document.querySelectorAll('.rest-card').forEach(function(c){var cats=c.getAttribute('data-cat')||'';c.style.display=(cat==='all'||cats.includes(cat))?'flex':'none';});}
+(function(){
+  var cv=document.getElementById('c3d');
+  var rend=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+  rend.shadowMap.enabled=true;rend.setClearColor(0x7EAEC8);
+  var sc=new THREE.Scene();sc.fog=new THREE.Fog(0x7EAEC8,55,110);
+  var cam=new THREE.PerspectiveCamera(45,1,0.1,200);
+  function rsz(){var w=cv.clientWidth,h=cv.clientHeight;rend.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  rsz();new ResizeObserver(rsz).observe(cv);
+  sc.add(new THREE.AmbientLight(0xddeeff,.9));
+  var sun=new THREE.DirectionalLight(0xfffaf0,1.7);sun.position.set(20,30,15);sun.castShadow=true;sc.add(sun);
+  function M(c,r){return new THREE.MeshStandardMaterial({color:c,roughness:r||0.8});}
+  var mW=M(0xF0EBE0),mF=M(0xD8CCAA),mR=M(0xDDD4C0),mG=new THREE.MeshStandardMaterial({color:0x88BBDD,transparent:true,opacity:.5,roughness:.1}),mGr=M(0x5A9040),mD=M(0x7A5E3A),mP=new THREE.MeshStandardMaterial({color:0x1AAAD4,transparent:true,opacity:.88,roughness:.04}),mSt=M(0x9A8E7E),mWd=M(0x9A6830),mSo=M(0x4A6578),mTb=M(0xC0A060),mBd=M(0xEEE8E0),mBH=M(0x806040),mWh=M(0xF8F8F8,.85),mGn=M(0x3A7828),mPv=M(0xB0A898),mSl=new THREE.MeshStandardMaterial({color:0x1A2A3C,roughness:.15,metalness:.4});
+  var g={all:[],eg:[],og:[],roof:[],env:[]};
+  function bx(w,h,d,m,x,y,z){var mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+  function ad(mesh){var gs=Array.from(arguments).slice(1);sc.add(mesh);gs.forEach(function(k){g[k].push(mesh);});return mesh;}
+  ad(bx(50,.5,38,mD,0,-.75,0),'all','env');ad(bx(50,.1,38,mGr,0,-.45,0),'all','env');ad(bx(22,.2,16,mPv,0,-.35,0),'all','env');
+  ad(bx(24,1.6,.5,mSt,0,.5,-9),'all','env');ad(bx(.5,1.6,16,mSt,-12,.5,0),'all','env');ad(bx(.5,1.6,16,mSt,12,.5,0),'all','env');
+  ad(bx(8,.4,5,mSt,-9,.2,0),'all','env','roof');ad(bx(7,.2,4,mP,-9,.45,0),'all','env','roof');
+  ad(bx(8,.5,.25,mSt,-9,.55,-2.35),'all','env','roof');ad(bx(8,.5,.25,mSt,-9,.55,2.35),'all','env','roof');
+  ad(bx(.25,.5,5,mSt,-13.1,.55,0),'all','env','roof');ad(bx(.25,.5,5,mSt,-4.9,.55,0),'all','env','roof');
+  ad(bx(5,.1,12,mPv,9,0,-1),'all','env');
+  [[-14,0,-7],[-15,0,4],[14,0,-8],[13,0,6],[0,0,-12],[6,0,-12]].forEach(function(p){ad(bx(.35,1.8,.35,mWd,p[0],.9,p[2]),'all','env');var cr=new THREE.Mesh(new THREE.SphereGeometry(1.3,7,6),mGn);cr.position.set(p[0],2.9,p[2]);cr.castShadow=true;sc.add(cr);g.all.push(cr);g.env.push(cr);});
+  var EY=.3;
+  ad(bx(14,.28,9,mF,0,EY+.14,0),'all','eg');ad(bx(14,3.2,.3,mW,0,EY+1.9,-4.5),'all','eg');ad(bx(14,3.2,.3,mW,0,EY+1.9,4.5),'all','eg');ad(bx(.3,3.2,9,mW,-7,EY+1.9,0),'all','eg');ad(bx(.3,3.2,9,mW,7,EY+1.9,0),'all','eg');ad(bx(14,.25,9,mF,0,EY+3.5,0),'all','eg');
+  ad(bx(4.5,2.2,.15,mG,0,EY+2,-4.5),'all','eg');ad(bx(2.5,2,.15,mG,-4,EY+2,-4.5),'all','eg');ad(bx(3.5,2.3,.15,mG,2,EY+2,4.5),'all','eg');ad(bx(1.4,1.6,.15,mG,-7,EY+2,-2),'all','eg');ad(bx(1.4,1.6,.15,mG,-7,EY+2,2),'all','eg');ad(bx(.25,3,5,mW,-4.2,EY+1.8,1.5),'all','eg');
+  ad(bx(3.8,.72,1.1,mSo,-1.5,EY+.64,1.5),'all','eg');ad(bx(1.4,.45,.8,mTb,-1.5,EY+.51,-.3),'all','eg');ad(bx(2.5,1.5,.4,mBH,-1.5,EY+1.03,-4.2),'all','eg');ad(bx(1.8,.08,1,mTb,4,EY+.78,-1.5),'all','eg');ad(bx(.5,.85,.5,mBH,3,EY+.58,-1.5),'all','eg');ad(bx(.5,.85,.5,mBH,5,EY+.58,-1.5),'all','eg');ad(bx(3,.9,.6,mWh,-5.5,EY+.73,2.8),'all','eg');ad(bx(14,.2,2.5,mF,0,EY+3.65,-6.8),'all','eg');ad(bx(14,.85,.1,mG,0,EY+4.08,-7.95),'all','eg');
+  for(var i=0;i<7;i++)ad(bx(2.2,.22,.42,mF,6.5,EY+.25+i*.5,3.5-i*.5),'all','eg');
+  var OY=3.78;
+  ad(bx(14,.25,9,mF,0,OY+.12,0),'all','og');ad(bx(14,3,.3,mW,0,OY+1.8,-4.5),'all','og');ad(bx(14,3,.3,mW,0,OY+1.8,4.5),'all','og');ad(bx(.3,3,9,mW,-7,OY+1.8,0),'all','og');ad(bx(.3,3,9,mW,7,OY+1.8,0),'all','og');ad(bx(14,.25,9,mR,0,OY+3.1,0),'all','og');
+  ad(bx(.25,2.9,4.4,mW,-3.5,OY+1.75,-2.3),'all','og');ad(bx(.25,2.9,4.4,mW,.2,OY+1.75,-2.3),'all','og');ad(bx(.25,2.9,4.4,mW,3.7,OY+1.75,-2.3),'all','og');ad(bx(14,2.9,.2,mW,0,OY+1.75,.6),'all','og');
+  ad(bx(2.8,2,.15,mG,-5,OY+2.1,-4.5),'all','og');ad(bx(2.8,2,.15,mG,-1,OY+2.1,-4.5),'all','og');ad(bx(2,2,.15,mG,4.5,OY+2.1,-4.5),'all','og');ad(bx(4,2.2,.15,mG,-.5,OY+2.1,4.5),'all','og');
+  function bed(x,z){var by=OY+.5;ad(bx(1.6,.38,2.1,mBd,x,by+.19,z),'all','og');ad(bx(1.6,.55,.2,mBH,x,by+.55,z-1.05),'all','og');ad(bx(1.5,.16,1.9,mWh,x,by+.46,z),'all','og');ad(bx(1.5,.2,1.2,mSo,x,by+.6,z+.35),'all','og');}
+  bed(-5.5,-1.5);bed(-1.8,-1.5);bed(1.8,2);bed(5.5,0);
+  [[-5.5,-4],[-1.8,-4],[5.5,-4]].forEach(function(p){ad(bx(1.4,2,.55,mBH,p[0],OY+1.2,p[1]),'all','og');});
+  var RY=7.15;
+  ad(bx(14,.25,9,mR,0,RY+.12,0),'all','roof');ad(bx(14,.9,.28,mW,0,RY+.55,-4.5),'all','roof');ad(bx(14,.9,.28,mW,0,RY+.55,4.5),'all','roof');ad(bx(.28,.9,9,mW,-7,RY+.55,0),'all','roof');ad(bx(.28,.9,9,mW,7,RY+.55,0),'all','roof');
+  ad(bx(4.5,2.4,3.5,mW,1.5,RY+1.4,0),'all','roof');ad(bx(2.2,1.6,.15,mG,1.5,RY+1.5,-1.75),'all','roof');ad(bx(4.5,.2,3.5,mR,1.5,RY+2.65,0),'all','roof');
+  ad(bx(2.8,.08,1.5,mSl,-3.5,RY+.22,-1),'all','roof');ad(bx(2.8,.08,1.5,mSl,-3.5,RY+.22,1.8),'all','roof');
+  ad(bx(1.2,.65,.7,mSo,-.8,RY+.55,-2.5),'all','roof');ad(bx(1.2,.65,.7,mSo,-.8,RY+.55,2.5),'all','roof');
+  var theta=.7,phi=.52,radius=42,lx=0,ly=0,isDrag=false,mx=0,my=0;
+  var ft=[{r:42,ly:3,ph:.52},{r:30,ly:2,ph:.45},{r:30,ly:6,ph:.42},{r:28,ly:8,ph:.38}];
+  window.setFloor=function(f,btn){document.querySelectorAll('.vbtn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');var t=ft[f];radius=t.r;ly=t.ly;phi=t.ph;var show={0:['all','env','eg','og','roof'],1:['all','env','eg'],2:['all','env','og'],3:['all','env','roof']}[f];sc.children.forEach(function(m){if(m.isMesh)m.visible=false;});var seen=[];show.forEach(function(k){g[k].forEach(function(m){seen.push(m);});});seen.forEach(function(m){m.visible=true;});sun.visible=true;};
+  setFloor(0,document.querySelector('.vbtn.on'));
+  cv.addEventListener('mousedown',function(e){isDrag=true;mx=e.clientX;my=e.clientY;});
+  window.addEventListener('mouseup',function(){isDrag=false;});
+  cv.addEventListener('mousemove',function(e){if(!isDrag)return;theta-=(e.clientX-mx)*.007;phi=Math.max(.1,Math.min(1.4,phi+(e.clientY-my)*.006));mx=e.clientX;my=e.clientY;});
+  cv.addEventListener('wheel',function(e){e.preventDefault();radius=Math.max(10,Math.min(80,radius+e.deltaY*.05));},{passive:false});
+  var tx=0,ty=0,td=false;
+  cv.addEventListener('touchstart',function(e){if(e.touches.length===1){td=true;tx=e.touches[0].clientX;ty=e.touches[0].clientY;}});
+  window.addEventListener('touchend',function(){td=false;});
+  cv.addEventListener('touchmove',function(e){if(!td||e.touches.length!==1)return;theta-=(e.touches[0].clientX-tx)*.009;phi=Math.max(.1,Math.min(1.4,phi+(e.touches[0].clientY-ty)*.007));tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  (function loop(){requestAnimationFrame(loop);var cx=lx+radius*Math.sin(phi)*Math.sin(theta),cy=ly+radius*Math.cos(phi),cz=radius*Math.sin(phi)*Math.cos(theta);cam.position.set(cx,cy,cz);cam.lookAt(lx,ly,0);rend.render(sc,cam);})();
+})();
+</script>
+</body>
+</html>
