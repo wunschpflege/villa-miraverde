@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Las Hermanas – Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#2A6B6B;--teal2:#1F5252;--teal3:#E0EEEE;--gold:#B8924A;--ink:#1E1812;--ink2:#3A3028;--ink3:#6B5F50;--b0:#FDFAF5;--b1:#F5F0E8;--b2:#EDE5D8;--b3:#D9CEBC;--r:8px;--red:#C0392B;--red2:#FADBD8;--green:#1E8449;--green2:#D5F5E3;--orange:#E67E22;--orange2:#FDEBD0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--b1);color:var(--ink);min-height:100vh}
+h1,h2,h3{font-family:'Cormorant Garamond',serif}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-box{background:var(--b0);border-radius:16px;padding:3rem;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(30,24,18,.12);text-align:center}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:.3rem}
+.login-logo span{color:var(--gold);font-style:italic}
+.login-sub{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:2.5rem}
+.login-box input{width:100%;padding:.9rem 1.1rem;border:1.5px solid var(--b3);border-radius:var(--r);background:var(--b0);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;transition:border-color .2s;margin-bottom:1rem}
+.login-box input:focus{border-color:var(--teal)}
+.login-btn{width:100%;padding:1rem;background:var(--teal);color:#fff;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--teal2)}
+.login-err{color:var(--red);font-size:.8rem;margin-top:.8rem;display:none}
+
+/* APP */
+#app{display:none;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--ink);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:1.8rem 1.6rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo-main{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:#fff;letter-spacing:.1em}
+.sidebar-logo-main span{color:var(--gold);font-style:italic}
+.sidebar-logo-sub{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:3px}
+.sidebar-nav{flex:1;padding:1.2rem 0}
+.nav-item{display:flex;align-items:center;gap:.85rem;padding:.85rem 1.6rem;cursor:pointer;transition:background .15s;color:rgba(255,255,255,.6);font-size:.82rem;letter-spacing:.04em;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(42,107,107,.25);color:#fff;border-left-color:var(--teal)}
+.nav-item-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{background:var(--red);color:#fff;font-size:.6rem;padding:2px 6px;border-radius:10px;margin-left:auto}
+.sidebar-footer{padding:1.2rem 1.6rem;border-top:1px solid rgba(255,255,255,.08)}
+.logout-btn{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.45);font-size:.78rem;cursor:pointer;transition:color .2s;background:none;border:none;font-family:'DM Sans',sans-serif;width:100%}
+.logout-btn:hover{color:#fff}
+
+.main-content{margin-left:240px;padding:2.5rem;min-height:100vh}
+.page-header{margin-bottom:2rem}
+.page-header h2{font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:.3rem}
+.page-header p{font-size:.85rem;color:var(--ink3)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2.5rem}
+.stat-card{background:var(--b0);border-radius:10px;padding:1.5rem;border:1px solid var(--b3)}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--ink);line-height:1}
+.stat-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:.4rem}
+.stat-card.highlight{background:var(--teal);border-color:var(--teal2)}
+.stat-card.highlight .stat-num,.stat-card.highlight .stat-label{color:#fff}
+.stat-card.highlight .stat-label{color:rgba(255,255,255,.65)}
+
+/* CARDS */
+.section-card{background:var(--b0);border-radius:12px;border:1px solid var(--b3);overflow:hidden;margin-bottom:1.5rem}
+.section-card-header{padding:1.2rem 1.6rem;border-bottom:1px solid var(--b2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.section-card-header h3{font-size:1.2rem;font-weight:400;color:var(--ink)}
+.section-card-body{padding:0}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{padding:.75rem 1.2rem;background:var(--b1);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);text-align:left;border-bottom:1px solid var(--b2)}
+.data-table td{padding:.85rem 1.2rem;border-bottom:1px solid var(--b2);font-size:.83rem;color:var(--ink2);vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--b1)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .75rem;border-radius:20px;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.badge-pending{background:var(--orange2);color:var(--orange)}
+.badge-confirmed{background:var(--green2);color:var(--green)}
+.badge-cancelled{background:var(--red2);color:var(--red)}
+.badge-approved{background:var(--green2);color:var(--green)}
+.badge-waiting{background:var(--orange2);color:var(--orange)}
+
+/* BUTTONS */
+.btn{padding:.45rem 1rem;border-radius:6px;border:none;font-family:'DM Sans',sans-serif;font-size:.75rem;cursor:pointer;transition:all .15s;font-weight:500}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:var(--teal2)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{opacity:.85}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.85}
+.btn-ghost{background:transparent;color:var(--ink3);border:1px solid var(--b3)}.btn-ghost:hover{border-color:var(--ink3);color:var(--ink)}
+.btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{opacity:.85}
+.btn-group{display:flex;gap:.4rem}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.6rem}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3)}
+.fg input,.fg select,.fg textarea{padding:.75rem 1rem;border:1.5px solid var(--b3);border-radius:6px;background:var(--b0);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal)}
+.fg textarea{resize:vertical;min-height:80px}
+.form-actions{padding:0 1.6rem 1.6rem;display:flex;gap:.8rem}
+
+/* REVIEW CARD */
+.review-item{padding:1.2rem 1.6rem;border-bottom:1px solid var(--b2)}
+.review-item:last-child{border-bottom:none}
+.review-header{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;flex-wrap:wrap}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:500;flex-shrink:0}
+.review-name{font-weight:500;font-size:.88rem;color:var(--ink)}
+.review-meta{font-size:.75rem;color:var(--ink3)}
+.review-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--ink2);line-height:1.7;margin-bottom:.8rem}
+.review-actions{display:flex;gap:.5rem}
+
+/* CALENDAR BLOCKED */
+.blocked-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.2rem;border-bottom:1px solid var(--b2);gap:1rem;flex-wrap:wrap}
+.blocked-item:last-child{border-bottom:none}
+.blocked-dates{font-size:.88rem;color:var(--ink);font-weight:500}
+.blocked-label{font-size:.78rem;color:var(--ink3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:#fff;padding:.85rem 1.4rem;border-radius:8px;font-size:.82rem;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:320px}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+
+/* PAGES */
+.page{display:none}.page.active{display:block}
+
+/* EMPTY STATE */
+.empty-state{padding:3rem;text-align:center;color:var(--ink3)}
+.empty-state-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.5}
+.empty-state p{font-size:.88rem}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{width:100%;height:60px;flex-direction:row;align-items:center;justify-content:space-between;padding:0 1rem;bottom:auto}
+  .sidebar-nav,.sidebar-footer,.sidebar-logo-sub{display:none}
+  .sidebar-logo{padding:.8rem 1rem;border-bottom:none}
+  .main-content{margin-left:0;margin-top:60px;padding:1.2rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Villa <span>Las Hermanas</span></div>
+    <div class="login-sub">Admin-Bereich</div>
+    <input type="password" id="pw-input" placeholder="Passwort eingeben" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Einloggen →</button>
+    <div class="login-err" id="login-err">Falsches Passwort</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-main">Villa <span>Las Hermanas</span></div>
+      <div class="sidebar-logo-sub">Admin · Benissa</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-item-icon">📊</span>Dashboard</div>
+      <div class="nav-item" onclick="showPage('bookings')"><span class="nav-item-icon">📅</span>Buchungsanfragen<span class="nav-badge" id="badge-bookings" style="display:none">0</span></div>
+      <div class="nav-item" onclick="showPage('calendar')"><span class="nav-item-icon">🗓️</span>Kalender sperren</div>
+      <div class="nav-item" onclick="showPage('reviews')"><span class="nav-item-icon">⭐</span>Gästebuch<span class="nav-badge" id="badge-reviews" style="display:none">0</span></div>
+      <div class="nav-item" onclick="window.open('/')"><span class="nav-item-icon">🌐</span>Zur Website</div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()"><span>🚪</span>Abmelden</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h2>Willkommen, Sophie & Lisa 👋</h2>
+        <p>Hier ist eine Übersicht aller aktuellen Aktivitäten der Villa Las Hermanas.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card highlight"><div class="stat-num" id="stat-pending">–</div><div class="stat-label">Offene Anfragen</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-confirmed">–</div><div class="stat-label">Bestätigte Buchungen</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-reviews-pending">–</div><div class="stat-label">Bewertungen ausstehend</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-reviews-total">–</div><div class="stat-label">Bewertungen gesamt</div></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-header"><h3>Neueste Buchungsanfragen</h3><button class="btn btn-ghost" onclick="showPage('bookings')">Alle ansehen →</button></div>
+        <div class="section-card-body"><div id="dashboard-bookings-list"></div></div>
+      </div>
+
+      <div class="section-card" style="margin-top:1.5rem">
+        <div class="section-card-header"><h3>Neueste Bewertungen</h3><button class="btn btn-ghost" onclick="showPage('reviews')">Alle ansehen →</button></div>
+        <div class="section-card-body"><div id="dashboard-reviews-list"></div></div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="page" id="page-bookings">
+      <div class="page-header">
+        <h2>Buchungsanfragen</h2>
+        <p>Alle eingegangenen Anfragen – bestätigen, ablehnen oder löschen.</p>
+      </div>
+      <div class="section-card">
+        <div class="section-card-header">
+          <h3>Alle Anfragen</h3>
+          <div style="display:flex;gap:.5rem">
+            <select id="booking-filter" onchange="renderBookings()" style="padding:.4rem .8rem;border:1px solid var(--b3);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.78rem;background:var(--b0);color:var(--ink)">
+              <option value="all">Alle</option>
+              <option value="pending">Ausstehend</option>
+              <option value="confirmed">Bestätigt</option>
+              <option value="cancelled">Abgelehnt</option>
+            </select>
+          </div>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead><tr><th>Gast</th><th>Zeitraum</th><th>Gäste</th><th>Nachricht</th><th>Status</th><th>Aktionen</th></tr></thead>
+            <tbody id="bookings-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="page" id="page-calendar">
+      <div class="page-header">
+        <h2>Kalender sperren</h2>
+        <p>Gesperrte Zeiträume erscheinen rot im Buchungskalender auf der Website.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="section-card">
+          <div class="section-card-header"><h3>Zeitraum sperren</h3></div>
+          <div class="form-grid" style="grid-template-columns:1fr">
+            <div class="fg"><label>Von (Anreise)</label><input type="date" id="block-from"></div>
+            <div class="fg"><label>Bis (Abreise)</label><input type="date" id="block-to"></div>
+            <div class="fg"><label>Beschreibung (optional)</label><input type="text" id="block-label" placeholder="z.B. Familie Müller, Privat, Renovierung..."></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-teal" onclick="addBlockedDate()">Zeitraum sperren</button></div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header"><h3>Gesperrte Zeiträume</h3></div>
+          <div id="blocked-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="page" id="page-reviews">
+      <div class="page-header">
+        <h2>Gästebuch</h2>
+        <p>Neue Bewertungen prüfen und genehmigen bevor sie auf der Website erscheinen.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="section-card">
+          <div class="section-card-header" style="background:var(--orange2)"><h3 style="color:var(--orange)">⏳ Ausstehend</h3></div>
+          <div id="reviews-pending-list"></div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header" style="background:var(--green2)"><h3 style="color:var(--green)">✅ Veröffentlicht</h3></div>
+          <div id="reviews-approved-list"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var token = localStorage.getItem('admin_token');
+var allBookings = [];
+var allReviews = [];
+var allBlocked = [];
+
+// ── AUTH ──
+async function doLogin(){
+  var pw = document.getElementById('pw-input').value;
+  try {
+    var res = await fetch('/api/login', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    var data = await res.json();
+    if(data.token){
+      localStorage.setItem('admin_token',data.token);
+      token = data.token;
+      showApp();
+    } else {
+      document.getElementById('login-err').style.display='block';
+    }
+  } catch(e){ showToast('Server nicht erreichbar','error'); }
+}
+
+function doLogout(){
+  localStorage.removeItem('admin_token');
+  location.reload();
+}
+
+function showApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadAll();
+}
+
+if(token){ showApp(); }
+
+// ── LOAD DATA ──
+async function loadAll(){
+  await Promise.all([loadBookings(), loadReviews(), loadBlocked()]);
+  renderDashboard();
+}
+
+async function loadBookings(){
+  try {
+    var res = await fetch('/api/admin/bookings',{headers:{Authorization:'Bearer '+token}});
+    allBookings = await res.json();
+    renderBookings();
+    updateBadges();
+  } catch(e){}
+}
+
+async function loadReviews(){
+  try {
+    var res = await fetch('/api/admin/reviews',{headers:{Authorization:'Bearer '+token}});
+    allReviews = await res.json();
+    renderReviews();
+    updateBadges();
+  } catch(e){}
+}
+
+async function loadBlocked(){
+  try {
+    var res = await fetch('/api/blocked-dates');
+    allBlocked = await res.json();
+    renderBlocked();
+  } catch(e){}
+}
+
+function updateBadges(){
+  var pendingB = allBookings.filter(b=>b.status==='pending').length;
+  var pendingR = allReviews.filter(r=>!r.approved).length;
+  var bb = document.getElementById('badge-bookings');
+  var br = document.getElementById('badge-reviews');
+  bb.style.display = pendingB>0?'inline':'none'; bb.textContent=pendingB;
+  br.style.display = pendingR>0?'inline':'none'; br.textContent=pendingR;
+}
+
+// ── PAGES ──
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  var items = document.querySelectorAll('.nav-item');
+  var map = {dashboard:0,bookings:1,calendar:2,reviews:3};
+  if(map[page]!==undefined) items[map[page]].classList.add('active');
+}
+
+// ── DASHBOARD ──
+function renderDashboard(){
+  document.getElementById('stat-pending').textContent = allBookings.filter(b=>b.status==='pending').length;
+  document.getElementById('stat-confirmed').textContent = allBookings.filter(b=>b.status==='confirmed').length;
+  document.getElementById('stat-reviews-pending').textContent = allReviews.filter(r=>!r.approved).length;
+  document.getElementById('stat-reviews-total').textContent = allReviews.length;
+
+  // Latest 3 bookings
+  var bHtml = allBookings.slice(0,3).map(b=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.6rem;border-bottom:1px solid var(--b2);flex-wrap:wrap;gap:.5rem">
+      <div><div style="font-weight:500;font-size:.88rem">${b.firstname||''} ${b.lastname||''}</div><div style="font-size:.75rem;color:var(--ink3)">${b.checkin?new Date(b.checkin).toLocaleDateString('de-DE'):''} – ${b.checkout?new Date(b.checkout).toLocaleDateString('de-DE'):''}</div></div>
+      <span class="badge badge-${b.status}">${statusLabel(b.status)}</span>
+    </div>`).join('');
+  document.getElementById('dashboard-bookings-list').innerHTML = bHtml || '<div class="empty-state"><div class="empty-state-icon">📭</div><p>Noch keine Anfragen</p></div>';
+
+  // Latest 3 reviews
+  var rHtml = allReviews.slice(0,3).map(r=>`
+    <div class="review-item">
+      <div class="review-header"><div class="review-avatar">${r.name.substring(0,2).toUpperCase()}</div><div><div class="review-name">${r.name}</div><div class="review-meta">${r.date||''} · ${'★'.repeat(r.rating)}</div></div><span class="badge badge-${r.approved?'approved':'waiting'}">${r.approved?'Veröffentlicht':'Ausstehend'}</span></div>
+      <div class="review-text">${r.text.substring(0,120)}${r.text.length>120?'...':''}</div>
+    </div>`).join('');
+  document.getElementById('dashboard-reviews-list').innerHTML = rHtml || '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>Noch keine Bewertungen</p></div>';
+}
+
+function statusLabel(s){ return {pending:'Ausstehend',confirmed:'Bestätigt',cancelled:'Abgelehnt'}[s]||s; }
+
+// ── BOOKINGS ──
+function renderBookings(){
+  var filter = document.getElementById('booking-filter')?.value || 'all';
+  var list = filter==='all' ? allBookings : allBookings.filter(b=>b.status===filter);
+  var html = list.map(b=>`
+    <tr>
+      <td><div style="font-weight:500">${b.firstname||''} ${b.lastname||''}</div><div style="font-size:.73rem;color:var(--ink3)">${b.email||''}<br>${b.phone||''}</div></td>
+      <td><div style="font-weight:500">${b.checkin?new Date(b.checkin).toLocaleDateString('de-DE'):''}</div><div style="font-size:.73rem;color:var(--ink3)">bis ${b.checkout?new Date(b.checkout).toLocaleDateString('de-DE'):''}</div></td>
+      <td>${b.guests||'–'} Pers.</td>
+      <td style="max-width:180px;font-size:.78rem;color:var(--ink3)">${b.message?b.message.substring(0,80)+(b.message.length>80?'...':''):'–'}</td>
+      <td><span class="badge badge-${b.status}">${statusLabel(b.status)}</span></td>
+      <td><div class="btn-group">
+        ${b.status!=='confirmed'?`<button class="btn btn-green" onclick="updateBooking(${b.id},'confirmed')">✓</button>`:''}
+        ${b.status!=='cancelled'?`<button class="btn btn-red" onclick="updateBooking(${b.id},'cancelled')">✕</button>`:''}
+        <button class="btn btn-ghost" onclick="deleteBooking(${b.id})">🗑</button>
+      </div></td>
+    </tr>`).join('');
+  document.getElementById('bookings-tbody').innerHTML = html || '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--ink3)">Keine Anfragen gefunden</td></tr>';
+}
+
+async function updateBooking(id, status){
+  await fetch('/api/admin/bookings/'+id,{method:'PATCH',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({status})});
+  showToast(status==='confirmed'?'✅ Buchung bestätigt':'❌ Buchung abgelehnt', status==='confirmed'?'success':'error');
+  await loadBookings();
+  renderDashboard();
+}
+
+async function deleteBooking(id){
+  if(!confirm('Buchung wirklich löschen?')) return;
+  await fetch('/api/admin/bookings/'+id,{method:'DELETE',headers:{Authorization:'Bearer '+token}});
+  showToast('Buchung gelöscht');
+  await loadBookings();
+  renderDashboard();
+}
+
+// ── BLOCKED DATES ──
+async function addBlockedDate(){
+  var from = document.getElementById('block-from').value;
+  var to = document.getElementById('block-to').value;
+  var label = document.getElementById('block-label').value;
+  if(!from||!to){ showToast('Bitte beide Daten auswählen','error'); return; }
+  await fetch('/api/admin/blocked-dates',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({date_from:from,date_to:to,label})});
+  showToast('✅ Zeitraum gesperrt','success');
+  document.getElementById('block-from').value='';
+  document.getElementById('block-to').value='';
+  document.getElementById('block-label').value='';
+  await loadBlocked();
+}
+
+async function deleteBlocked(id){
+  await fetch('/api/admin/blocked-dates/'+id,{method:'DELETE',headers:{Authorization:'Bearer '+token}});
+  showToast('Zeitraum freigegeben');
+  await loadBlocked();
+}
+
+function renderBlocked(){
+  var html = allBlocked.map(b=>`
+    <div class="blocked-item">
+      <div><div class="blocked-dates">📅 ${new Date(b.date_from).toLocaleDateString('de-DE')} – ${new Date(b.date_to).toLocaleDateString('de-DE')}</div><div class="blocked-label">${b.label||'Kein Kommentar'}</div></div>
+      <button class="btn btn-red" onclick="deleteBlocked(${b.id})">Freigeben</button>
+    </div>`).join('');
+  document.getElementById('blocked-list').innerHTML = html || '<div class="empty-state"><div class="empty-state-icon">🗓️</div><p>Keine gesperrten Zeiträume</p></div>';
+}
+
+// ── REVIEWS ──
+function renderReviews(){
+  var pending = allReviews.filter(r=>!r.approved);
+  var approved = allReviews.filter(r=>r.approved);
+
+  var pendHtml = pending.map(r=>`
+    <div class="review-item">
+      <div class="review-header"><div class="review-avatar">${r.name.substring(0,2).toUpperCase()}</div><div><div class="review-name">${r.name}</div><div class="review-meta">${r.country||''} · ${r.date||''} · ${'★'.repeat(r.rating)}</div></div></div>
+      <div class="review-text">${r.text}</div>
+      <div class="review-actions"><button class="btn btn-green" onclick="approveReview(${r.id})">✓ Genehmigen</button><button class="btn btn-red" onclick="deleteReview(${r.id})">✕ Löschen</button></div>
+    </div>`).join('');
+  document.getElementById('reviews-pending-list').innerHTML = pendHtml || '<div class="empty-state"><div class="empty-state-icon">✓</div><p>Keine ausstehenden Bewertungen</p></div>';
+
+  var appHtml = approved.map(r=>`
+    <div class="review-item">
+      <div class="review-header"><div class="review-avatar">${r.name.substring(0,2).toUpperCase()}</div><div><div class="review-name">${r.name}</div><div class="review-meta">${r.country||''} · ${r.date||''} · ${'★'.repeat(r.rating)}</div></div></div>
+      <div class="review-text">${r.text}</div>
+      <div class="review-actions"><button class="btn btn-red" onclick="deleteReview(${r.id})">✕ Entfernen</button></div>
+    </div>`).join('');
+  document.getElementById('reviews-approved-list').innerHTML = appHtml || '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>Noch keine veröffentlichten Bewertungen</p></div>';
+}
+
+async function approveReview(id){
+  await fetch('/api/admin/reviews/'+id,{method:'PATCH',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({approved:true})});
+  showToast('✅ Bewertung veröffentlicht','success');
+  await loadReviews();
+  renderDashboard();
+}
+
+async function deleteReview(id){
+  if(!confirm('Bewertung wirklich löschen?')) return;
+  await fetch('/api/admin/reviews/'+id,{method:'DELETE',headers:{Authorization:'Bearer '+token}});
+  showToast('Bewertung gelöscht');
+  await loadReviews();
+  renderDashboard();
+}
+
+// ── TOAST ──
+function showToast(msg, type=''){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type?' '+type:'');
+  setTimeout(()=>t.className='toast',3000);
+}
+</script>
+</body>
+</html>
