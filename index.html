@@ -1,4 +1,4 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -11,8 +11,8 @@ a<!DOCTYPE html>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden}body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}img{display:block;max-width:100%}
-nav{position:fixed;top:0;left:0;right:0;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:all .4s ease;will-change:transform;transform:translateZ(0)}
-nav.scrolled{transform:translateY(-100%);opacity:0;pointer-events:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:opacity .3s ease,visibility .3s ease;will-change:opacity;}
+nav.scrolled{opacity:0;visibility:hidden;pointer-events:none}
 nav.scrolled{background:rgba(29,23,15,.95);backdrop-filter:blur(16px);padding:.85rem 4rem}
 .nav-logo{display:flex;flex-direction:column;line-height:1;text-decoration:none}
 .nav-logo-top{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:#fff;letter-spacing:.18em}
