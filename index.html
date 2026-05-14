@@ -2381,10 +2381,8 @@ function addStaggerDelays() {
 }
 function initAccordions(){
   document.querySelectorAll('.rest-grid .rest-card').forEach(function(card){
-    // Already converted
     if(card.querySelector('.rest-card-header')) return;
 
-    // Extract data from old structure
     var topEl = card.querySelector('.rest-card-top');
     var imgEl = topEl ? topEl.querySelector('img') : null;
     var distEl = topEl ? topEl.querySelector('.rest-dist') : null;
@@ -2392,69 +2390,61 @@ function initAccordions(){
     var bodyEl = card.querySelector('.rest-body');
     var nameEl = bodyEl ? bodyEl.querySelector('.rest-name') : null;
     var catEl = bodyEl ? bodyEl.querySelector('.rest-cat') : null;
+    var tagsEl = bodyEl ? bodyEl.querySelector('.rest-tags') : null;
+    var descEl = bodyEl ? bodyEl.querySelector('.rest-desc') : null;
+    var metaEl = bodyEl ? bodyEl.querySelector('.rest-meta') : null;
+    var specialEl = bodyEl ? bodyEl.querySelector('.rest-special') : null;
 
     var imgSrc = imgEl ? imgEl.src : '';
     var imgAlt = imgEl ? imgEl.alt : '';
     var dist = distEl ? distEl.textContent.trim() : '';
-    var stars = starsEl ? starsEl.innerHTML : '';
+    var starsHTML = starsEl ? starsEl.innerHTML : '';
     var name = nameEl ? nameEl.textContent.trim() : '';
     var cat = catEl ? catEl.textContent.trim() : '';
-    var bodyHTML = bodyEl ? bodyEl.innerHTML : '';
-
-    // Get onclick from card
+    var tagsHTML = tagsEl ? tagsEl.outerHTML : '';
+    var desc = descEl ? descEl.textContent.trim() : '';
+    var metaHTML = metaEl ? metaEl.outerHTML : '';
+    var specialHTML = specialEl ? specialEl.outerHTML : '';
     var onclickAttr = card.getAttribute('onclick') || '';
+    var url = '';
+    var m = onclickAttr.match(/window\.open\('([^']+)'/);
+    if(m) url = m[1];
 
-    // Build new accordion structure
-    var header = document.createElement('div');
-    header.className = 'rest-card-header';
-    header.innerHTML =
-      '<div class="rest-card-header-img"><img src="'+imgSrc+'" alt="'+imgAlt+'"></div>'+
-      '<div class="rest-card-header-info">'+
-        '<div class="rest-card-header-name">'+name+'</div>'+
-        '<div class="rest-card-header-meta">'+
-          '<span class="rest-card-header-stars">'+stars+'</span>'+
-          '<span class="rest-card-header-dist">'+dist+'</span>'+
-          '<span class="rest-card-header-cat">'+cat+'</span>'+
-        '</div>'+
-      '</div>'+
-      '<div class="rest-card-chevron">▾</div>';
+    // Build accordion
+    card.innerHTML =
+      '<div class="rest-card-header">'
+      + '<div class="rest-card-header-img"><img src="'+imgSrc+'" alt="'+imgAlt+'" loading="lazy"></div>'
+      + '<div class="rest-card-header-info">'
+      +   '<div class="rest-card-header-name">'+name+'</div>'
+      +   '<div class="rest-card-header-meta">'
+      +     '<span class="rest-card-header-stars">'+starsHTML+'</span>'
+      +     '<span class="rest-card-header-dist">'+dist+'</span>'
+      +     '<span class="rest-card-header-cat">'+cat+'</span>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="rest-card-chevron">▾</div>'
+      + '</div>'
+      + '<div class="rest-card-body">'
+      +   '<div class="rest-card-body-inner">'
+      +     '<div class="rest-card-body-img"><img src="'+imgSrc+'" alt="'+imgAlt+'" loading="lazy"></div>'
+      +     '<div class="rest-card-body-content">'
+      +       tagsHTML
+      +       '<p class="rest-desc">'+desc+'</p>'
+      +       metaHTML
+      +       (url ? '<div class="rest-meta-row" style="margin-top:.5rem"><span class="rm-ic">🌐</span><a href="'+url+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</a></div>' : '')
+      +       specialHTML
+      +     '</div>'
+      +   '</div>'
+      + '</div>';
 
-    var body = document.createElement('div');
-    body.className = 'rest-card-body';
-    body.innerHTML =
-      '<div class="rest-card-body-inner">'+
-        '<div class="rest-card-body-img"><img src="'+imgSrc+'" alt="'+imgAlt+'"></div>'+
-        '<div class="rest-card-body-content">'+bodyHTML+'</div>'+
-      '</div>';
-
-    // Clear card and rebuild
-    card.innerHTML = '';
-    card.appendChild(header);
-    card.appendChild(body);
     card.style.cursor = 'pointer';
     card.removeAttribute('onclick');
 
-    // Toggle open/close
+    var header = card.querySelector('.rest-card-header');
     header.addEventListener('click', function(e){
-      // If clicking a link inside, don't toggle
       if(e.target.tagName === 'A') return;
-      var isOpen = card.classList.contains('open');
-      card.classList.toggle('open', !isOpen);
+      card.classList.toggle('open');
     });
-
-    // External link on "Auf Google Maps" or map icon click goes to URL
-    if(onclickAttr){
-      var match = onclickAttr.match(/window\.open\('([^']+)'/);
-      if(match){
-        var url = match[1];
-        // Add map link inside body
-        var mapRow = document.createElement('div');
-        mapRow.className = 'rest-meta-row';
-        mapRow.style.marginTop = '.5rem';
-        mapRow.innerHTML = '<span class="rm-ic">🌐</span><a href="'+url+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</a>';
-        body.querySelector('.rest-card-body-content').appendChild(mapRow);
-      }
-    }
   });
 }
 
