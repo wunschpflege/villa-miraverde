@@ -9,9 +9,9 @@
 <style>
 :root{--b0:#FDFAF5;--b1:#F5F0E8;--b2:#EDE5D8;--b3:#D9CEBC;--b4:#C2B59E;--ink:#1E1812;--ink2:#3A3028;--ink3:#6B5F50;--teal:#2A6B6B;--teal2:#1F5252;--teal3:#E0EEEE;--gold:#B8924A;--gold2:#96773A;--gold3:#FBF3E4;--r:6px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden}body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}img{display:block;max-width:100%}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:all .35s ease}
+nav{position:fixed;top:0;left:0;right:0;z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:all .35s ease;will-change:transform;transform:translateZ(0)}
 nav.scrolled{background:rgba(29,23,15,.95);backdrop-filter:blur(16px);padding:.85rem 4rem}
 .nav-logo{display:flex;flex-direction:column;line-height:1;text-decoration:none}
 .nav-logo-top{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;color:#fff;letter-spacing:.18em}
