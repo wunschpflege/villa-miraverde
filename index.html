@@ -394,9 +394,28 @@ footer{background:#0E0C08;padding:3rem 4rem}
 .nav-dropdown-wrap{position:relative}
 .nav-dropdown-trigger{color:rgba(255,255,255,.75);text-decoration:none;font-size:.73rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color .2s;white-space:nowrap}
 .nav-dropdown-trigger:hover{color:var(--gold)}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);background:rgba(253,250,245,.98);backdrop-filter:blur(16px);border:1px solid var(--b3);border-radius:10px;min-width:210px;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:2000;box-shadow:0 12px 40px rgba(30,24,18,.12)}
-.nav-dropdown-wrap:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
-.nav-dropdown-menu a{display:flex;align-items:center;gap:.7rem;padding:.78rem 1.2rem;font-size:.78rem;color:var(--ink2);text-decoration:none;letter-spacing:.04em;border-bottom:1px solid var(--b2);transition:background .15s,color .15s;font-family:'DM Sans',sans-serif;text-transform:none}
+/* Bridge gap so hover doesn't break */
+.nav-dropdown-wrap::after{content:'';position:absolute;top:100%;left:0;right:0;height:16px}
+.nav-dropdown-menu{
+  position:absolute;top:calc(100% + 16px);left:50%;
+  transform:translateX(-50%) translateY(-6px);
+  background:rgba(253,250,245,.99);backdrop-filter:blur(16px);
+  border:1px solid var(--b3);border-radius:10px;
+  min-width:210px;overflow:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;
+  z-index:2000;box-shadow:0 12px 40px rgba(30,24,18,.12);
+}
+.nav-dropdown-wrap:hover .nav-dropdown-menu{
+  opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a{
+  display:flex;align-items:center;gap:.7rem;padding:.78rem 1.2rem;
+  font-size:.78rem;color:var(--ink2);text-decoration:none;
+  letter-spacing:.04em;border-bottom:1px solid var(--b2);
+  transition:background .15s,color .15s;
+  font-family:'DM Sans',sans-serif;text-transform:none;
+}
 .nav-dropdown-menu a:last-child{border-bottom:none}
 .nav-dropdown-menu a:hover{background:var(--teal3);color:var(--teal)}
 
@@ -455,7 +474,18 @@ footer{background:var(--b2);padding:3rem 4rem}
 .ft-links a{color:var(--ink3)}.ft-links a:hover{color:var(--teal)}
 .ft-copy{color:var(--ink3)}
 
-/* LANGUAGE SWITCHER */
+/* MOBILE HAMBURGER */
+.mob-menu-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.4rem;margin-left:.5rem}
+.mob-menu-btn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.mob-menu-open .mob-menu-btn span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.mob-menu-open .mob-menu-btn span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mob-menu-open .mob-menu-btn span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mob-nav-overlay{display:none;position:fixed;inset:0;top:60px;z-index:998;background:rgba(253,250,245,.98);backdrop-filter:blur(20px);flex-direction:column;padding:1.5rem 1.6rem;gap:.1rem;overflow-y:auto}
+.mob-nav-overlay.open{display:flex}
+.mob-nav-overlay a{padding:.9rem 0;font-size:1rem;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--b2);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:.8rem;transition:color .2s}
+.mob-nav-overlay a:hover{color:var(--teal)}
+.mob-section-label{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-top:1.2rem;margin-bottom:.2rem;font-family:'DM Sans',sans-serif}
+@media(max-width:767px){.mob-menu-btn{display:flex}}
 .lang-switcher{position:relative;margin-left:.5rem}
 .lang-btn{
   display:flex;align-items:center;gap:.5rem;
@@ -487,43 +517,84 @@ footer{background:var(--b2);padding:3rem 4rem}
 .lang-option .flag{font-size:1.2rem;line-height:1;flex-shrink:0}
 .lang-option .lang-name{font-weight:400}
 .lang-option .lang-native{font-size:.68rem;color:rgba(255,255,255,.38);margin-left:auto}
-@media(max-width:960px){.lang-switcher{display:none}}
+/* ══════════════════════════
+   RESPONSIVE
+   ══════════════════════════ */
+
+/* TABLET (768–1100px) */
 @media(max-width:1100px){
   nav,nav.scrolled{padding-left:2rem;padding-right:2rem}
-  .nav-links li:nth-child(n+5){display:none}
-  .viewer-wrap{grid-template-columns:1fr}
-  .am-featured{grid-template-columns:1fr}
-  .am-grid{grid-template-columns:1fr 1fr}
-  .am-promise{grid-template-columns:1fr}
+  .nav-links li:nth-child(n+4){display:none}
+  .nav-links li.nav-dropdown-wrap{display:flex}
+  .lang-switcher{display:flex}
+  section{padding:6rem 2.5rem}
+  #highlights,#amenities,#restaurants,#aktivitaeten,#sehenswuerdigkeiten,#einkaufen{padding:6rem 2.5rem!important}
+  .viewer-wrap,.book-wrap,.loc-wrap,.contact-wrap{grid-template-columns:1fr;gap:3rem}
+  .rest-intro{grid-template-columns:1fr;gap:2rem}
+  .am-featured{grid-template-columns:1fr 1fr}
+  .am-grid{grid-template-columns:repeat(3,1fr)}
+  .am-promise{grid-template-columns:repeat(3,1fr)}
+  .gal-grid{grid-template-rows:220px 220px}
 }
-@media(max-width:900px){
-  nav,nav.scrolled{padding-left:1.6rem;padding-right:1.6rem}
-  .nav-links{display:none}
-  section{padding:5rem 1.6rem}
-  #highlights,#amenities,#restaurants,#aktivitaeten,#sehenswuerdigkeiten,#einkaufen{padding:5rem 1.6rem!important}
-  .hero-content{padding:0 1.6rem 4.5rem}
+
+/* MOBILE (max 767px) */
+@media(max-width:767px){
+  nav,nav.scrolled{padding:.9rem 1.4rem}
+  .nav-links{display:none!important}
+  .lang-switcher{display:flex}
+  .nav-logo-top{font-size:1.2rem}
+  .hero-content{padding:0 1.4rem 5rem}
+  .hero-h1{font-size:clamp(2.4rem,10vw,3.5rem)}
+  .hero-tagline{font-size:.88rem}
+  .hero-btns{flex-direction:column;gap:.7rem}
+  .btn-solid,.btn-ghost{width:100%;text-align:center}
   .hero-pills{display:none}
   .scroll-cue{display:none}
   .qbar-inner{flex-direction:column}
-  .qf{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .qf{border-right:none;border-bottom:1px solid var(--b3);padding:.9rem 1.4rem}
+  .qbar-btn{padding:1rem;text-align:center}
   .hl-grid{grid-template-columns:1fr 1fr}
-  .gal-head{padding:0 1.6rem}
+  .hl-card{padding:1.6rem 1.2rem}
+  .gal-head{padding:0 1.4rem}
   .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .gi{grid-column:auto!important;grid-row:auto!important;height:200px}
-  .rest-grid{grid-template-columns:repeat(2,1fr)}
-  .rest-intro,.book-wrap,.loc-wrap,.contact-wrap{grid-template-columns:1fr}
-  .host-wrap{grid-template-columns:1fr;text-align:center}
-  .host-avatar{margin:0 auto}
-  .host-badges{justify-content:center}
-  .frow{grid-template-columns:1fr}
+  .gi{grid-column:auto!important;grid-row:auto!important;height:160px}
+  section{padding:4rem 1.4rem}
+  #highlights,#amenities,#restaurants,#aktivitaeten,#sehenswuerdigkeiten,#einkaufen{padding:4rem 1.4rem!important}
+  .viewer-wrap,.book-wrap,.loc-wrap,.contact-wrap{grid-template-columns:1fr;gap:2rem}
+  .rest-intro{grid-template-columns:1fr;gap:1.5rem}
+  #c3d{height:280px}
+  .am-header{flex-direction:column;margin-bottom:2.5rem}
+  .am-header-right{text-align:left}
   .am-featured{grid-template-columns:1fr}
+  .am-feat-side{flex-direction:row;gap:2px}
   .am-grid{grid-template-columns:1fr 1fr}
   .am-promise{grid-template-columns:1fr}
+  .am-promise-num{font-size:2.2rem}
+  .book-form{padding:1.6rem 1.4rem}
+  .frow{grid-template-columns:1fr}
+  .map-box iframe{height:280px}
+  .host-wrap{grid-template-columns:1fr;text-align:center;gap:2rem}
+  .host-avatar{margin:0 auto;width:120px;height:120px;font-size:2rem}
+  .host-badges{justify-content:center}
+  .cf-wrap{padding:1.6rem 1.4rem}
+  footer{padding:2rem 1.4rem}
+  .ft-inner{flex-direction:column;align-items:flex-start;gap:1rem}
+  .ft-links{flex-wrap:wrap;gap:.8rem}
+  .rf-btn{font-size:.68rem;padding:.38rem .85rem}
+  .rest-card-header{padding:.8rem 1rem;gap:.8rem}
+  .rest-card-header-img{width:42px;height:42px}
+  .rest-card-header-name{font-size:1rem}
+  .lang-btn{padding:.3rem .7rem;font-size:.68rem}
 }
-@media(max-width:520px){
-  .rest-grid{grid-template-columns:1fr}
+
+/* SMALL PHONES (max 400px) */
+@media(max-width:400px){
   .hl-grid{grid-template-columns:1fr}
   .am-grid{grid-template-columns:1fr}
+  .am-feat-side{flex-direction:column}
+  .hero-h1{font-size:2.4rem}
+  .gal-grid{grid-template-columns:1fr}
+  .gi{height:200px}
 }
 </style>
 </head>
@@ -566,7 +637,27 @@ footer{background:var(--b2);padding:3rem 4rem}
       <div class="lang-option" onclick="setLang('ru')"><span class="flag">🇷🇺</span><span class="lang-name">Русский</span><span class="lang-native">RU</span></div>
     </div>
   </div>
+  <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobMenu()" aria-label="Menü" style="display:none">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mob-nav-overlay" id="mob-overlay">
+  <span class="mob-section-label">Navigation</span>
+  <a href="#viewer" onclick="closeMobMenu()">🏠 3D Tour</a>
+  <a href="#gallery" onclick="closeMobMenu()">📸 Galerie</a>
+  <a href="#amenities" onclick="closeMobMenu()">✨ Ausstattung</a>
+  <span class="mob-section-label">In der Nähe</span>
+  <a href="#restaurants" onclick="closeMobMenu()">🍽️ Restaurants</a>
+  <a href="#aktivitaeten" onclick="closeMobMenu()">🏄 Aktivitäten</a>
+  <a href="#sehenswuerdigkeiten" onclick="closeMobMenu()">🏖️ Strände & Natur</a>
+  <a href="#einkaufen" onclick="closeMobMenu()">🛒 Einkaufen</a>
+  <span class="mob-section-label">Mehr</span>
+  <a href="#location" onclick="closeMobMenu()">📍 Lage</a>
+  <a href="#host" onclick="closeMobMenu()">👩‍👧 Gastgeber</a>
+  <a href="#booking" onclick="closeMobMenu()" style="color:var(--teal);font-weight:500">📅 Jetzt buchen</a>
+</div>
 
 <section id="hero">
   <div class="hero-bg"></div><div class="hero-veil"></div>
@@ -1246,13 +1337,30 @@ footer{background:var(--b2);padding:3rem 4rem}
     </div>
     <div class="rest-grid" id="seh-grid">
 
+      <div class="rest-card" data-scat="strand" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJX8n6v0QHnhIRZQM57FiJ8BI','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?w=500&q=75" alt="Cala de la Fustera"><span class="rest-dist">📍 8 km · 10 Min.</span><span class="rest-stars">★ 4.5 <span>1.397 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Strand · Sandbucht · Benissa</div>
+          <div class="rest-name">Cala de la Fustera</div>
+          <div class="rest-tags"><span class="rest-tag">Sandstrand</span><span class="rest-tag">Kayak-Verleih</span><span class="rest-tag">Strandbar</span></div>
+          <p class="rest-desc">Wunderschöner Sandstrand mit kristallklarem Wasser. Kayak-Verleih, eine gemütliche Strandbar und ein Spielplatz für Kinder direkt am Strand. Idealer Ausgangspunkt für den Küstenwanderweg nach Calpe.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965732225" onclick="event.stopPropagation()">+34 965 73 22 25</a></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Carrer del Navegant Josep Ribes · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Start des Küstenwanderwegs Richtung Calpe – traumhafte Aussichten</div>
+        </div>
+      </div>
+
       <div class="rest-card" data-scat="strand" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Cala+Advocat+Benissa','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?w=500&q=75" alt="Cala Advocat"><span class="rest-dist">📍 8 km · 10 Min.</span><span class="rest-stars">★ 4.5 <span>1.500 Bewertungen</span></span></div>
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=75" alt="Cala Advocat"><span class="rest-dist">📍 8 km · 10 Min.</span><span class="rest-stars">★ 4.5 <span>1.500 Bewertungen</span></span></div>
         <div class="rest-body">
           <div class="rest-cat">Strand · Naturbucht · Benissa</div>
           <div class="rest-name">Cala Advocat</div>
-          <div class="rest-tags"><span class="rest-tag">Kristallklares Wasser</span><span class="rest-tag">Schnorcheln</span></div>
-          <p class="rest-desc">Eine der schönsten Naturbuchten an der Costa Blanca – türkisblaues Wasser, malerische Felsen und Blick auf den Peñón de Ifach. Ideal für Familien und Schnorchler.</p>
+          <div class="rest-tags"><span class="rest-tag">Kristallklares Wasser</span><span class="rest-tag">Schnorcheln</span><span class="rest-tag">Natürlich</span></div>
+          <p class="rest-desc">Eine der schönsten Naturbuchten der Costa Blanca – türkisblaues Wasser, malerische Felsen und Blick auf den Peñón de Ifach. Ideal für Familien und Schnorchler, sehr ruhig.</p>
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. del Gavià, 17 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
@@ -1261,83 +1369,115 @@ footer{background:var(--b2);padding:3rem 4rem}
         </div>
       </div>
 
-      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Passeig+Ecologic+Benissa','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=500&q=75" alt="Küstenweg"><span class="rest-dist">📍 6 km · 8 Min.</span><span class="rest-stars">★ 4.7 <span>1.698 Bewertungen</span></span></div>
+      <div class="rest-card" data-scat="strand" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJ12N_36QHnhIRATUw5reDFj4','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=500&q=75" alt="Cala l'Andragó"><span class="rest-dist">📍 10 km · 12 Min. · CV-746</span><span class="rest-stars">★ 4.5 <span>492 Bewertungen</span></span></div>
         <div class="rest-body">
-          <div class="rest-cat">Wandern · Küstenpfad · Benissa</div>
-          <div class="rest-name">Passeig Ecològic de Benissa</div>
-          <div class="rest-tags"><span class="rest-tag">Küstenwanderweg</span><span class="rest-tag">Panoramaaussicht</span></div>
-          <p class="rest-desc">Spektakulärer Küstenwanderweg zwischen Cala Pinets und Cala Advocat. Atemberaubende Meerblicke, Ruhebänke, Strandrestaurant. Für alle Fitnesslevel geeignet.</p>
+          <div class="rest-cat">Felsbucht · Schnorcheln · CV-746</div>
+          <div class="rest-name">Cala l'Andragó</div>
+          <div class="rest-tags"><span class="rest-tag">Beste Schnorchelbucht</span><span class="rest-tag">Felsstrand</span><span class="rest-tag">Strandbar</span></div>
+          <p class="rest-desc">Eine der besten Schnorchelbuchten der Costa Blanca! Felsstrand mit glasklarem Wasser, riesige Fischschwärme, kein Jellyfish. Direkt an der CV-746 mit Strandbar und Sonnenuntergangs-Atmosphäre.</p>
           <div class="rest-meta">
-            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965732225" onclick="event.stopPropagation()">+34 965 73 22 25</a></div>
-            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. de la Marina, 307 · Benissa</span></div>
-            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich 24h · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJP-tHyuH9nRIRnbJJXKmA830','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=500&q=75" alt="Penyal d'Ifac"><span class="rest-dist">📍 18 km · 20 Min.</span><span class="rest-stars">★ 4.6 <span>11.559 Bewertungen</span></span></div>
-        <div class="rest-body">
-          <div class="rest-cat">Naturpark · Wandern · Calpe</div>
-          <div class="rest-name">Penyal d'Ifac Naturpark</div>
-          <div class="rest-tags"><span class="rest-tag">Wahrzeichen</span><span class="rest-tag">300m Felsen</span><span class="rest-tag">Pflichtausflug</span></div>
-          <p class="rest-desc">Das Wahrzeichen der Costa Blanca – 300 Meter hoher Felsen direkt am Meer. Der Aufstieg belohnt mit 360°-Panorama über die gesamte Küste. Unbedingt früh starten!</p>
-          <div class="rest-meta">
-            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34679195912" onclick="event.stopPropagation()">+34 679 19 59 12</a></div>
-            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Isla de Formentera · Calpe</span></div>
-            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Fr 8:30–14:30 · Sa–So 9:00–14:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
-          </div>
-          <div class="rest-special">✦ Tipp: Online-Reservierung empfohlen – begrenzte Plätze täglich</div>
-        </div>
-      </div>
-
-      <div class="rest-card" data-scat="moraira" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJo53F5M4HnhIRBrthQxDwPUA','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=500&q=75" alt="Castillo Moraira"><span class="rest-dist">📍 12 km · 15 Min.</span><span class="rest-stars">★ 4.4 <span>1.409 Bewertungen</span></span></div>
-        <div class="rest-body">
-          <div class="rest-cat">Geschichte · Kastell · Moraira</div>
-          <div class="rest-name">Castillo de Moraira</div>
-          <div class="rest-tags"><span class="rest-tag">Kostenfrei</span><span class="rest-tag">Piratengeschichte</span></div>
-          <p class="rest-desc">Das ikonische Kastell aus dem 18. Jahrhundert im Herzen von Moraira. Kleines Museum über die Piratengeschichte der Region, herrliche Aussicht auf den Hafen. Eintritt kostenlos.</p>
-          <div class="rest-meta">
-            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965740158" onclick="event.stopPropagation()">+34 965 74 01 58</a></div>
-            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Castillo, s/n · Moraira</span></div>
-            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Fr 10:30–13:00 · Sa–So 10:30–13:30 · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rest-card" data-scat="moraira natur" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Torre+del+Cap+d+Or+Moraira','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=75" alt="Torre Cap d'Or"><span class="rest-dist">📍 14 km · 17 Min.</span><span class="rest-stars">★ 4.6 <span>515 Bewertungen</span></span></div>
-        <div class="rest-body">
-          <div class="rest-cat">Wandern · Aussichtspunkt · Moraira</div>
-          <div class="rest-name">Torre del Cap d'Or</div>
-          <div class="rest-tags"><span class="rest-tag">360° Panorama</span><span class="rest-tag">Leichte Wanderung</span></div>
-          <p class="rest-desc">Leichter Küstenhike zur mittelalterlichen Wachturm-Ruine mit 360°-Aussicht bis nach Benidorm. Anfängerfreundlich, ca. 2 Stunden Rundweg, atemberaubende Ausblicke auf das Meer.</p>
-          <div class="rest-meta">
-            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Cap d'Or · Moraira</span></div>
-            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich 24h · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
-          </div>
-          <div class="rest-special">✦ Tipp: Früh morgens starten – bestes Licht und weniger Hitze</div>
-        </div>
-      </div>
-
-      <div class="rest-card" data-scat="strand moraira" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Cala+Les+Bassetes+Benissa','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=500&q=75" alt="Cala Les Bassetes"><span class="rest-dist">📍 9 km · 11 Min.</span><span class="rest-stars">★ 4.5 <span>1.355 Bewertungen</span></span></div>
-        <div class="rest-body">
-          <div class="rest-cat">Strand · Tauchen · Benissa</div>
-          <div class="rest-name">Cala Les Bassetes</div>
-          <div class="rest-tags"><span class="rest-tag">Tauchzentrum</span><span class="rest-tag">SUP-Verleih</span><span class="rest-tag">Strandrestaurant</span></div>
-          <p class="rest-desc">Wunderschöne Bucht mit PADI-Tauchzentrum, SUP-Verleih und einem der besten Strandrestaurants der Region. Perfekt für aktive Tage mit Blick auf den Peñón de Ifach.</p>
-          <div class="rest-meta">
-            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. de la Marina, 333 · Benissa</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34966623601" onclick="event.stopPropagation()">+34 966 62 36 01</a></div>
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe, 170 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
             <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
           </div>
+          <div class="rest-special">✦ Tipp: Wasserschuhe mitbringen – kein Sand, dafür der beste Schnorchel-Spot!</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand moraira" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJzXfg-tYHnhIR-y-RGTqCaWg','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=500&q=75" alt="Cala el Portet"><span class="rest-dist">📍 12 km · 15 Min. · Moraira</span><span class="rest-stars">★ 4.6 <span>3.115 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Sandstrand · Moraira · Hafen</div>
+          <div class="rest-name">Cala el Portet</div>
+          <div class="rest-tags"><span class="rest-tag">Familienfreundlich</span><span class="rest-tag">SUP & Kayak</span><span class="rest-tag">Restaurants am Strand</span></div>
+          <p class="rest-desc">Der schönste Strand Morairas – kleiner Sandstrand mit ruhigem, kristallklarem Wasser. Perfekt zum Schwimmen mit Kindern, SUP und Schnorcheln. Herrliche Restaurants direkt am Wasser.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Cala del Portet · Moraira</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Früh morgens kommen – im Sommer schnell voll</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand moraira" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJD98MgJ8HnhIRyrAOH8oMh8g','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=500&q=75" alt="Cala Punta Estrella"><span class="rest-dist">📍 11 km · 13 Min.</span><span class="rest-stars">★ 4.6 <span>359 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Geheimtipp · Felsbucht · Teulada</div>
+          <div class="rest-name">Cala Punta Estrella</div>
+          <div class="rest-tags"><span class="rest-tag">Geheimtipp</span><span class="rest-tag">Schnorcheln</span><span class="rest-tag">Ruhig</span></div>
+          <p class="rest-desc">Versteckte Felsbucht mit glasklarem Wasser – wenig bekannt, deshalb ruhig und ursprünglich. Ideal zum Schnorcheln und für romantische Sonnenuntergänge. Wasserschuhe empfohlen.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Cabo de Palos, 7 · Teulada</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Wenig bekannt – unter der Woche fast immer leer</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJU_zFvpQOnhIR_KXuz2Tp1F8','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1586861203927-800a5acdcc4d?w=500&q=75" alt="Cala Blanca Jávea"><span class="rest-dist">📍 28 km · 28 Min. · Jávea</span><span class="rest-stars">★ 4.5 <span>2.249 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Sandstrand · Jávea · Promenade</div>
+          <div class="rest-name">Cala Blanca – Jávea</div>
+          <div class="rest-tags"><span class="rest-tag">Strandpromenade</span><span class="rest-tag">Restaurants</span><span class="rest-tag">Familienfreundlich</span></div>
+          <p class="rest-desc">Wunderschöner Sandstrand mit langer Promenade, Shops und Cafés in Jávea – etwas weiter weg, aber ein perfekter Tagesausflug. Kristallklares Wasser, ruhige Atmosphäre außerhalb der Hochsaison.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Camí de la Caleta · Jávea</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Kombination mit dem Fischerhafen Jávea – tolle Fischrestaurants</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJvUouKOP_nRIRLlLrjriGIDk','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=500&q=75" alt="Playa Calpe"><span class="rest-dist">📍 18 km · 20 Min. · Calpe</span><span class="rest-stars">★ 4.7 <span>2.133 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Langer Sandstrand · Calpe</div>
+          <div class="rest-name">Playa de Calpe</div>
+          <div class="rest-tags"><span class="rest-tag">Langer Sandstrand</span><span class="rest-tag">Ifach-Blick</span><span class="rest-tag">Bars & Shops</span></div>
+          <p class="rest-desc">Langer, wunderschöner Sandstrand mit spektakulärem Blick auf den Penyal d'Ifac. Türkisblaues Wasser, viele Restaurants und Shops in der Nähe. Perfekter Tagesausflug nach Calpe!</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Dinamarca, 14 · Calpe</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Kombination mit Aufstieg auf den Penyal d'Ifac – perfekter Tag</div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJoUh4XxD-nRIRqZ7zyMllixI','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500&q=75" alt="Cala del Morelló"><span class="rest-dist">📍 19 km · 21 Min. · Calpe</span><span class="rest-stars">★ 4.5 <span>620 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Strandpromenade · Calpe · Entspannung</div>
+          <div class="rest-name">Cala del Morelló</div>
+          <div class="rest-tags"><span class="rest-tag">Promenade</span><span class="rest-tag">Sonnenliegen</span><span class="rest-tag">Ruhig</span></div>
+          <p class="rest-desc">Schöner Strand mit Strandpromenade in Calpe, sanfter Sand und klares Wasser. Viele gemütliche Cafés und Restaurants direkt am Meer. Ideal zum Spazieren und Entspannen.</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>P.º Maritimo Playa del Bol · Calpe</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rest-card" data-scat="strand natur" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Cala+del+Moraig+Benitachell','_blank')" style="cursor:pointer">
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?w=500&q=75" alt="Cala del Moraig"><span class="rest-dist">📍 14 km · 17 Min.</span><span class="rest-stars">★ 4.7 <span>4.200 Bewertungen</span></span></div>
+        <div class="rest-body">
+          <div class="rest-cat">Felsenbucht · Tauchen · Benitachell</div>
+          <div class="rest-name">Cala del Moraig</div>
+          <div class="rest-tags"><span class="rest-tag">Meereshöhle</span><span class="rest-tag">Tauchen</span><span class="rest-tag">Spektakulär</span></div>
+          <p class="rest-desc">Eine der spektakulärsten Buchten der ganzen Costa Blanca – mit einer begehbaren Meereshöhle am Ende des Strandes! Kristallklares Wasser, berühmt für Tauchen und Schnorcheln. Absolutes Highlight!</p>
+          <div class="rest-meta">
+            <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Cala del Moraig · Benitachell</span></div>
+            <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+          </div>
+          <div class="rest-special">✦ Tipp: Meereshöhle am Ende des Strandes durchschwimmen – unvergesslich!</div>
         </div>
       </div>
 
@@ -1454,12 +1594,12 @@ footer{background:var(--b2);padding:3rem 4rem}
       <div class="host-info">
         <div class="eyebrow">Ihre Gastgeberinnen</div>
         <h2>Sophie & <em>Lisa</em></h2>
-        <p>Wir sind Sophie Wunsch und Lisa Wunsch-Zöllner – zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.</p>
+        <p>Wir sind Sophie Wunsch und Lisa Wunsch – zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.</p>
         <p>Irgendwann fragten wir uns: Was wäre, wenn wir dieses Gefühl mit anderen teilen könnten? Nicht als Zufall, sondern als bewusste Entscheidung. So entstand der Traum – und aus dem Traum wurde die Villa Miraverde. Ein Haus, das wir von Grund auf nach unseren eigenen Wünschen und Vorstellungen gebaut haben. Jedes Detail, jede Aussicht, jeder Winkel ist so, wie wir ihn uns immer erträumt haben.</p>
         <p>Wir möchten, dass Sie dasselbe erleben, was uns Moraira bedeutet – und wir sind jederzeit persönlich für Sie da.</p>
         <div class="host-badges">
           <span class="hbadge">Sophie Wunsch</span>
-          <span class="hbadge">Lisa Wunsch-Zöllner</span>
+          <span class="hbadge">Lisa Wunsch</span>
           <span class="hbadge">5★ Bewertungen</span>
           <span class="hbadge">Antwortet in &lt; 24h</span>
           <span class="hbadge">Deutsch · English · Español</span>
@@ -1549,12 +1689,12 @@ var translations = {
     season_incl:'Endreinigung inklusive · WLAN inklusive',
     host_eyebrow:'Ihre Gastgeberinnen',
     host_h:'Sophie & Lisa',
-    host_p1:'Wir sind Sophie Wunsch und Lisa Wunsch-Zöllner – zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.',
+    host_p1:'Wir sind Sophie Wunsch und Lisa Wunsch – zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.',
     host_p2:'Irgendwann fragten wir uns: Was wäre, wenn wir dieses Gefühl mit anderen teilen könnten? So entstand der Traum – und aus dem Traum wurde die Villa Miraverde. Ein Haus, das wir von Grund auf nach unseren eigenen Wünschen gebaut haben.',
     host_p3:'Wir möchten, dass Sie dasselbe erleben, was uns Moraira bedeutet – und wir sind jederzeit persönlich für Sie da.',
     contact_eyebrow:'Kontakt', contact_h:'Wir sind für', contact_hi:'Sie da',
     contact_p:'Fragen zur Verfügbarkeit, Anreise oder besonderen Wünschen? Sophie & Lisa antworten persönlich.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   },
   en: {
     nav_tour:'3D Tour', nav_gallery:'Gallery', nav_amenities:'Amenities',
@@ -1582,12 +1722,12 @@ var translations = {
     season_incl:'Final cleaning included · WiFi included',
     host_eyebrow:'Your Hosts',
     host_h:'Sophie & Lisa',
-    host_p1:'We are Sophie Wunsch and Lisa Wunsch-Zöllner – two sisters who have loved Moraira for many years. What began as a childhood memory grew over the years into a deep connection with this coastline, this light, and the very special feeling that only the Costa Blanca can give.',
+    host_p1:'We are Sophie Wunsch and Lisa Wunsch – two sisters who have loved Moraira for many years. What began as a childhood memory grew over the years into a deep connection with this coastline, this light, and the very special feeling that only the Costa Blanca can give.',
     host_p2:'At some point we asked ourselves: what if we could share this feeling with others? That was the dream – and from that dream came Villa Miraverde. A house we built from the ground up, exactly as we had always imagined it.',
     host_p3:'We want you to experience what Moraira means to us – and we are always personally available for you.',
     contact_eyebrow:'Contact', contact_h:'We are here', contact_hi:'for you',
     contact_p:'Questions about availability, arrival or special requests? Sophie & Lisa reply personally.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   },
   fr: {
     nav_tour:'Visite 3D', nav_gallery:'Galerie', nav_amenities:'Équipements',
@@ -1615,12 +1755,12 @@ var translations = {
     season_incl:'Ménage final inclus · WiFi inclus',
     host_eyebrow:'Vos hôtes',
     host_h:'Sophie & Lisa',
-    host_p1:'Nous sommes Sophie Wunsch et Lisa Wunsch-Zöllner – deux sœurs qui aiment Moraira depuis de nombreuses années. Ce qui a commencé comme un souvenir d\'enfance est devenu au fil des années un lien profond avec cette côte, cette lumière et ce sentiment si particulier que seule la Costa Blanca peut offrir.',
+    host_p1:'Nous sommes Sophie Wunsch et Lisa Wunsch – deux sœurs qui aiment Moraira depuis de nombreuses années. Ce qui a commencé comme un souvenir d\'enfance est devenu au fil des années un lien profond avec cette côte, cette lumière et ce sentiment si particulier que seule la Costa Blanca peut offrir.',
     host_p2:'Un jour, nous nous sommes demandé : et si nous pouvions partager ce sentiment avec d\'autres ? C\'est ainsi qu\'est né le rêve – et de ce rêve est née la Villa Miraverde. Une maison que nous avons construite de A à Z selon nos propres désirs.',
     host_p3:'Nous souhaitons que vous viviez ce que Moraira représente pour nous – et nous sommes toujours personnellement disponibles pour vous.',
     contact_eyebrow:'Contact', contact_h:'Nous sommes là', contact_hi:'pour vous',
     contact_p:'Questions sur la disponibilité, l\'arrivée ou des demandes spéciales ? Sophie & Lisa répondent personnellement.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   },
   nl: {
     nav_tour:'3D Tour', nav_gallery:'Galerij', nav_amenities:'Voorzieningen',
@@ -1648,12 +1788,12 @@ var translations = {
     season_incl:'Eindschoonmaak inbegrepen · WiFi inbegrepen',
     host_eyebrow:'Uw gastheren',
     host_h:'Sophie & Lisa',
-    host_p1:'Wij zijn Sophie Wunsch en Lisa Wunsch-Zöllner – twee zussen die al vele jaren van Moraira houden. Wat begon als een jeugdherinnering groeide door de jaren heen uit tot een diepe verbondenheid met deze kust, dit licht en dit bijzondere gevoel dat alleen de Costa Blanca kan geven.',
+    host_p1:'Wij zijn Sophie Wunsch en Lisa Wunsch – twee zussen die al vele jaren van Moraira houden. Wat begon als een jeugdherinnering groeide door de jaren heen uit tot een diepe verbondenheid met deze kust, dit licht en dit bijzondere gevoel dat alleen de Costa Blanca kan geven.',
     host_p2:'Op een gegeven moment vroegen we ons af: wat als we dit gevoel met anderen konden delen? Zo ontstond de droom – en uit die droom werd Villa Miraverde geboren. Een huis dat we van de grond af aan hebben gebouwd precies zoals wij het ons altijd hebben voorgesteld.',
     host_p3:'We willen dat u beleeft wat Moraira voor ons betekent – en we staan altijd persoonlijk voor u klaar.',
     contact_eyebrow:'Contact', contact_h:'Wij staan', contact_hi:'voor u klaar',
     contact_p:'Vragen over beschikbaarheid, aankomst of speciale wensen? Sophie & Lisa antwoorden persoonlijk.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   },
   pl: {
     nav_tour:'Wirtualny Tour', nav_gallery:'Galeria', nav_amenities:'Udogodnienia',
@@ -1681,12 +1821,12 @@ var translations = {
     season_incl:'Sprzątanie końcowe w cenie · WiFi w cenie',
     host_eyebrow:'Wasze gospodynie',
     host_h:'Sophie & Lisa',
-    host_p1:'Jesteśmy Sophie Wunsch i Lisa Wunsch-Zöllner – dwiema siostrami, które kochają Morairę od wielu lat. To, co zaczęło się jako wspomnienie z dzieciństwa, z biegiem lat przerodziło się w głęboką więź z tym wybrzeżem, tym światłem i tym wyjątkowym uczuciem, które daje tylko Costa Blanca.',
+    host_p1:'Jesteśmy Sophie Wunsch i Lisa Wunsch – dwiema siostrami, które kochają Morairę od wielu lat. To, co zaczęło się jako wspomnienie z dzieciństwa, z biegiem lat przerodziło się w głęboką więź z tym wybrzeżem, tym światłem i tym wyjątkowym uczuciem, które daje tylko Costa Blanca.',
     host_p2:'Pewnego dnia zapytałyśmy siebie: co by było, gdybyśmy mogły podzielić się tym uczuciem z innymi? Tak narodziło się marzenie – a z marzenia powstała Villa Miraverde. Dom, który zbudowałyśmy od podstaw dokładnie tak, jak zawsze sobie wyobrażałyśmy.',
     host_p3:'Chcemy, abyście doświadczyli tego, czym Moraira jest dla nas – i zawsze jesteśmy do waszej dyspozycji.',
     contact_eyebrow:'Kontakt', contact_h:'Jesteśmy tu', contact_hi:'dla Ciebie',
     contact_p:'Pytania o dostępność, przyjazd lub specjalne życzenia? Sophie i Lisa odpowiadają osobiście.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   },
   ru: {
     nav_tour:'3D-Тур', nav_gallery:'Галерея', nav_amenities:'Удобства',
@@ -1719,7 +1859,7 @@ var translations = {
     host_p3:'Мы хотим, чтобы вы испытали то, что значит для нас Моραира — и мы всегда лично к вашим услугам.',
     contact_eyebrow:'Контакты', contact_h:'Мы здесь', contact_hi:'для вас',
     contact_p:'Вопросы о наличии, заезде или особые пожелания? Софи и Лиза отвечают лично.',
-    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch-Zöllner · Benissa, Costa Blanca',
+    footer_copy:'© 2025 Villa Miraverde · Sophie Wunsch & Lisa Wunsch · Benissa, Costa Blanca',
   }
 };
 
@@ -1822,6 +1962,19 @@ document.addEventListener('click', function(e) {
     document.getElementById('lang-dropdown').classList.remove('open');
   }
 });
+function toggleMobMenu(){
+  var nav=document.getElementById('nav');
+  var overlay=document.getElementById('mob-overlay');
+  var isOpen=overlay.classList.contains('open');
+  overlay.classList.toggle('open',!isOpen);
+  nav.classList.toggle('mob-menu-open',!isOpen);
+  document.body.style.overflow=isOpen?'':'hidden';
+}
+function closeMobMenu(){
+  document.getElementById('mob-overlay').classList.remove('open');
+  document.getElementById('nav').classList.remove('mob-menu-open');
+  document.body.style.overflow='';
+}
 window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>70);});
 // Set German as default on load
 // ── ACCORDION SYSTEM ──
