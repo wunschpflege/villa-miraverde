@@ -251,6 +251,49 @@ footer{background:linear-gradient(to bottom,#0E0C08,#080603);padding:3rem 4rem}
 .am-promise-txt p{font-size:.73rem;color:rgba(253,250,245,.4);line-height:1.55}
 
 /* BOOKING */
+.cal-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:2rem}
+.cal-leg-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--ink3)}
+.cal-leg-dot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.cal-wrap{margin-bottom:1.5rem;border:1.5px solid var(--b3);border-radius:10px;overflow:hidden;background:var(--b0)}
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.2rem;background:var(--teal);color:#fff}
+.cal-nav{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:background .2s;display:flex;align-items:center;justify-content:center;line-height:1}
+.cal-nav:hover{background:rgba(255,255,255,.3)}
+.cal-months{display:flex;gap:2rem}
+.cal-month-label{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.06em;text-align:center}
+.cal-grids{display:grid;grid-template-columns:1fr 1fr;padding:.8rem}
+.cal-grid{padding:.4rem .6rem}
+.cal-grid-title{font-size:.68rem;font-weight:500;color:var(--ink2);letter-spacing:.12em;text-transform:uppercase;text-align:center;margin-bottom:.5rem}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:3px}
+.cal-dow span{font-size:.58rem;color:var(--b4);text-align:center;padding:.15rem 0;letter-spacing:.04em}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.73rem;border-radius:5px;cursor:pointer;border:1.5px solid transparent;transition:all .15s;color:var(--ink2);background:var(--b0);position:relative;-webkit-user-select:none;user-select:none;min-width:30px;min-height:30px;-webkit-tap-highlight-color:transparent}
+.cal-day:hover:not(.past):not(.booked):not(.empty){background:var(--teal3);border-color:var(--teal);color:var(--teal)}
+.cal-day.past{color:var(--b4);background:var(--b1);cursor:default}
+.cal-day.booked{background:#fde8e8;border-color:#e8b4b4;color:#c97070;cursor:not-allowed}
+.cal-day.booked::after{content:'✕';position:absolute;font-size:.5rem;opacity:.4}
+.cal-day.selected-start,.cal-day.selected-end{background:var(--teal)!important;color:#fff!important;border-color:var(--teal2)!important;font-weight:600;z-index:1}
+.cal-day.in-range{background:var(--teal3);border-color:rgba(42,107,107,.15);color:var(--teal2)}
+.cal-day.today{border-color:var(--gold);font-weight:600;color:var(--gold2)}
+.cal-day.empty{cursor:default;background:transparent;border:none}
+.cal-selection{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.2rem;background:var(--b1);border-top:1px solid var(--b3);flex-wrap:wrap}
+.cal-sel-item{display:flex;flex-direction:column;gap:.18rem;flex:1;min-width:80px}
+.cal-sel-label{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.cal-sel-val{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);font-weight:400}
+.cal-sel-arrow{color:var(--teal);font-size:1.1rem;flex-shrink:0}
+.cal-sel-nights{background:var(--teal);color:#fff;font-size:.7rem;padding:.28rem .75rem;border-radius:20px;white-space:nowrap;margin-left:auto}
+.cal-reset{background:none;border:1px solid var(--b3);color:var(--ink3);font-family:'DM Sans',sans-serif;font-size:.68rem;padding:.25rem .7rem;border-radius:20px;cursor:pointer;transition:all .2s;margin-left:.5rem}
+.cal-reset:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:600px){
+  .cal-grids{grid-template-columns:1fr}
+  .cal-grid:last-child{display:none}
+  .cal-months .cal-month-label:last-child{display:none}
+  .cal-day{font-size:.8rem;border-radius:4px}
+  .cal-header{padding:.7rem 1rem}
+  .cal-month-label{font-size:.95rem}
+  .cal-selection{gap:.5rem}
+  .cal-sel-val{font-size:.95rem}
+  .cal-sel-nights{font-size:.65rem;padding:.22rem .6rem}
+}
 #booking{padding:8rem 4rem}
 .book-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
 .price-stack{display:flex;flex-direction:column;gap:.9rem;margin-top:2.8rem}
@@ -871,26 +914,60 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="pc hot"><div class="pc-badge">Beliebt</div><div class="pc-season">Zwischensaison · Mai, Jun, Sep, Okt</div><div class="pc-price">€ 620 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 3.990 · min. 5 Nächte</div><div class="pc-inc">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
           <div class="pc"><div class="pc-season">Hochsaison · Juli – August</div><div class="pc-price">€ 980 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 6.500 · min. 7 Nächte</div><div class="pc-inc">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
         </div>
+
+        <!-- CALENDAR LEGEND -->
+        <div class="cal-legend">
+          <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--b0);border:1.5px solid var(--b3)"></div><span>Verfügbar</span></div>
+          <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#e8f4e8;border:1.5px solid #5a9a5a"></div><span>Ausgewählt</span></div>
+          <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#fde8e8;border:1.5px solid #c97070"></div><span>Belegt</span></div>
+          <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--b2)"></div><span>Vergangen</span></div>
+        </div>
       </div>
+
       <div class="book-form">
-        <h3>Anfrage stellen</h3><p>Familie Wunsch antwortet persönlich innerhalb von 24 Stunden.</p>
-        <div class="frow"><div class="fg"><label>Anreise</label><input type="date" id="fi" oninput="calcP()"></div><div class="fg"><label>Abreise</label><input type="date" id="fo" oninput="calcP()"></div></div>
-        <div class="frow"><div class="fg"><label>Vorname</label><input type="text" placeholder="Maria"></div><div class="fg"><label>Nachname</label><input type="text" placeholder="Müller"></div></div>
-        <div class="fg"><label>E-Mail</label><input type="email" placeholder="ihre@email.de"></div>
-        <div class="fg"><label>Telefon</label><input type="tel" placeholder="+49 …"></div>
+        <h3>Verfügbarkeit & Anfrage</h3>
+        <p>Wählen Sie Ihren Zeitraum – Sophie & Lisa antworten innerhalb von 24 Stunden.</p>
+
+        <!-- CALENDAR -->
+        <div class="cal-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="calPrev()">‹</button>
+            <div class="cal-months" id="cal-months"></div>
+            <button class="cal-nav" onclick="calNext()">›</button>
+          </div>
+          <div class="cal-grids" id="cal-grids"></div>
+          <div class="cal-selection" id="cal-selection">
+            <div class="cal-sel-item">
+              <span class="cal-sel-label">Anreise</span>
+              <span class="cal-sel-val" id="cal-from">–</span>
+            </div>
+            <div class="cal-sel-arrow">→</div>
+            <div class="cal-sel-item">
+              <span class="cal-sel-label">Abreise</span>
+              <span class="cal-sel-val" id="cal-to">–</span>
+            </div>
+            <div class="cal-sel-nights" id="cal-nights"></div>
+          </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="frow"><div class="fg"><label>Vorname</label><input type="text" id="b-fname" placeholder="Maria"></div><div class="fg"><label>Nachname</label><input type="text" id="b-lname" placeholder="Müller"></div></div>
+        <div class="fg"><label>E-Mail</label><input type="email" id="b-email" placeholder="ihre@email.de"></div>
+        <div class="fg"><label>Telefon</label><input type="tel" id="b-phone" placeholder="+49 …"></div>
         <div class="frow">
-          <div class="fg"><label>Gäste</label><select id="fg-guests" onchange="calcP()"><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8" selected>8 Personen</option></select></div>
+          <div class="fg"><label>Gäste</label><select id="fg-guests"><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8" selected>8 Personen</option></select></div>
           <div class="fg"><label>Sprache</label><select><option>Deutsch</option><option>English</option><option>Español</option></select></div>
         </div>
-        <div class="fg"><label>Nachricht</label><textarea placeholder="Besondere Wünsche, Fragen…"></textarea></div>
+        <div class="fg"><label>Nachricht</label><textarea id="b-msg" placeholder="Besondere Wünsche, Fragen…"></textarea></div>
+
         <div class="price-calc">
-          <div class="pc-row"><span>Nächte</span><span id="pn">– –</span></div>
+          <div class="pc-row"><span>Zeitraum</span><span id="pn">– –</span></div>
           <div class="pc-row"><span>Mietpreis</span><span id="pr">– –</span></div>
           <div class="pc-row"><span>Endreinigung</span><span>€ 250</span></div>
           <div class="pc-row tot"><span>Gesamtpreis</span><span id="pt">– –</span></div>
         </div>
         <button class="btn-book" onclick="sendBooking()">Verbindliche Anfrage senden →</button>
-        <div class="book-trust">🔒 SSL-verschlüsselt · ✓ Keine Buchungsgebühr · ✓ Direkt bei Familie Wunsch</div>
+        <div class="book-trust">🔒 SSL-verschlüsselt · ✓ Keine Buchungsgebühr · ✓ Direkt bei Sophie & Lisa</div>
       </div>
     </div>
   </div>
@@ -2060,13 +2137,239 @@ function initAccordions(){
 window.addEventListener('DOMContentLoaded', function(){
   setLang('de');
   initAccordions();
+  renderCalendar();
+  updateCalSelection();
 });
 var imgs=document.querySelectorAll('.gi img');
 function openLb(i){document.getElementById('lb').classList.add('open');document.getElementById('lb-img').src=imgs[i].src.replace('w=600','w=1400').replace('w=900','w=1600');}
 function closeLb(){document.getElementById('lb').classList.remove('open');}
 function quickCheck(){var d1=document.getElementById('qi').value,d2=document.getElementById('qo').value;if(!d1||!d2){alert('Bitte Datum auswählen.');return;}document.getElementById('fi').value=d1;document.getElementById('fo').value=d2;calcP();document.getElementById('booking').scrollIntoView({behavior:'smooth'});}
-function calcP(){var d1=new Date(document.getElementById('fi').value),d2=new Date(document.getElementById('fo').value);if(!d1||!d2||isNaN(d1)||isNaN(d2)||d2<=d1){document.getElementById('pn').textContent='--';document.getElementById('pr').textContent='--';document.getElementById('pt').textContent='--';return;}var n=Math.round((d2-d1)/86400000),m=d1.getMonth(),r=(m>=6&&m<=7)?980:(m>=4&&m<=5||m===8||m===9)?620:380,rent=n*r,total=rent+250;document.getElementById('pn').textContent=n+' Naechte x EUR '+r;document.getElementById('pr').textContent='EUR '+rent.toLocaleString('de-DE');document.getElementById('pt').textContent='EUR '+total.toLocaleString('de-DE');}
-function sendBooking(){var d1=document.getElementById('fi').value,d2=document.getElementById('fo').value;if(!d1||!d2){alert('Bitte Datum waehlen.');return;}document.getElementById('mic').textContent='checkmark';document.getElementById('mtitle').textContent='Anfrage gesendet!';document.getElementById('mtext').textContent='Vielen Dank! Familie Wunsch bestaetigt die Verfuegbarkeit und meldet sich persoenlich innerhalb von 24 Stunden.';document.getElementById('modal').classList.add('open');}
+// ── BOOKING CALENDAR ──
+var calState = {
+  offset: 0,       // months offset from today
+  selStart: null,  // Date object
+  selEnd: null,    // Date object
+  selecting: false
+};
+
+// ── BLOCKED DATES – add your real booked periods here ──
+var bookedRanges = [
+  { from: '2025-07-01', to: '2025-07-14' },
+  { from: '2025-07-20', to: '2025-07-31' },
+  { from: '2025-08-05', to: '2025-08-19' },
+  { from: '2025-09-10', to: '2025-09-17' },
+];
+
+var months_de = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var months_en = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var dow_de = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+function isBooked(date) {
+  var d = date.getTime();
+  for (var i = 0; i < bookedRanges.length; i++) {
+    var f = new Date(bookedRanges[i].from).getTime();
+    var t = new Date(bookedRanges[i].to).getTime();
+    if (d >= f && d <= t) return true;
+  }
+  return false;
+}
+
+function isRangeBlocked(start, end) {
+  var d = new Date(start);
+  while (d <= end) {
+    if (isBooked(d)) return true;
+    d.setDate(d.getDate() + 1);
+  }
+  return false;
+}
+
+function fmtDate(d) {
+  if (!d) return '–';
+  return d.getDate() + '. ' + months_de[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function fmtISO(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function getRate(date) {
+  var m = date.getMonth();
+  if (m === 6 || m === 7) return 980;
+  if (m === 4 || m === 5 || m === 8 || m === 9) return 620;
+  return 380;
+}
+
+function calcCalPrice() {
+  if (!calState.selStart || !calState.selEnd) {
+    document.getElementById('pn').textContent = '– –';
+    document.getElementById('pr').textContent = '– –';
+    document.getElementById('pt').textContent = '– –';
+    return;
+  }
+  var nights = Math.round((calState.selEnd - calState.selStart) / 86400000);
+  var total = 0;
+  var d = new Date(calState.selStart);
+  for (var i = 0; i < nights; i++) {
+    total += getRate(d);
+    d.setDate(d.getDate() + 1);
+  }
+  var grand = total + 250;
+  document.getElementById('pn').textContent = nights + ' Nächte';
+  document.getElementById('pr').textContent = '€ ' + total.toLocaleString('de-DE');
+  document.getElementById('pt').textContent = '€ ' + grand.toLocaleString('de-DE');
+}
+
+function renderCalendar() {
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var grids = document.getElementById('cal-grids');
+  var monthsEl = document.getElementById('cal-months');
+  if (!grids || !monthsEl) return;
+
+  grids.innerHTML = '';
+  monthsEl.innerHTML = '';
+
+  for (var m = 0; m < 2; m++) {
+    var base = new Date(today.getFullYear(), today.getMonth() + calState.offset + m, 1);
+    var year = base.getFullYear();
+    var month = base.getMonth();
+
+    // Month label in header
+    var lbl = document.createElement('div');
+    lbl.className = 'cal-month-label';
+    lbl.textContent = months_de[month] + ' ' + year;
+    monthsEl.appendChild(lbl);
+
+    // Grid
+    var grid = document.createElement('div');
+    grid.className = 'cal-grid';
+
+    // Day of week headers
+    var dow = document.createElement('div');
+    dow.className = 'cal-dow';
+    dow_de.forEach(function(d) {
+      var s = document.createElement('span');
+      s.textContent = d;
+      dow.appendChild(s);
+    });
+    grid.appendChild(dow);
+
+    var days = document.createElement('div');
+    days.className = 'cal-days';
+
+    // First day offset (Monday = 0)
+    var firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
+    for (var e = 0; e < firstDow; e++) {
+      var empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      days.appendChild(empty);
+    }
+
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (var day = 1; day <= daysInMonth; day++) {
+      var date = new Date(year, month, day);
+      date.setHours(0,0,0,0);
+      var cell = document.createElement('div');
+      cell.className = 'cal-day';
+      cell.textContent = day;
+
+      // Today
+      if (date.getTime() === today.getTime()) cell.classList.add('today');
+
+      // Past
+      if (date < today) {
+        cell.classList.add('past');
+      } else if (isBooked(date)) {
+        cell.classList.add('booked');
+        cell.title = 'Dieser Zeitraum ist belegt';
+      } else {
+        // Selection state
+        var s = calState.selStart, en = calState.selEnd;
+        if (s && date.getTime() === s.getTime()) cell.classList.add('selected-start');
+        if (en && date.getTime() === en.getTime()) cell.classList.add('selected-end');
+        if (s && en && date > s && date < en) cell.classList.add('in-range');
+
+        // Click handler
+        (function(d) {
+          cell.addEventListener('click', function() {
+            if (!calState.selStart || (calState.selStart && calState.selEnd)) {
+              // Start new selection
+              calState.selStart = d;
+              calState.selEnd = null;
+              calState.selecting = true;
+            } else {
+              // End selection
+              if (d <= calState.selStart) {
+                calState.selStart = d;
+                calState.selEnd = null;
+                return;
+              }
+              if (isRangeBlocked(calState.selStart, d)) {
+                alert('Dieser Zeitraum enthält bereits gebuchte Tage.');
+                return;
+              }
+              calState.selEnd = d;
+              calState.selecting = false;
+              // Update hidden inputs
+              document.getElementById('fi') && (document.getElementById('fi').value = fmtISO(calState.selStart));
+              document.getElementById('fo') && (document.getElementById('fo').value = fmtISO(calState.selEnd));
+            }
+            renderCalendar();
+            updateCalSelection();
+            calcCalPrice();
+          });
+        })(date);
+      }
+      days.appendChild(cell);
+    }
+    grid.appendChild(days);
+    grids.appendChild(grid);
+  }
+}
+
+function updateCalSelection() {
+  var fromEl = document.getElementById('cal-from');
+  var toEl = document.getElementById('cal-to');
+  var nightsEl = document.getElementById('cal-nights');
+  if (!fromEl) return;
+  fromEl.textContent = calState.selStart ? fmtDate(calState.selStart) : '–';
+  toEl.textContent = calState.selEnd ? fmtDate(calState.selEnd) : '–';
+  if (calState.selStart && calState.selEnd) {
+    var n = Math.round((calState.selEnd - calState.selStart) / 86400000);
+    nightsEl.textContent = n + ' Nächte';
+    nightsEl.style.display = 'block';
+  } else {
+    nightsEl.textContent = '';
+    nightsEl.style.display = 'none';
+  }
+}
+
+function calPrev() {
+  if (calState.offset > 0) { calState.offset--; renderCalendar(); }
+}
+function calNext() {
+  if (calState.offset < 18) { calState.offset++; renderCalendar(); }
+}
+function calReset() {
+  calState.selStart = null;
+  calState.selEnd = null;
+  renderCalendar();
+  updateCalSelection();
+  calcCalPrice();
+}
+
+// Old calcP kept for compatibility
+function calcP() { calcCalPrice(); }
+function sendBooking(){
+  if(!calState.selStart||!calState.selEnd){
+    alert('Bitte wählen Sie zuerst Ihren Anreise- und Abreisetermin im Kalender.');
+    return;
+  }
+  document.getElementById('mic').textContent='✅';
+  document.getElementById('mtitle').textContent='Anfrage gesendet!';
+  document.getElementById('mtext').textContent='Vielen Dank! Sophie & Lisa bestätigen die Verfügbarkeit und melden sich persönlich innerhalb von 24 Stunden. Anreise: '+fmtDate(calState.selStart)+' · Abreise: '+fmtDate(calState.selEnd);
+  document.getElementById('modal').classList.add('open');
+}
 function sendContact(){document.getElementById('mic').textContent='mail';document.getElementById('mtitle').textContent='Nachricht erhalten!';document.getElementById('mtext').textContent='Herzlichen Dank. Familie Wunsch meldet sich innerhalb von 24 Stunden persoenlich bei Ihnen.';document.getElementById('modal').classList.add('open');}
 function showLegal(t){document.getElementById('mic').textContent=t==='impressum'?'doc':'lock';document.getElementById('mtitle').textContent=t==='impressum'?'Impressum':'Datenschutz';document.getElementById('mtext').textContent=t==='impressum'?'Villa Miraverde - Inhaber: Familie Wunsch - Benissa, Alicante, Espana - E-Mail: info@villa-miraverde.com':'Ihre Daten werden ausschliesslich zur Bearbeitung Ihrer Anfrage genutzt und nicht an Dritte weitergegeben (DSGVO).';document.getElementById('modal').classList.add('open');}
 function closeModal(e){if(!e||e.target===document.getElementById('modal')||!e.target)document.getElementById('modal').classList.remove('open');}
