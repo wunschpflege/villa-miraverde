@@ -346,52 +346,85 @@ footer{background:linear-gradient(to bottom,#0E0C08,#080603);padding:3rem 4rem}
 .rf-btn:hover,.rf-btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
 .rest-note{font-size:.82rem;color:var(--ink3);line-height:1.8;padding:1.6rem;border:1px solid var(--b3);border-radius:8px;background:var(--b1)}
 .rest-note strong{color:var(--teal);font-weight:500}
-/* ACCORDION CARDS */
-.rest-grid{display:flex;flex-direction:column;gap:.6rem}
+/* ACCORDION CARDS - Simple & Clean */
+.rest-grid{display:flex;flex-direction:column;gap:.5rem}
 .rest-card{
-  background:var(--b1);border-radius:10px;overflow:hidden;
-  border:1px solid var(--b3);transition:border-color .2s,box-shadow .2s;
-  display:flex;flex-direction:column;cursor:pointer;
+  background:var(--b0);border-radius:10px;
+  border:1.5px solid var(--b3);
+  transition:border-color .2s,box-shadow .2s;
+  overflow:hidden;
 }
-.rest-card:hover{border-color:var(--b4);box-shadow:0 4px 20px rgba(30,24,18,.08)}
-.rest-card.open{border-color:var(--teal);box-shadow:0 6px 28px rgba(42,107,107,.12)}
-.rest-card-header{
-  display:flex;align-items:center;gap:1.2rem;
-  padding:1rem 1.4rem;position:relative;
+.rest-card:hover{border-color:var(--teal);box-shadow:0 4px 20px rgba(42,107,107,.1)}
+.rest-card.open{border-color:var(--teal)}
+
+/* Header - always visible */
+.rest-card-top{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.4rem;cursor:pointer;
+  position:relative;
 }
-.rest-card-header-img{
-  width:52px;height:52px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--b2);
+.rest-card-top img{
+  width:56px;height:56px;border-radius:8px;
+  object-fit:cover;flex-shrink:0;background:var(--b2);
 }
-.rest-card-header-img img{width:100%;height:100%;object-fit:cover}
-.rest-card-header-info{flex:1;min-width:0}
-.rest-card-header-name{
-  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;
-  color:var(--ink);line-height:1.2;margin-bottom:.2rem;
+.rest-card-top-info{flex:1;min-width:0}
+.rest-card-top-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-weight:400;color:var(--ink);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:.2rem;
 }
-.rest-card-header-meta{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
-.rest-card-header-stars{color:var(--gold);font-size:.72rem}
-.rest-card-header-stars span{color:var(--ink3);font-size:.68rem}
-.rest-card-header-dist{font-size:.68rem;color:var(--ink3);letter-spacing:.04em}
-.rest-card-header-cat{font-size:.62rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase}
+.rest-card-top-meta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.rest-card-top-stars{color:var(--gold);font-size:.72rem}
+.rest-card-top-stars span{color:var(--ink3);font-size:.68rem}
+.rest-card-top-dist{font-size:.68rem;color:var(--ink3)}
+.rest-card-top-cat{font-size:.62rem;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}
 .rest-card-chevron{
-  width:28px;height:28px;border-radius:50%;border:1px solid var(--b3);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:transform .3s,border-color .2s,background .2s;font-size:.75rem;color:var(--ink3);
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid var(--b3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--ink3);flex-shrink:0;
+  transition:transform .3s,border-color .2s,background .2s;
 }
-.rest-card.open .rest-card-chevron{transform:rotate(180deg);border-color:var(--teal);background:var(--teal3);color:var(--teal)}
-.rest-card-body{
+.rest-card.open .rest-card-chevron{
+  transform:rotate(180deg);
+  border-color:var(--teal);background:var(--teal3);color:var(--teal);
+}
+
+/* Body - hidden by default */
+.rest-body{
   max-height:0;overflow:hidden;
-  transition:max-height .4s cubic-bezier(.16,1,.3,1),padding .3s;
-  padding:0 1.4rem;
+  transition:max-height .4s cubic-bezier(.16,1,.3,1);
+  padding:0;
 }
-.rest-card.open .rest-card-body{max-height:600px;padding:0 1.4rem 1.4rem}
-.rest-card-body-inner{border-top:1px solid var(--b2);padding-top:1.2rem;display:flex;gap:1.4rem;}
-.rest-card-body-img{width:120px;height:90px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--b2)}
-.rest-card-body-img img{width:100%;height:100%;object-fit:cover}
-.rest-card-body-content{flex:1;min-width:0}
-.rest-card.open .rest-card-top{display:none}
-@media(max-width:600px){.rest-card-body-img{display:none}}
+.rest-card.open .rest-body{
+  max-height:500px;
+  border-top:1px solid var(--b2);
+}
+.rest-body-inner{
+  display:flex;gap:1.2rem;padding:1.2rem 1.4rem 1.4rem;
+}
+.rest-body-img{
+  width:110px;height:80px;border-radius:8px;
+  overflow:hidden;flex-shrink:0;background:var(--b2);
+}
+.rest-body-img img{width:100%;height:100%;object-fit:cover}
+.rest-body-content{flex:1;min-width:0}
+.rest-cat{font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem}
+.rest-name{display:none} /* name shown in header */
+.rest-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+.rest-tag{font-size:.62rem;background:var(--teal3);color:var(--teal2);padding:2px 8px;border-radius:3px;letter-spacing:.06em;border:1px solid rgba(42,107,107,.12)}
+.rest-desc{font-size:.8rem;color:var(--ink3);line-height:1.7;margin-bottom:1rem}
+.rest-meta{display:flex;flex-direction:column;gap:.4rem;border-top:1px solid var(--b2);padding-top:.9rem}
+.rest-meta-row{display:flex;align-items:center;gap:.55rem;font-size:.75rem;color:var(--ink3)}
+.rm-ic{font-size:.85rem;width:16px;text-align:center;flex-shrink:0}
+.rest-meta-row a{color:var(--teal);text-decoration:none;font-weight:500}
+.rest-meta-row a:hover{text-decoration:underline}
+.rest-price{display:inline-flex;gap:2px;margin-left:auto}
+.rest-price span{font-size:.7rem;color:var(--gold)}
+.rest-price span.off{opacity:.22}
+.rest-special{margin-top:.8rem;padding:.55rem .9rem;background:var(--gold3);border:1px solid rgba(184,146,74,.2);border-radius:5px;font-size:.72rem;color:var(--gold2);font-style:italic;line-height:1.5}
+@media(max-width:600px){.rest-body-img{display:none}}
 
 /* REVIEWS */
 #reviews{padding:8rem 4rem}
@@ -2381,70 +2414,56 @@ function addStaggerDelays() {
 }
 function initAccordions(){
   document.querySelectorAll('.rest-grid .rest-card').forEach(function(card){
-    if(card.querySelector('.rest-card-header')) return;
-
     var topEl = card.querySelector('.rest-card-top');
-    var imgEl = topEl ? topEl.querySelector('img') : null;
-    var distEl = topEl ? topEl.querySelector('.rest-dist') : null;
-    var starsEl = topEl ? topEl.querySelector('.rest-stars') : null;
     var bodyEl = card.querySelector('.rest-body');
-    var nameEl = bodyEl ? bodyEl.querySelector('.rest-name') : null;
-    var catEl = bodyEl ? bodyEl.querySelector('.rest-cat') : null;
-    var tagsEl = bodyEl ? bodyEl.querySelector('.rest-tags') : null;
-    var descEl = bodyEl ? bodyEl.querySelector('.rest-desc') : null;
-    var metaEl = bodyEl ? bodyEl.querySelector('.rest-meta') : null;
-    var specialEl = bodyEl ? bodyEl.querySelector('.rest-special') : null;
+    if(!topEl || !bodyEl) return;
 
-    var imgSrc = imgEl ? imgEl.src : '';
-    var imgAlt = imgEl ? imgEl.alt : '';
-    var dist = distEl ? distEl.textContent.trim() : '';
-    var starsHTML = starsEl ? starsEl.innerHTML : '';
-    var name = nameEl ? nameEl.textContent.trim() : '';
-    var cat = catEl ? catEl.textContent.trim() : '';
-    var tagsHTML = tagsEl ? tagsEl.outerHTML : '';
-    var desc = descEl ? descEl.textContent.trim() : '';
-    var metaHTML = metaEl ? metaEl.outerHTML : '';
-    var specialHTML = specialEl ? specialEl.outerHTML : '';
-    var onclickAttr = card.getAttribute('onclick') || '';
-    var url = '';
-    var m = onclickAttr.match(/window\.open\('([^']+)'/);
-    if(m) url = m[1];
+    // Wrap body content in inner div if not already done
+    if(!bodyEl.querySelector('.rest-body-inner')){
+      var inner = document.createElement('div');
+      inner.className = 'rest-body-inner';
+      // Move body content into inner wrapper
+      var img = topEl.querySelector('img');
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'rest-body-img';
+      if(img) imgDiv.innerHTML = '<img src="'+img.src+'" alt="'+img.alt+'" loading="lazy">';
+      var content = document.createElement('div');
+      content.className = 'rest-body-content';
+      content.innerHTML = bodyEl.innerHTML;
+      inner.appendChild(imgDiv);
+      inner.appendChild(content);
+      bodyEl.innerHTML = '';
+      bodyEl.appendChild(inner);
+    }
 
-    // Build accordion
-    card.innerHTML =
-      '<div class="rest-card-header">'
-      + '<div class="rest-card-header-img"><img src="'+imgSrc+'" alt="'+imgAlt+'" loading="lazy"></div>'
-      + '<div class="rest-card-header-info">'
-      +   '<div class="rest-card-header-name">'+name+'</div>'
-      +   '<div class="rest-card-header-meta">'
-      +     '<span class="rest-card-header-stars">'+starsHTML+'</span>'
-      +     '<span class="rest-card-header-dist">'+dist+'</span>'
-      +     '<span class="rest-card-header-cat">'+cat+'</span>'
-      +   '</div>'
-      + '</div>'
-      + '<div class="rest-card-chevron">▾</div>'
-      + '</div>'
-      + '<div class="rest-card-body">'
-      +   '<div class="rest-card-body-inner">'
-      +     '<div class="rest-card-body-img"><img src="'+imgSrc+'" alt="'+imgAlt+'" loading="lazy"></div>'
-      +     '<div class="rest-card-body-content">'
-      +       tagsHTML
-      +       '<p class="rest-desc">'+desc+'</p>'
-      +       metaHTML
-      +       (url ? '<div class="rest-meta-row" style="margin-top:.5rem"><span class="rm-ic">🌐</span><a href="'+url+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</a></div>' : '')
-      +       specialHTML
-      +     '</div>'
-      +   '</div>'
-      + '</div>';
+    // Build new header from rest-card-top
+    var img = topEl.querySelector('img');
+    var dist = topEl.querySelector('.rest-dist');
+    var stars = topEl.querySelector('.rest-stars');
+    var nameEl = card.querySelector('.rest-name');
+    var catEl = card.querySelector('.rest-cat');
 
-    card.style.cursor = 'pointer';
-    card.removeAttribute('onclick');
+    topEl.innerHTML =
+      '<img src="'+(img?img.src:'')+'" alt="'+(img?img.alt:'')+'" loading="lazy">'
+      +'<div class="rest-card-top-info">'
+      +  '<div class="rest-card-top-name">'+(nameEl?nameEl.textContent.trim():'')+'</div>'
+      +  '<div class="rest-card-top-meta">'
+      +    '<span class="rest-card-top-stars">'+(stars?stars.innerHTML:'')+'</span>'
+      +    '<span class="rest-card-top-dist">'+(dist?dist.textContent.trim():'')+'</span>'
+      +    '<span class="rest-card-top-cat">'+(catEl?catEl.textContent.trim():'')+'</span>'
+      +  '</div>'
+      +'</div>'
+      +'<div class="rest-card-chevron">▾</div>';
 
-    var header = card.querySelector('.rest-card-header');
-    header.addEventListener('click', function(e){
+    // Click toggles open
+    topEl.addEventListener('click', function(e){
       if(e.target.tagName === 'A') return;
       card.classList.toggle('open');
     });
+
+    // Card onclick goes to maps when clicking non-header area
+    var onclickVal = card.getAttribute('onclick')||'';
+    card.removeAttribute('onclick');
   });
 }
 
