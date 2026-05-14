@@ -286,30 +286,52 @@ footer{background:linear-gradient(to bottom,#0E0C08,#080603);padding:3rem 4rem}
 .rf-btn:hover,.rf-btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
 .rest-note{font-size:.82rem;color:var(--ink3);line-height:1.8;padding:1.6rem;border:1px solid var(--b3);border-radius:8px;background:var(--b1)}
 .rest-note strong{color:var(--teal);font-weight:500}
-.rest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.rest-card{background:var(--b1);border-radius:12px;overflow:hidden;border:1px solid var(--b3);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
-.rest-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(30,24,18,.13)}
-.rest-card-top{height:170px;position:relative;overflow:hidden;background:var(--b2)}
-.rest-card-top img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.rest-card:hover .rest-card-top img{transform:scale(1.08)}
-.rest-dist{position:absolute;top:.75rem;right:.75rem;background:rgba(30,24,18,.85);backdrop-filter:blur(6px);color:#fff;font-size:.64rem;letter-spacing:.1em;padding:4px 10px;border-radius:20px;font-family:'DM Sans',sans-serif}
-.rest-stars{position:absolute;bottom:.75rem;left:.75rem;background:rgba(30,24,18,.85);backdrop-filter:blur(6px);color:var(--gold);font-size:.73rem;padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif}
-.rest-stars span{color:rgba(255,255,255,.6);font-size:.65rem}
-.rest-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
-.rest-cat{font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.45rem}
-.rest-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:.55rem;line-height:1.2}
-.rest-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem}
-.rest-tag{font-size:.62rem;background:var(--teal3);color:var(--teal2);padding:3px 9px;border-radius:3px;letter-spacing:.06em;border:1px solid rgba(42,107,107,.12)}
-.rest-desc{font-size:.8rem;color:var(--ink3);line-height:1.7;margin-bottom:1.2rem;flex:1}
-.rest-meta{display:flex;flex-direction:column;gap:.45rem;border-top:1px solid var(--b3);padding-top:1.1rem;margin-top:auto}
-.rest-meta-row{display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:var(--ink3)}
-.rm-ic{font-size:.85rem;width:16px;text-align:center;flex-shrink:0}
-.rest-meta-row a{color:var(--teal);text-decoration:none;font-weight:500;letter-spacing:.02em}
-.rest-meta-row a:hover{color:var(--teal2);text-decoration:underline}
-.rest-price{display:inline-flex;gap:2px;margin-left:auto;flex-shrink:0}
-.rest-price span{font-size:.72rem;color:var(--gold)}
-.rest-price span.off{opacity:.22}
-.rest-special{margin-top:.8rem;padding:.6rem .9rem;background:var(--gold3);border:1px solid rgba(184,146,74,.2);border-radius:5px;font-size:.72rem;color:var(--gold2);font-style:italic;line-height:1.5}
+/* ACCORDION CARDS */
+.rest-grid{display:flex;flex-direction:column;gap:.6rem}
+.rest-card{
+  background:var(--b1);border-radius:10px;overflow:hidden;
+  border:1px solid var(--b3);transition:border-color .2s,box-shadow .2s;
+  display:flex;flex-direction:column;cursor:pointer;
+}
+.rest-card:hover{border-color:var(--b4);box-shadow:0 4px 20px rgba(30,24,18,.08)}
+.rest-card.open{border-color:var(--teal);box-shadow:0 6px 28px rgba(42,107,107,.12)}
+.rest-card-header{
+  display:flex;align-items:center;gap:1.2rem;
+  padding:1rem 1.4rem;position:relative;
+}
+.rest-card-header-img{
+  width:52px;height:52px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--b2);
+}
+.rest-card-header-img img{width:100%;height:100%;object-fit:cover}
+.rest-card-header-info{flex:1;min-width:0}
+.rest-card-header-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;
+  color:var(--ink);line-height:1.2;margin-bottom:.2rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.rest-card-header-meta{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.rest-card-header-stars{color:var(--gold);font-size:.72rem}
+.rest-card-header-stars span{color:var(--ink3);font-size:.68rem}
+.rest-card-header-dist{font-size:.68rem;color:var(--ink3);letter-spacing:.04em}
+.rest-card-header-cat{font-size:.62rem;color:var(--teal);letter-spacing:.1em;text-transform:uppercase}
+.rest-card-chevron{
+  width:28px;height:28px;border-radius:50%;border:1px solid var(--b3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:transform .3s,border-color .2s,background .2s;font-size:.75rem;color:var(--ink3);
+}
+.rest-card.open .rest-card-chevron{transform:rotate(180deg);border-color:var(--teal);background:var(--teal3);color:var(--teal)}
+.rest-card-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.16,1,.3,1),padding .3s;
+  padding:0 1.4rem;
+}
+.rest-card.open .rest-card-body{max-height:600px;padding:0 1.4rem 1.4rem}
+.rest-card-body-inner{border-top:1px solid var(--b2);padding-top:1.2rem;display:flex;gap:1.4rem;}
+.rest-card-body-img{width:120px;height:90px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--b2)}
+.rest-card-body-img img{width:100%;height:100%;object-fit:cover}
+.rest-card-body-content{flex:1;min-width:0}
+.rest-card.open .rest-card-top{display:none}
+@media(max-width:600px){.rest-card-body-img{display:none}}
 
 /* REVIEWS */
 #reviews{padding:8rem 4rem}
@@ -1720,7 +1742,90 @@ document.addEventListener('click', function(e) {
 });
 window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>70);});
 // Set German as default on load
-window.addEventListener('DOMContentLoaded', function(){ setLang('de'); });
+// ── ACCORDION SYSTEM ──
+function initAccordions(){
+  document.querySelectorAll('.rest-grid .rest-card').forEach(function(card){
+    // Already converted
+    if(card.querySelector('.rest-card-header')) return;
+
+    // Extract data from old structure
+    var topEl = card.querySelector('.rest-card-top');
+    var imgEl = topEl ? topEl.querySelector('img') : null;
+    var distEl = topEl ? topEl.querySelector('.rest-dist') : null;
+    var starsEl = topEl ? topEl.querySelector('.rest-stars') : null;
+    var bodyEl = card.querySelector('.rest-body');
+    var nameEl = bodyEl ? bodyEl.querySelector('.rest-name') : null;
+    var catEl = bodyEl ? bodyEl.querySelector('.rest-cat') : null;
+
+    var imgSrc = imgEl ? imgEl.src : '';
+    var imgAlt = imgEl ? imgEl.alt : '';
+    var dist = distEl ? distEl.textContent.trim() : '';
+    var stars = starsEl ? starsEl.innerHTML : '';
+    var name = nameEl ? nameEl.textContent.trim() : '';
+    var cat = catEl ? catEl.textContent.trim() : '';
+    var bodyHTML = bodyEl ? bodyEl.innerHTML : '';
+
+    // Get onclick from card
+    var onclickAttr = card.getAttribute('onclick') || '';
+
+    // Build new accordion structure
+    var header = document.createElement('div');
+    header.className = 'rest-card-header';
+    header.innerHTML =
+      '<div class="rest-card-header-img"><img src="'+imgSrc+'" alt="'+imgAlt+'"></div>'+
+      '<div class="rest-card-header-info">'+
+        '<div class="rest-card-header-name">'+name+'</div>'+
+        '<div class="rest-card-header-meta">'+
+          '<span class="rest-card-header-stars">'+stars+'</span>'+
+          '<span class="rest-card-header-dist">'+dist+'</span>'+
+          '<span class="rest-card-header-cat">'+cat+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="rest-card-chevron">▾</div>';
+
+    var body = document.createElement('div');
+    body.className = 'rest-card-body';
+    body.innerHTML =
+      '<div class="rest-card-body-inner">'+
+        '<div class="rest-card-body-img"><img src="'+imgSrc+'" alt="'+imgAlt+'"></div>'+
+        '<div class="rest-card-body-content">'+bodyHTML+'</div>'+
+      '</div>';
+
+    // Clear card and rebuild
+    card.innerHTML = '';
+    card.appendChild(header);
+    card.appendChild(body);
+    card.style.cursor = 'pointer';
+    card.removeAttribute('onclick');
+
+    // Toggle open/close
+    header.addEventListener('click', function(e){
+      // If clicking a link inside, don't toggle
+      if(e.target.tagName === 'A') return;
+      var isOpen = card.classList.contains('open');
+      card.classList.toggle('open', !isOpen);
+    });
+
+    // External link on "Auf Google Maps" or map icon click goes to URL
+    if(onclickAttr){
+      var match = onclickAttr.match(/window\.open\('([^']+)'/);
+      if(match){
+        var url = match[1];
+        // Add map link inside body
+        var mapRow = document.createElement('div');
+        mapRow.className = 'rest-meta-row';
+        mapRow.style.marginTop = '.5rem';
+        mapRow.innerHTML = '<span class="rm-ic">🌐</span><a href="'+url+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</a>';
+        body.querySelector('.rest-card-body-content').appendChild(mapRow);
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  setLang('de');
+  initAccordions();
+});
 var imgs=document.querySelectorAll('.gi img');
 function openLb(i){document.getElementById('lb').classList.add('open');document.getElementById('lb-img').src=imgs[i].src.replace('w=600','w=1400').replace('w=900','w=1600');}
 function closeLb(){document.getElementById('lb').classList.remove('open');}
