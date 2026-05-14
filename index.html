@@ -390,6 +390,71 @@ footer{background:#0E0C08;padding:3rem 4rem}
 .modal-box p{color:var(--ink3);font-size:.88rem;line-height:1.7;margin-bottom:1.5rem}
 .modal-close{position:absolute;top:1rem;right:1.3rem;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--b4)}
 .modal-ic{font-size:2.8rem;margin-bottom:1rem}
+/* NAV DROPDOWN */
+.nav-dropdown-wrap{position:relative}
+.nav-dropdown-trigger{color:rgba(255,255,255,.75);text-decoration:none;font-size:.73rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color .2s;white-space:nowrap}
+.nav-dropdown-trigger:hover{color:var(--gold)}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);background:rgba(253,250,245,.98);backdrop-filter:blur(16px);border:1px solid var(--b3);border-radius:10px;min-width:210px;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:2000;box-shadow:0 12px 40px rgba(30,24,18,.12)}
+.nav-dropdown-wrap:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-menu a{display:flex;align-items:center;gap:.7rem;padding:.78rem 1.2rem;font-size:.78rem;color:var(--ink2);text-decoration:none;letter-spacing:.04em;border-bottom:1px solid var(--b2);transition:background .15s,color .15s;font-family:'DM Sans',sans-serif;text-transform:none}
+.nav-dropdown-menu a:last-child{border-bottom:none}
+.nav-dropdown-menu a:hover{background:var(--teal3);color:var(--teal)}
+
+/* ── LIGHT THEME ── */
+#qbar{background:var(--b2);border-top:1px solid var(--b3)}
+#qbar .qf label{color:var(--teal)}
+#qbar .qf input,#qbar .qf select{color:var(--ink)}
+.qbar-btn{background:var(--teal)}
+.qbar-btn:hover{background:var(--teal2)}
+#highlights{background:var(--b0);padding:0}
+.hl-grid{background:var(--b3)}
+.hl-card{background:var(--b0);padding:2.5rem 2rem;transition:background .2s}
+.hl-card:hover{background:var(--b1)}
+.hl-num{color:rgba(42,107,107,.15)}
+.hl-icon-wrap{border-color:rgba(42,107,107,.2);background:var(--teal3)}
+.hl-card h3{color:var(--ink)}.hl-card p{color:var(--ink3)}
+.hl-line{background:rgba(42,107,107,.3)}
+#amenities{background:var(--b1);padding:9rem 4rem;position:relative;overflow:hidden}
+.am-header-left .eyebrow{color:var(--teal)}.am-header-left .eyebrow::after{background:var(--teal)}
+.am-header-left .section-h{color:var(--ink)}.am-header-left .section-h em{color:var(--teal)}
+.am-header-right{color:var(--ink3)}
+.am-feat-main{background:linear-gradient(145deg,var(--teal3) 0%,var(--b0) 100%);border-color:rgba(42,107,107,.2)}
+.am-feat-main::before{background:radial-gradient(circle,rgba(42,107,107,.08) 0%,transparent 65%)}
+.am-feat-main h3{color:var(--ink)}.am-feat-main p{color:var(--ink3)}
+.am-feat-main .am-tag{background:var(--teal3);border-color:rgba(42,107,107,.2);color:var(--teal2)}
+.am-feat-card{background:var(--b0);border-color:var(--b3)}
+.am-feat-card:hover{background:var(--teal3);border-color:rgba(42,107,107,.2)}
+.am-feat-card::after{background:linear-gradient(to right,var(--teal),transparent)}
+.am-feat-card h4{color:var(--ink)}.am-feat-card p{color:var(--ink3)}
+.am-cell{background:var(--b0);border-color:var(--b3)}
+.am-cell:hover{background:var(--teal3);border-color:rgba(42,107,107,.2)}
+.am-cell::before{background:var(--teal)}
+.am-cell h4{color:var(--ink2)}.am-cell p{color:var(--ink3)}
+.am-cell-wrap{border-color:rgba(42,107,107,.2);background:var(--teal3)}
+.am-divider{background:linear-gradient(to right,transparent,rgba(42,107,107,.2),transparent)}
+.am-promise{background:rgba(42,107,107,.06)}
+.am-promise-item{background:var(--b0)}.am-promise-item:hover{background:var(--teal3)}
+.am-promise-num{color:var(--teal);opacity:.6}
+.am-promise-txt h5{color:var(--ink)}.am-promise-txt p{color:var(--ink3)}
+.vctrl{background:var(--b2)}
+.vbtn{color:var(--ink3)}.vbtn:hover{color:var(--ink)}.vbtn.on{background:var(--teal);color:#fff}
+.vhint{color:var(--ink3)}
+.fp-head{background:var(--teal)}.fp-head p{color:rgba(255,255,255,.7)}
+#contact{background:var(--b0);position:relative}
+#contact::before{display:none}
+#contact .eyebrow{color:var(--teal)}#contact .eyebrow::after{background:var(--teal)}
+#contact .section-h{color:var(--ink)}#contact .section-h em{color:var(--teal)}
+#contact .section-p{color:var(--ink3)}
+.cway-ic{background:var(--teal3);border-color:rgba(42,107,107,.2)}
+.cway-lbl{color:var(--teal)}.cway-val{color:var(--ink)}
+.cf-wrap{background:var(--b1);border-color:var(--b3)}
+.cf-wrap .fg input,.cf-wrap .fg select,.cf-wrap .fg textarea{background:var(--b0);border-color:var(--b3);color:var(--ink)}
+.cf-wrap .fg label{color:var(--teal)}
+footer{background:var(--b2);padding:3rem 4rem}
+.ft-logo{color:var(--ink)}.ft-logo span{color:var(--teal);font-style:italic}
+.ft-links a{color:var(--ink3)}.ft-links a:hover{color:var(--teal)}
+.ft-copy{color:var(--ink3)}
+
 /* LANGUAGE SWITCHER */
 .lang-switcher{position:relative;margin-left:.5rem}
 .lang-btn{
@@ -473,10 +538,15 @@ footer{background:#0E0C08;padding:3rem 4rem}
     <li><a href="#viewer" data-t="nav_tour">3D Tour</a></li>
     <li><a href="#gallery" data-t="nav_gallery">Galerie</a></li>
     <li><a href="#amenities" data-t="nav_amenities">Ausstattung</a></li>
-    <li><a href="#restaurants" data-t="nav_restaurants">Restaurants</a></li>
-    <li><a href="#aktivitaeten" data-t="nav_activities">Aktivitäten</a></li>
-    <li><a href="#sehenswuerdigkeiten" data-t="nav_discover">Entdecken</a></li>
-    <li><a href="#einkaufen" data-t="nav_shopping">Einkaufen</a></li>
+    <li class="nav-dropdown-wrap">
+      <a class="nav-dropdown-trigger" data-t="nav_nearby">In der Nähe ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="#restaurants" data-t="nav_restaurants">🍽️ Restaurants</a>
+        <a href="#aktivitaeten" data-t="nav_activities">🏄 Aktivitäten</a>
+        <a href="#sehenswuerdigkeiten" data-t="nav_discover">🏖️ Strände & Natur</a>
+        <a href="#einkaufen" data-t="nav_shopping">🛒 Einkaufen</a>
+      </div>
+    </li>
     <li><a href="#location" data-t="nav_location">Lage</a></li>
     <li><a href="#host" data-t="nav_host">Gastgeber</a></li>
     <li><a href="#booking" class="nav-cta" data-t="nav_book">Buchen</a></li>
@@ -1455,7 +1525,8 @@ footer{background:#0E0C08;padding:3rem 4rem}
 var translations = {
   de: {
     nav_tour:'3D Tour', nav_gallery:'Galerie', nav_amenities:'Ausstattung',
-    nav_restaurants:'Restaurants', nav_activities:'Aktivitäten', nav_discover:'Entdecken',
+    nav_nearby:'In der Nähe',
+    nav_restaurants:'Restaurants', nav_activities:'Aktivitäten', nav_discover:'Strände & Natur',
     nav_shopping:'Einkaufen', nav_location:'Lage', nav_host:'Gastgeber', nav_book:'Buchen',
     hero_location:'Benissa · Costa Blanca · Spanien',
     hero_tagline:'Eine außergewöhnliche Architektenvilla hoch über dem Mittelmeer – mit atemberaubendem Meerblick, privatem Pool und der einzigartigen Gastfreundschaft von Sophie & Lisa.',
@@ -1487,6 +1558,7 @@ var translations = {
   },
   en: {
     nav_tour:'3D Tour', nav_gallery:'Gallery', nav_amenities:'Amenities',
+    nav_nearby:'Nearby',
     nav_restaurants:'Restaurants', nav_activities:'Activities', nav_discover:'Discover',
     nav_shopping:'Shopping', nav_location:'Location', nav_host:'Hosts', nav_book:'Book Now',
     hero_location:'Benissa · Costa Blanca · Spain',
@@ -1519,6 +1591,7 @@ var translations = {
   },
   fr: {
     nav_tour:'Visite 3D', nav_gallery:'Galerie', nav_amenities:'Équipements',
+    nav_nearby:'À proximité',
     nav_restaurants:'Restaurants', nav_activities:'Activités', nav_discover:'Découvrir',
     nav_shopping:'Shopping', nav_location:'Situation', nav_host:'Hôtes', nav_book:'Réserver',
     hero_location:'Benissa · Costa Blanca · Espagne',
@@ -1551,6 +1624,7 @@ var translations = {
   },
   nl: {
     nav_tour:'3D Tour', nav_gallery:'Galerij', nav_amenities:'Voorzieningen',
+    nav_nearby:'In de buurt',
     nav_restaurants:'Restaurants', nav_activities:'Activiteiten', nav_discover:'Ontdekken',
     nav_shopping:'Winkelen', nav_location:'Ligging', nav_host:'Gastheren', nav_book:'Boeken',
     hero_location:'Benissa · Costa Blanca · Spanje',
@@ -1583,6 +1657,7 @@ var translations = {
   },
   pl: {
     nav_tour:'Wirtualny Tour', nav_gallery:'Galeria', nav_amenities:'Udogodnienia',
+    nav_nearby:'W pobliżu',
     nav_restaurants:'Restauracje', nav_activities:'Aktywności', nav_discover:'Odkryj',
     nav_shopping:'Zakupy', nav_location:'Lokalizacja', nav_host:'Gospodarze', nav_book:'Rezerwuj',
     hero_location:'Benissa · Costa Blanca · Hiszpania',
@@ -1615,6 +1690,7 @@ var translations = {
   },
   ru: {
     nav_tour:'3D-Тур', nav_gallery:'Галерея', nav_amenities:'Удобства',
+    nav_nearby:'Рядом',
     nav_restaurants:'Рестораны', nav_activities:'Активности', nav_discover:'Исследовать',
     nav_shopping:'Магазины', nav_location:'Расположение', nav_host:'Хозяева', nav_book:'Забронировать',
     hero_location:'Бениса · Коста-Бланка · Испания',
@@ -1728,6 +1804,12 @@ function setLang(lang) {
   });
   // Close dropdown
   document.getElementById('lang-dropdown').classList.remove('open');
+  // Update nav dropdown trigger
+  var nearbyTrigger = document.querySelector('.nav-dropdown-trigger');
+  if(nearbyTrigger && t.nav_nearby) nearbyTrigger.textContent = t.nav_nearby + ' ▾';
+  // Update dropdown items
+  var ddLinks = document.querySelectorAll('.nav-dropdown-menu a[data-t]');
+  ddLinks.forEach(function(el){var k=el.getAttribute('data-t');if(t[k])el.childNodes[el.childNodes.length-1].textContent=' '+t[k];});
   // Update html lang attr
   document.documentElement.lang = lang;
 }
