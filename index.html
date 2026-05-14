@@ -2105,87 +2105,183 @@ var currentLang = 'de';
 function setLang(lang) {
   currentLang = lang;
   var t = translations[lang];
-  // Update all data-t elements
+  if (!t) return;
+
+  // 1. All data-t elements
   document.querySelectorAll('[data-t]').forEach(function(el) {
     var key = el.getAttribute('data-t');
     if (t[key] !== undefined) el.textContent = t[key];
   });
-  // Special: hero h with italic
-  if (t.book_hi) {
-    var bh = document.querySelector('[data-t="book_h"]');
-    if (bh) {
-      var parent = bh.closest('.section-h');
-      if (parent) parent.innerHTML = t.book_h + '<br><em>' + t.book_hi + '</em>';
-    }
+
+  // 2. Section headings with italic
+  function setH(selector, plain, italic) {
+    var el = document.querySelector(selector);
+    if (el && t[plain] && t[italic]) el.innerHTML = t[plain] + '<br><em>' + t[italic] + '</em>';
   }
-  if (t.contact_hi) {
-    var ch = document.querySelector('[data-t="contact_h"]');
-    if (ch) {
-      var cp = ch.closest('.section-h');
-      if (cp) cp.innerHTML = t.contact_h + '<br><em>' + t.contact_hi + '</em>';
-    }
-  }
-  // Host section
-  var hostPs = document.querySelectorAll('#host .host-info p');
-  if (hostPs[0]) hostPs[0].textContent = t.host_p1;
-  if (hostPs[1]) hostPs[1].textContent = t.host_p2;
-  if (hostPs[2]) hostPs[2].textContent = t.host_p3;
-  var hostEy = document.querySelector('#host .eyebrow');
-  if (hostEy) hostEy.childNodes[0].textContent = t.host_eyebrow;
-  // Update golden names based on language
-  var nameEls = document.querySelectorAll('.host-name-gold');
-  if (nameEls[0]) nameEls[0].textContent = 'Sophie Wunsch';
-  if (nameEls[1]) nameEls[1].textContent = 'Lisa Wunsch';
-  // Highlight cards
+  setH('[data-t="book_h"]', 'book_h', 'book_hi');
+  setH('[data-t="contact_h"]', 'contact_h', 'contact_hi');
+
+  // 3. Hero
+  var heroEy = document.querySelector('.hero-eyebrow');
+  if (heroEy) heroEy.innerHTML = (heroEy.innerHTML.match(/::before/) ? heroEy.innerHTML : '') + (t.hero_location||'');
+  var heroEyEl = document.querySelector('[data-t="hero_location"]');
+  if (heroEyEl) heroEyEl.textContent = t.hero_location;
+  var heroTag = document.querySelector('[data-t="hero_tagline"]');
+  if (heroTag) heroTag.textContent = t.hero_tagline;
+  var heroBtn1 = document.querySelector('[data-t="hero_btn1"]');
+  if (heroBtn1) heroBtn1.textContent = t.hero_btn1;
+  var heroBtn2 = document.querySelector('[data-t="hero_btn2"]');
+  if (heroBtn2) heroBtn2.textContent = t.hero_btn2;
+
+  // 4. Highlights
   var hls = document.querySelectorAll('.hl-card');
   var hlKeys = [['hl1_title','hl1_text'],['hl2_title','hl2_text'],['hl3_title','hl3_text'],['hl4_title','hl4_text']];
   hls.forEach(function(card, i) {
-    if (hlKeys[i]) {
-      var h3 = card.querySelector('h3'); if (h3) h3.textContent = t[hlKeys[i][0]];
-      var p = card.querySelector('p'); if (p) p.textContent = t[hlKeys[i][1]];
-    }
+    if (!hlKeys[i]) return;
+    var h3 = card.querySelector('h3'); if (h3 && t[hlKeys[i][0]]) h3.textContent = t[hlKeys[i][0]];
+    var p = card.querySelector('p'); if (p && t[hlKeys[i][1]]) p.textContent = t[hlKeys[i][1]];
   });
-  // Pricing seasons
+
+  // 5. Section eyebrows & headings
+  var sectionMap = {
+    '#viewer .eyebrow': 'Virtuelle Tour',
+    '#viewer .section-h': null,
+    '#gallery .eyebrow': 'Impressionen',
+    '#amenities .am-header-left .eyebrow': 'Ausstattung',
+    '#booking .eyebrow': t.book_eyebrow,
+    '#restaurants .eyebrow': 'Kulinarischer Guide',
+    '#aktivitaeten .eyebrow': 'Aktivitäten & Ausflüge',
+    '#sehenswuerdigkeiten .eyebrow': 'Sehenswürdigkeiten',
+    '#einkaufen .eyebrow': 'Einkaufen',
+    '#reviews .eyebrow': t.lang_reviews || (lang==='en'?'Guestbook':lang==='fr'?'Livre d\'or':lang==='nl'?'Gastenboek':lang==='pl'?'Księga gości':lang==='ru'?'Книга гостей':lang==='es'?'Libro de visitas':'Gästebuch'),
+    '#location .eyebrow': t.lang_location || (lang==='en'?'Location':lang==='fr'?'Situation':lang==='nl'?'Ligging':lang==='pl'?'Lokalizacja':lang==='ru'?'Расположение':lang==='es'?'Ubicación':'Lage'),
+  };
+
+  // 6. Pricing
   var seasons = document.querySelectorAll('.pc-season');
-  if (seasons[0]) seasons[0].textContent = t.season_low;
-  if (seasons[1]) seasons[1].textContent = t.season_mid;
-  if (seasons[2]) seasons[2].textContent = t.season_high;
+  if (seasons[0] && t.season_low) seasons[0].textContent = t.season_low;
+  if (seasons[1] && t.season_mid) seasons[1].textContent = t.season_mid;
+  if (seasons[2] && t.season_high) seasons[2].textContent = t.season_high;
   var badge = document.querySelector('.pc-badge');
-  if (badge) badge.textContent = t.season_badge;
+  if (badge && t.season_badge) badge.textContent = t.season_badge;
   var details = document.querySelectorAll('.pc-detail');
-  if (details[0]) details[0].textContent = t.season_low_detail;
-  if (details[1]) details[1].textContent = t.season_mid_detail;
-  if (details[2]) details[2].textContent = t.season_high_detail;
+  if (details[0] && t.season_low_detail) details[0].textContent = t.season_low_detail;
+  if (details[1] && t.season_mid_detail) details[1].textContent = t.season_mid_detail;
+  if (details[2] && t.season_high_detail) details[2].textContent = t.season_high_detail;
   var incls = document.querySelectorAll('.pc-inc');
-  incls.forEach(function(el){ el.textContent = '✓ ' + t.season_incl.replace(' · ','   ·   ✓ '); });
+  if (t.season_incl) incls.forEach(function(el){ el.textContent = '✓ ' + t.season_incl; });
+
+  // 7. Book form
+  var bh = document.querySelector('.book-form h3'); if (bh && t.book_form_h) bh.textContent = t.book_form_h;
+  var bp = document.querySelector('.book-form > p'); if (bp && t.book_form_p) bp.textContent = t.book_form_p;
+  var bbtn = document.querySelector('.btn-book'); if (bbtn && t.book_btn) bbtn.textContent = t.book_btn;
+  var btrust = document.querySelector('.book-trust'); if (btrust && t.book_trust) btrust.innerHTML = '🔒 ' + t.book_trust;
+
   // Book form labels
-  var labels = document.querySelectorAll('.book-form .fg label');
-  var lkeys = ['book_arrival','book_departure','book_fname','book_lname','book_arrival','book_departure','book_guests'];
-  // Book button
-  var bbtn = document.querySelector('.btn-book');
-  if (bbtn) bbtn.textContent = t.book_btn;
-  // Book trust
-  var btrust = document.querySelector('.book-trust');
-  if (btrust) btrust.innerHTML = '🔒 ' + t.book_trust.replace(' · ','  ·  ').replace(' · ','  ·  ');
-  // Footer
+  var labelMap = {
+    'book_arrival': ['Anreise','Llegada','Arrivée','Aankomst','Przyjazd','Заезд'],
+    'book_departure': ['Abreise','Salida','Départ','Vertrek','Wyjazd','Выезд'],
+    'book_fname': ['Vorname','Nombre','Prénom','Voornaam','Imię','Имя'],
+    'book_lname': ['Nachname','Apellidos','Nom','Achternaam','Nazwisko','Фамилия'],
+    'book_msg': ['Nachricht','Mensaje','Message','Bericht','Wiadomość','Сообщение'],
+  };
+  document.querySelectorAll('.book-form .fg label').forEach(function(lbl) {
+    var txt = lbl.textContent.trim();
+    Object.keys(labelMap).forEach(function(key) {
+      if (t[key] && labelMap[key].includes(txt)) lbl.textContent = t[key];
+    });
+  });
+
+  // 8. Host section
+  var hostPs = document.querySelectorAll('#host .host-info p');
+  if (hostPs[0] && t.host_p1) hostPs[0].textContent = t.host_p1;
+  if (hostPs[1] && t.host_p2) hostPs[1].textContent = t.host_p2;
+  if (hostPs[2] && t.host_p3) hostPs[2].textContent = t.host_p3;
+  var hostEy = document.querySelector('#host .eyebrow');
+  if (hostEy && t.host_eyebrow) hostEy.childNodes[0].textContent = t.host_eyebrow;
+  var nameEls = document.querySelectorAll('.host-name-gold');
+  if (nameEls[0]) nameEls[0].textContent = 'Sophie Wunsch';
+  if (nameEls[1]) nameEls[1].textContent = 'Lisa Wunsch';
+
+  // 9. Contact
+  var cEy = document.querySelector('#contact .eyebrow');
+  if (cEy && t.contact_eyebrow) cEy.childNodes[0].textContent = t.contact_eyebrow;
+  var cP = document.querySelector('#contact .section-p');
+  if (cP && t.contact_p) cP.textContent = t.contact_p;
+  var cSH = document.querySelector('#contact .section-h');
+  if (cSH && t.contact_h && t.contact_hi) cSH.innerHTML = t.contact_h + '<br><em>' + t.contact_hi + '</em>';
+
+  // 10. Location section
+  var locH = document.querySelector('#location .section-h');
+  if (locH) {
+    var locNames = {de:'Benissa,', en:'Benissa,', fr:'Benissa,', nl:'Benissa,', pl:'Benissa,', ru:'Бениса,', es:'Benissa,'};
+    var locSubs = {de:'<em>Costa Blanca</em>', en:'<em>Costa Blanca</em>', fr:'<em>Costa Blanca</em>', nl:'<em>Costa Blanca</em>', pl:'<em>Costa Blanca</em>', ru:'<em>Коста-Бланка</em>', es:'<em>Costa Blanca</em>'};
+    locH.innerHTML = (locNames[lang]||'Benissa,') + '<br>' + (locSubs[lang]||'<em>Costa Blanca</em>');
+  }
+
+  // 11. Amenities
+  var amH = document.querySelector('#amenities .am-header-left .section-h');
+  if (amH) {
+    var amTitles = {de:'Alles für Ihren<br><em>perfekten Aufenthalt</em>', en:'Everything for your<br><em>perfect stay</em>', fr:'Tout pour votre<br><em>séjour parfait</em>', nl:'Alles voor uw<br><em>perfecte verblijf</em>', pl:'Wszystko na<br><em>idealny pobyt</em>', ru:'Всё для вашего<br><em>идеального отдыха</em>', es:'Todo para su<br><em>estancia perfecta</em>'};
+    amH.innerHTML = amTitles[lang] || amTitles.de;
+  }
+
+  // 12. Guestbook section heading
+  var revH = document.querySelector('#reviews .section-h');
+  if (revH) {
+    var revTitles = {de:'Was unsere Gäste <em>sagen</em>', en:'What our guests <em>say</em>', fr:'Ce que disent <em>nos hôtes</em>', nl:'Wat onze gasten <em>zeggen</em>', pl:'Co mówią <em>nasi goście</em>', ru:'Что говорят <em>наши гости</em>', es:'Lo que dicen <em>nuestros huéspedes</em>'};
+    revH.innerHTML = revTitles[lang] || revTitles.de;
+  }
+
+  // 13. Reviews section eyebrow
+  var revEy = document.querySelector('#reviews .eyebrow');
+  if (revEy) {
+    var revEyTxt = {de:'Gästebuch', en:'Guestbook', fr:'Livre d\'or', nl:'Gastenboek', pl:'Księga gości', ru:'Книга гостей', es:'Libro de visitas'};
+    revEy.childNodes[0].textContent = revEyTxt[lang] || 'Gästebuch';
+  }
+
+  // 14. Review form
+  var rfh = document.querySelector('.review-form-header h3');
+  var rfp = document.querySelector('.review-form-header p');
+  var rfBtn = document.querySelector('.review-form-footer .btn-solid');
+  var rfNote = document.querySelector('.review-form-note');
+  var rfTitles = {de:'Ihre Bewertung hinterlassen',en:'Leave your review',fr:'Laissez votre avis',nl:'Laat uw beoordeling achter',pl:'Zostaw swoją opinię',ru:'Оставить отзыв',es:'Deje su valoración'};
+  var rfSubtitles = {de:'Waren Sie Gast in der Villa Las Hermanas? Wir freuen uns über Ihre Erfahrung!',en:'Were you a guest at Villa Las Hermanas? We\'d love to hear about your experience!',fr:'Étiez-vous notre hôte? Nous serions ravis de lire votre expérience!',nl:'Was u onze gast? We horen graag uw ervaring!',pl:'Czy byłeś naszym gościem? Chętnie poznamy Twoją opinię!',ru:'Были ли вы нашим гостем? Расскажите о своём опыте!',es:'¿Fue nuestro huésped? ¡Nos encantaría conocer su experiencia!'};
+  var rfBtns = {de:'Bewertung absenden →',en:'Submit review →',fr:'Envoyer l\'avis →',nl:'Beoordeling verzenden →',pl:'Wyślij opinię →',ru:'Отправить отзыв →',es:'Enviar valoración →'};
+  var rfNotes = {de:'Ihre Bewertung wird nach Prüfung durch Sophie & Lisa veröffentlicht.',en:'Your review will be published after approval by Sophie & Lisa.',fr:'Votre avis sera publié après vérification par Sophie et Lisa.',nl:'Uw beoordeling wordt gepubliceerd na goedkeuring door Sophie & Lisa.',pl:'Opinia zostanie opublikowana po zatwierdzeniu przez Sophie i Lisę.',ru:'Отзыв будет опубликован после проверки Софи и Лизой.',es:'Su valoración se publicará tras la aprobación de Sophie y Lisa.'};
+  if (rfh) rfh.textContent = rfTitles[lang]||rfTitles.de;
+  if (rfp) rfp.textContent = rfSubtitles[lang]||rfSubtitles.de;
+  if (rfBtn) rfBtn.textContent = rfBtns[lang]||rfBtns.de;
+  if (rfNote) rfNote.textContent = '⚐ ' + (rfNotes[lang]||rfNotes.de);
+
+  // 15. Footer
   var ftcopy = document.querySelector('.ft-copy');
-  if (ftcopy) ftcopy.textContent = t.footer_copy;
-  // Update switcher button
+  if (ftcopy && t.footer_copy) ftcopy.textContent = t.footer_copy;
+
+  // 16. Nav dropdown trigger + items
+  var nearbyTrigger = document.querySelector('.nav-dropdown-trigger');
+  if (nearbyTrigger && t.nav_nearby) nearbyTrigger.textContent = t.nav_nearby + ' ▾';
+  var ddLinks = document.querySelectorAll('.nav-dropdown-menu a[data-t]');
+  ddLinks.forEach(function(el){
+    var k = el.getAttribute('data-t');
+    if (t[k]) { var emoji = el.textContent.match(/^[^\s]+/); el.textContent = (emoji?emoji[0]+' ':'')+t[k]; }
+  });
+
+  // 17. Mobile menu links
+  var mobLinks = document.querySelectorAll('.mob-nav-overlay a[href]');
+  var mobMap = {'#viewer':t.nav_tour,'#gallery':t.nav_gallery,'#amenities':t.nav_amenities,'#restaurants':t.nav_restaurants,'#aktivitaeten':t.nav_activities,'#sehenswuerdigkeiten':t.nav_discover,'#einkaufen':t.nav_shopping,'#location':t.nav_location,'#host':t.nav_host,'#booking':t.nav_book};
+  mobLinks.forEach(function(a){
+    var href = a.getAttribute('href');
+    if (mobMap[href]) { var emoji = a.textContent.match(/^[^\s]+/); a.textContent = (emoji?emoji[0]+' ':'')+mobMap[href]; }
+  });
+
+  // 18. Switcher button + active state
   document.getElementById('current-flag').textContent = langFlags[lang];
   document.getElementById('current-lang').textContent = langCodes[lang];
   document.querySelectorAll('.lang-option').forEach(function(opt, i) {
-    opt.classList.remove('active');
-    if (['de','en','fr','nl','pl','ru','es'][i] === lang) opt.classList.add('active');
+    opt.classList.toggle('active', ['de','en','fr','nl','pl','ru','es'][i] === lang);
   });
-  // Close dropdown
   document.getElementById('lang-dropdown').classList.remove('open');
-  // Update nav dropdown trigger
-  var nearbyTrigger = document.querySelector('.nav-dropdown-trigger');
-  if(nearbyTrigger && t.nav_nearby) nearbyTrigger.textContent = t.nav_nearby + ' ▾';
-  // Update dropdown items
-  var ddLinks = document.querySelectorAll('.nav-dropdown-menu a[data-t]');
-  ddLinks.forEach(function(el){var k=el.getAttribute('data-t');if(t[k])el.childNodes[el.childNodes.length-1].textContent=' '+t[k];});
-  // Update html lang attr
   document.documentElement.lang = lang;
 }
 
