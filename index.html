@@ -838,8 +838,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="viewer-wrap">
       <div>
-        <div class="eyebrow">Virtuelle Tour</div>
-        <h2 class="section-h">Erkunden Sie die Villa<br><em>in 3D</em></h2>
+        <div class="eyebrow" data-t="viewer_eyebrow">Virtuelle Tour</div>
+        <h2 class="section-h" data-t-h="viewer_h" data-t-hi="viewer_hi">Erkunden Sie die Villa<br><em>in 3D</em></h2>
         <p class="section-p">Drehen, zoomen und jede Ebene erkunden – so als wären Sie schon vor Ort.</p>
         <div class="viewer-feats">
           <div class="vfeat"><div class="vfeat-dot">🏠</div><div><h4>Drei Ebenen</h4><p>Wohnbereich, 4 Schlafbereiche, Dachterrasse mit Pool</p></div></div>
@@ -1001,12 +1001,12 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="cal-grids" id="cal-grids"></div>
           <div class="cal-selection" id="cal-selection">
             <div class="cal-sel-item">
-              <span class="cal-sel-label">Anreise</span>
+              <span class="cal-sel-label" data-t="cal_arrival">Anreise</span>
               <span class="cal-sel-val" id="cal-from">–</span>
             </div>
             <div class="cal-sel-arrow">→</div>
             <div class="cal-sel-item">
-              <span class="cal-sel-label">Abreise</span>
+              <span class="cal-sel-label" data-t="cal_departure">Abreise</span>
               <span class="cal-sel-val" id="cal-to">–</span>
             </div>
             <div class="cal-sel-nights" id="cal-nights"></div>
@@ -1014,14 +1014,14 @@ footer{background:var(--b2);padding:3rem 4rem}
         </div>
 
         <!-- FORM -->
-        <div class="frow"><div class="fg"><label>Vorname</label><input type="text" id="b-fname" placeholder="Maria"></div><div class="fg"><label>Nachname</label><input type="text" id="b-lname" placeholder="Müller"></div></div>
-        <div class="fg"><label>E-Mail</label><input type="email" id="b-email" placeholder="ihre@email.de"></div>
-        <div class="fg"><label>Telefon</label><input type="tel" id="b-phone" placeholder="+49 …"></div>
+        <div class="frow"><div class="fg"><label data-t="book_fname">Vorname</label><input type="text" id="b-fname" placeholder="Maria"></div><div class="fg"><label data-t="book_lname">Nachname</label><input type="text" id="b-lname" placeholder="Müller"></div></div>
+        <div class="fg"><label data-t="book_email">E-Mail</label><input type="email" id="b-email" placeholder="ihre@email.de"></div>
+        <div class="fg"><label data-t="book_phone">Telefon</label><input type="tel" id="b-phone" placeholder="+49 …"></div>
         <div class="frow">
-          <div class="fg"><label>Gäste</label><select id="fg-guests"><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8" selected>8 Personen</option></select></div>
-          <div class="fg"><label>Sprache</label><select><option>Deutsch</option><option>English</option><option>Español</option></select></div>
+          <div class="fg"><label data-t="book_guests">Gäste</label><select id="fg-guests"><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8" selected>8 Personen</option></select></div>
+          <div class="fg"><label data-t="book_lang">Sprache</label><select><option>Deutsch</option><option>English</option><option>Español</option></select></div>
         </div>
-        <div class="fg"><label>Nachricht</label><textarea id="b-msg" placeholder="Besondere Wünsche, Fragen…"></textarea></div>
+        <div class="fg"><label data-t="book_msg">Nachricht</label><textarea id="b-msg" data-ph="book_msg_ph" placeholder="Besondere Wünsche, Fragen…"></textarea></div>
 
         <div class="price-calc">
           <div class="pc-row"><span>Zeitraum</span><span id="pn">– –</span></div>
@@ -1041,8 +1041,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="rest-intro">
       <div>
-        <div class="eyebrow">Kulinarischer Guide</div>
-        <h2 class="section-h">Die besten Restaurants<br><em>Moraira & CV-746</em></h2>
+        <div class="eyebrow" data-t="rest_eyebrow">Kulinarischer Guide</div>
+        <h2 class="section-h" data-t-h="rest_h" data-t-hi="rest_hi">Die besten Restaurants<br><em>Moraira & CV-746</em></h2>
         <div class="rest-filter">
           <button class="rf-btn on" onclick="filterRest('all',this)">Alle (11)</button>
           <button class="rf-btn" onclick="filterRest('fine',this)">Fine Dining</button>
@@ -1069,7 +1069,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34966492494" onclick="event.stopPropagation()">+34 966 49 24 94</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Castillo, 11 · Moraira</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 10:00–23:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1089,7 +1089,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965744329" onclick="event.stopPropagation()">+34 965 74 43 29</a><div class="rest-price"><span>€</span><span>€</span><span>€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Puerto de Moraira, s/n · Moraira</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 9:00–23:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Hummer-Paella vorbestellen – Highlight des Hauses</div>
         </div>
@@ -1110,7 +1110,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965743090" onclick="event.stopPropagation()">+34 965 74 30 90</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe, Km 1.3 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 11:30–22:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Tisch innen reservieren – draußen nur bis 14:00 Uhr</div>
         </div>
@@ -1131,7 +1131,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34616749167" onclick="event.stopPropagation()">+34 616 74 91 67</a><div class="rest-price"><span>€</span><span>€</span><span>€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe, 119 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 12:30–00:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Sommerabend mit Klaviermusik auf der Terrasse reservieren</div>
         </div>
@@ -1152,7 +1152,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><span>keine Tel. – walk-in</span><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 9:30–21:30 (Do bis 15:00)</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Sonnenuntergang um 19:00 – bester Platz an der ganzen Küste</div>
         </div>
@@ -1173,7 +1173,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965745411" onclick="event.stopPropagation()">+34 965 74 54 11</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Cabo San Antonio, 2 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 13:00–15:00 & 19:00–22:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: 6-Gang-Menü für €30 – unschlagbares Preis-Leistungs-Verhältnis</div>
         </div>
@@ -1194,7 +1194,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965748193" onclick="event.stopPropagation()">+34 965 74 81 93</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Cabo San Vicente, 1 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Di–So 13:00–15:00 & 19:00–22:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1214,7 +1214,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34629828438" onclick="event.stopPropagation()">+34 629 82 84 38</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. del Poblenou de Benitatxell, 285 · Jávea</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 9:00–20:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Paella-Kochkurs mit der Familie – ein unvergessliches Erlebnis</div>
         </div>
@@ -1235,7 +1235,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34680507469" onclick="event.stopPropagation()">+34 680 50 74 69</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Carrer de la Manta, 7 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 10:00–20:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Abends mit Livemusik – romantischster Sonnenuntergang der Region</div>
         </div>
@@ -1256,7 +1256,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34865778300" onclick="event.stopPropagation()">+34 865 77 83 00</a><div class="rest-price"><span>€</span><span>€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Espadan, Ctra. Moraira a Calpe · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Di–So 12:30–16:00 & 18:30–23:30</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1276,7 +1276,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34644266248" onclick="event.stopPropagation()">+34 644 26 62 48</a><div class="rest-price"><span>€</span><span class="off">€</span><span class="off">€</span></div></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>P.º Senillar · Moraira Zentrum</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 12:00–00:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Max. 2 Kugeln Medium bestellen – schmilzt sonst zu schnell!</div>
         </div>
@@ -1289,8 +1289,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="rest-intro">
       <div>
-        <div class="eyebrow">Aktivitäten & Ausflüge</div>
-        <h2 class="section-h">Unvergessliche Erlebnisse<br><em>rund um Moraira</em></h2>
+        <div class="eyebrow" data-t="act_eyebrow">Aktivitäten & Ausflüge</div>
+        <h2 class="section-h" data-t-h="act_h" data-t-hi="act_hi">Unvergessliche Erlebnisse<br><em>rund um Moraira</em></h2>
         <div class="rest-filter">
           <button class="rf-btn on" onclick="filterAkt('all',this)">Alle</button>
           <button class="rf-btn" onclick="filterAkt('wasser',this)">Wasser & Meer</button>
@@ -1313,7 +1313,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34609002479" onclick="event.stopPropagation()">+34 609 00 24 79</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Puerto de Moraira · Hafen</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 10:30–20:00 · So 12:00–20:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: 4h Abendtour ab 17 Uhr – Sonnenuntergang auf dem Meer</div>
         </div>
@@ -1330,7 +1330,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34606454082" onclick="event.stopPropagation()">+34 606 45 40 82</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Puerto de Moraira, s/n · Hafen</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 8:00–20:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Mojito-Mann kommt direkt ans Boot – kein Witz!</div>
         </div>
@@ -1347,7 +1347,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34966492006" onclick="event.stopPropagation()">+34 966 49 20 06</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 12:00–18:00 · So 12:00–17:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Im Sommer früh buchen – schnell ausgebucht</div>
         </div>
@@ -1364,7 +1364,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34613190490" onclick="event.stopPropagation()">+34 613 19 04 90</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Pintor Durero, 1 · Teulada</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 9:00–17:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Sunrise SUP Tour – magischer Start in den Tag</div>
         </div>
@@ -1381,7 +1381,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34679195912" onclick="event.stopPropagation()">+34 679 19 59 12</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Isla de Formentera · Calpe</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Fr 8:30–14:30 · Sa–So 9:00–14:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Online-Reservierung nötig & festes Schuhwerk unbedingt erforderlich</div>
         </div>
@@ -1398,7 +1398,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965869101" onclick="event.stopPropagation()">+34 965 86 91 01</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Carrer Serra Gelada, s/n · Benidorm</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Tägl. 10:30–19:00 (saisonal)</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Online-Tickets günstiger · Kombikarte mit Aqualandia lohnt sich</div>
         </div>
@@ -1415,7 +1415,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965860100" onclick="event.stopPropagation()">+34 965 86 01 00</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Sierra Helada, s/n · Benidorm</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Tägl. 10:00–19:00 (saisonal)</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Eigene Snacks & Getränke mitbringen – spart bis zu €30</div>
         </div>
@@ -1432,7 +1432,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34966072770" onclick="event.stopPropagation()">+34 966 07 27 70</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Foia del Verdader, 1 · Benidorm</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 10:30–19:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Vogelshow nicht verpassen – Highlight des Parks</div>
         </div>
@@ -1449,7 +1449,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34636277466" onclick="event.stopPropagation()">+34 636 27 74 66</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Partida Segarra s/n · Callosa de Ensarriá</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–So 10:00–18:00</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Kombination mit Fuentes de Algar – Wasserfälle direkt nebenan!</div>
         </div>
@@ -1464,8 +1464,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="rest-intro">
       <div>
-        <div class="eyebrow">Sehenswürdigkeiten</div>
-        <h2 class="section-h">Strände & Natur<br><em>in der Umgebung</em></h2>
+        <div class="eyebrow" data-t="seh_eyebrow">Sehenswürdigkeiten</div>
+        <h2 class="section-h" data-t-h="seh_h" data-t-hi="seh_hi">Strände & Natur<br><em>in der Umgebung</em></h2>
         <div class="rest-filter">
           <button class="rf-btn on" onclick="filterSeh('all',this)">Alle</button>
           <button class="rf-btn" onclick="filterSeh('strand',this)">Strände</button>
@@ -1488,7 +1488,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965732225" onclick="event.stopPropagation()">+34 965 73 22 25</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Carrer del Navegant Josep Ribes · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Start des Küstenwanderwegs Richtung Calpe – traumhafte Aussichten</div>
         </div>
@@ -1504,7 +1504,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. del Gavià, 17 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1520,7 +1520,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34966623601" onclick="event.stopPropagation()">+34 966 62 36 01</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe, 170 · CV-746</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Wasserschuhe mitbringen – kein Sand, dafür der beste Schnorchel-Spot!</div>
         </div>
@@ -1536,7 +1536,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Cala del Portet · Moraira</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Früh morgens kommen – im Sommer schnell voll</div>
         </div>
@@ -1552,7 +1552,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Cabo de Palos, 7 · Teulada</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Wenig bekannt – unter der Woche fast immer leer</div>
         </div>
@@ -1568,7 +1568,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Camí de la Caleta · Jávea</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Kombination mit dem Fischerhafen Jávea – tolle Fischrestaurants</div>
         </div>
@@ -1584,7 +1584,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>C. Dinamarca, 14 · Calpe</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Kombination mit Aufstieg auf den Penyal d'Ifac – perfekter Tag</div>
         </div>
@@ -1600,7 +1600,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>P.º Maritimo Playa del Bol · Calpe</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1615,7 +1615,7 @@ footer{background:var(--b2);padding:3rem 4rem}
           <div class="rest-meta">
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Cala del Moraig · Benitachell</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Täglich geöffnet · Eintritt frei</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Meereshöhle am Ende des Strandes durchschwimmen – unvergesslich!</div>
         </div>
@@ -1630,8 +1630,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="rest-intro">
       <div>
-        <div class="eyebrow">Einkaufen</div>
-        <h2 class="section-h">Supermärkte &<br><em>Einkaufen in der Nähe</em></h2>
+        <div class="eyebrow" data-t="eink_eyebrow">Einkaufen</div>
+        <h2 class="section-h" data-t-h="eink_h" data-t-hi="eink_hi">Supermärkte &<br><em>Einkaufen in der Nähe</em></h2>
         <div class="rest-filter">
           <button class="rf-btn on" onclick="filterEink('all',this)">Alle</button>
           <button class="rf-btn" onclick="filterEink('super',this)">Supermärkte</button>
@@ -1653,7 +1653,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965594139" onclick="event.stopPropagation()">+34 965 59 41 39</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. d'Europa, 3 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 9:00–21:30 · So geschlossen</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
         </div>
       </div>
@@ -1669,7 +1669,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34965747225" onclick="event.stopPropagation()">+34 965 74 72 25</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Ctra. Moraira a Calpe km 3 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 8:30–21:00 · So geschlossen</span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Frisches Baguette morgens – täglich frisch gebacken</div>
         </div>
@@ -1686,7 +1686,7 @@ footer{background:var(--b2);padding:3rem 4rem}
             <div class="rest-meta-row"><span class="rm-ic">📞</span><a href="tel:+34900902466" onclick="event.stopPropagation()">+34 900 902 466</a></div>
             <div class="rest-meta-row"><span class="rm-ic">📍</span><span>Av. de la Marina, 112 · Benissa</span></div>
             <div class="rest-meta-row"><span class="rm-ic">🕐</span><span>Mo–Sa 9:00–21:30 · <strong style="color:var(--teal)">So 9:00–21:30 ✓</strong></span></div>
-            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem">Auf Google Maps öffnen →</span></div>
+            <div class="rest-meta-row" style="margin-top:.3rem"><span class="rm-ic">🌐</span><span style="color:var(--teal);font-size:.72rem" data-t="map_open">Auf Google Maps öffnen →</span></div>
           </div>
           <div class="rest-special">✦ Tipp: Einziger Markt der Region mit Sonntagsöffnung</div>
         </div>
@@ -1753,8 +1753,8 @@ footer{background:var(--b2);padding:3rem 4rem}
   <div class="container">
     <div class="loc-wrap">
       <div>
-        <div class="eyebrow">Lage</div>
-        <h2 class="section-h">Benissa,<br><em>Costa Blanca</em></h2>
+        <div class="eyebrow" data-t="loc_eyebrow">Lage</div>
+        <h2 class="section-h" data-t-h="loc_h" data-t-hi="loc_hi">Benissa,<br><em>Costa Blanca</em></h2>
         <p class="section-p">Hoch über dem Mittelmeer, in Benissa – einer der schönsten und authentischsten Gemeinden der Costa Blanca.</p>
         <div class="loc-facts">
           <div class="loc-item"><div class="loc-mark">🏖️</div><div><h4>Strand</h4><p>Cala Advocat & Cala del Moraig in nur 8 Minuten erreichbar</p></div></div>
@@ -1882,6 +1882,15 @@ var translations = {
     book_form_h:'Anfrage stellen', book_form_p:'Sophie & Lisa antworten persönlich innerhalb von 24 Stunden.',
     book_arrival:'Anreise', book_departure:'Abreise', book_guests:'Gäste', book_fname:'Vorname',
     book_lname:'Nachname', book_msg:'Nachricht', book_msg_ph:'Besondere Wünsche, Fragen…',
+    book_email:'E-Mail', book_phone:'Telefon', book_lang:'Sprache',
+    rest_eyebrow:'Kulinarischer Guide', rest_h:'Die besten Restaurants', rest_hi:'Moraira & CV-746',
+    rest_note:'Empfehlung von Sophie & Lisa: Die CV-746 zwischen Moraira und Calpe ist eine der gastronomisch reichsten Straßen der Costa Blanca.',
+    act_eyebrow:'Aktivitäten & Ausflüge', act_h:'Unvergessliche Erlebnisse', act_hi:'rund um Moraira',
+    seh_eyebrow:'Sehenswürdigkeiten', seh_h:'Strände & Natur', seh_hi:'in der Umgebung',
+    eink_eyebrow:'Einkaufen', eink_h:'Supermärkte &', eink_hi:'Einkaufen in der Nähe',
+    map_open:'Auf Google Maps öffnen →', cal_arrival:'Anreise', cal_departure:'Abreise',
+    loc_eyebrow:'Lage', loc_h:'Benissa,', loc_hi:'Costa Blanca',
+    viewer_eyebrow:'Virtuelle Tour', viewer_h:'Erkunden Sie die Villa', viewer_hi:'in 3D',
     book_btn:'Verbindliche Anfrage senden →', book_trust:'SSL-verschlüsselt · Keine Buchungsgebühr · Direkt bei Sophie & Lisa',
     season_low:'Nebensaison · Oktober – April', season_mid:'Zwischensaison · Mai, Jun, Sep, Okt',
     season_high:'Hochsaison · Juli – August', season_badge:'Beliebt',
@@ -1915,6 +1924,15 @@ var translations = {
     book_form_h:'Send Enquiry', book_form_p:'Sophie & Lisa will reply personally within 24 hours.',
     book_arrival:'Check-in', book_departure:'Check-out', book_guests:'Guests', book_fname:'First name',
     book_lname:'Last name', book_msg:'Message', book_msg_ph:'Special requests, questions…',
+    book_email:'E-Mail', book_phone:'Phone', book_lang:'Language',
+    rest_eyebrow:'Culinary Guide', rest_h:'Best Restaurants', rest_hi:'Moraira & CV-746',
+    rest_note:'Recommendation from Sophie & Lisa: The CV-746 between Moraira and Calpe is one of the most gastronomically rich roads on the Costa Blanca.',
+    act_eyebrow:'Activities & Excursions', act_h:'Unforgettable experiences', act_hi:'around Moraira',
+    seh_eyebrow:'Sights', seh_h:'Beaches & Nature', seh_hi:'in the area',
+    eink_eyebrow:'Shopping', eink_h:'Supermarkets &', eink_hi:'Shopping nearby',
+    map_open:'Open in Google Maps →', cal_arrival:'Check-in', cal_departure:'Check-out',
+    loc_eyebrow:'Location', loc_h:'Benissa,', loc_hi:'Costa Blanca',
+    viewer_eyebrow:'Virtual Tour', viewer_h:'Explore the Villa', viewer_hi:'in 3D',
     book_btn:'Send Enquiry →', book_trust:'SSL encrypted · No booking fee · Direct with Sophie & Lisa',
     season_low:'Low Season · October – April', season_mid:'Mid Season · May, Jun, Sep, Oct',
     season_high:'High Season · July – August', season_badge:'Popular',
@@ -1946,7 +1964,7 @@ var translations = {
     book_eyebrow:'Prix & Réservation', book_h:'Prix transparents,', book_hi:'réservation simple',
     book_p:'Sans frais de réservation. Directement avec Sophie & Lisa – personnel et sans intermédiaires.',
     book_form_h:'Envoyer une demande', book_form_p:'Sophie & Lisa répondront personnellement dans les 24 heures.',
-    book_arrival:'Arrivée', book_departure:'Départ', book_guests:'Voyageurs', book_fname:'Prénom',
+    book_arrival:'Arrivée', book_email:'E-Mail', book_phone:'Téléphone', book_lang:'Langue', rest_eyebrow:'Guide gastronomique', rest_h:'Meilleurs restaurants', rest_hi:'Moraira & CV-746', act_eyebrow:'Activités & Excursions', act_h:'Expériences inoubliables', act_hi:'autour de Moraira', seh_eyebrow:'Sites touristiques', seh_h:'Plages & Nature', seh_hi:'aux alentours', eink_eyebrow:'Shopping', eink_h:'Supermarchés &', eink_hi:'Shopping à proximité', map_open:'Ouvrir dans Google Maps →', cal_arrival:'Arrivée', cal_departure:'Départ', loc_eyebrow:'Situation', loc_h:'Benissa,', loc_hi:'Costa Blanca', viewer_eyebrow:'Visite virtuelle', viewer_h:'Explorez la villa', viewer_hi:'en 3D',, book_departure:'Départ', book_guests:'Voyageurs', book_fname:'Prénom',
     book_lname:'Nom', book_msg:'Message', book_msg_ph:'Demandes spéciales, questions…',
     book_btn:'Envoyer la demande →', book_trust:'Crypté SSL · Sans frais · Directement avec Sophie & Lisa',
     season_low:'Basse saison · Octobre – Avril', season_mid:'Moyenne saison · Mai, Jun, Sep, Oct',
@@ -1979,7 +1997,7 @@ var translations = {
     book_eyebrow:'Prijzen & Boeking', book_h:'Transparante prijzen,', book_hi:'eenvoudig boeken',
     book_p:'Geen boekingskosten. Rechtstreeks bij Sophie & Lisa – persoonlijk en zonder tussenpersonen.',
     book_form_h:'Aanvraag sturen', book_form_p:'Sophie & Lisa antwoorden persoonlijk binnen 24 uur.',
-    book_arrival:'Aankomst', book_departure:'Vertrek', book_guests:'Gasten', book_fname:'Voornaam',
+    book_arrival:'Aankomst', book_email:'E-Mail', book_phone:'Telefoon', book_lang:'Taal', rest_eyebrow:'Culinaire gids', rest_h:'Beste restaurants', rest_hi:'Moraira & CV-746', act_eyebrow:'Activiteiten & Uitstapjes', act_h:'Onvergetelijke ervaringen', act_hi:'rond Moraira', seh_eyebrow:'Bezienswaardigheden', seh_h:'Stranden & Natuur', seh_hi:'in de omgeving', eink_eyebrow:'Winkelen', eink_h:'Supermarkten &', eink_hi:'Winkelen in de buurt', map_open:'Openen in Google Maps →', cal_arrival:'Aankomst', cal_departure:'Vertrek', loc_eyebrow:'Ligging', loc_h:'Benissa,', loc_hi:'Costa Blanca', viewer_eyebrow:'Virtuele tour', viewer_h:'Ontdek de villa', viewer_hi:'in 3D',, book_departure:'Vertrek', book_guests:'Gasten', book_fname:'Voornaam',
     book_lname:'Achternaam', book_msg:'Bericht', book_msg_ph:'Speciale wensen, vragen…',
     book_btn:'Aanvraag versturen →', book_trust:'SSL-versleuteld · Geen boekingskosten · Rechtstreeks bij Sophie & Lisa',
     season_low:'Laagseizoen · Oktober – April', season_mid:'Tussenseizoen · Mei, Jun, Sep, Okt',
@@ -2012,7 +2030,7 @@ var translations = {
     book_eyebrow:'Ceny i rezerwacja', book_h:'Przejrzyste ceny,', book_hi:'łatwa rezerwacja',
     book_p:'Bez opłat rezerwacyjnych. Bezpośrednio z Sophie i Lisą – osobiście, bez pośredników.',
     book_form_h:'Wyślij zapytanie', book_form_p:'Sophie i Lisa odpowiedzą osobiście w ciągu 24 godzin.',
-    book_arrival:'Przyjazd', book_departure:'Wyjazd', book_guests:'Goście', book_fname:'Imię',
+    book_arrival:'Przyjazd', book_email:'E-Mail', book_phone:'Telefon', book_lang:'Język', rest_eyebrow:'Przewodnik kulinarny', rest_h:'Najlepsze restauracje', rest_hi:'Moraira & CV-746', act_eyebrow:'Aktywności & Wycieczki', act_h:'Niezapomniane doświadczenia', act_hi:'wokół Morairy', seh_eyebrow:'Atrakcje', seh_h:'Plaże i Natura', seh_hi:'w okolicy', eink_eyebrow:'Zakupy', eink_h:'Supermarkety &', eink_hi:'Zakupy w pobliżu', map_open:'Otwórz w Google Maps →', cal_arrival:'Przyjazd', cal_departure:'Wyjazd', loc_eyebrow:'Lokalizacja', loc_h:'Benissa,', loc_hi:'Costa Blanca', viewer_eyebrow:'Wirtualna wycieczka', viewer_h:'Poznaj willę', viewer_hi:'w 3D',, book_departure:'Wyjazd', book_guests:'Goście', book_fname:'Imię',
     book_lname:'Nazwisko', book_msg:'Wiadomość', book_msg_ph:'Specjalne życzenia, pytania…',
     book_btn:'Wyślij zapytanie →', book_trust:'Szyfrowanie SSL · Bez opłat · Bezpośrednio z Sophie i Lisą',
     season_low:'Niski sezon · Październik – Kwiecień', season_mid:'Pośredni sezon · Maj, Cze, Wrz, Paź',
@@ -2045,7 +2063,7 @@ var translations = {
     book_eyebrow:'Цены и бронирование', book_h:'Прозрачные цены,', book_hi:'простое бронирование',
     book_p:'Без комиссий. Напрямую с Софи и Лизой – лично, без посредников.',
     book_form_h:'Отправить запрос', book_form_p:'Софи и Лиза ответят лично в течение 24 часов.',
-    book_arrival:'Заезд', book_departure:'Выезд', book_guests:'Гостей', book_fname:'Имя',
+    book_arrival:'Заезд', book_email:'E-Mail', book_phone:'Телефон', book_lang:'Язык', rest_eyebrow:'Кулинарный гид', rest_h:'Лучшие рестораны', rest_hi:'Моραира и CV-746', act_eyebrow:'Активности и экскурсии', act_h:'Незабываемые впечатления', act_hi:'вокруг Моραиры', seh_eyebrow:'Достопримечательности', seh_h:'Пляжи и природа', seh_hi:'в окрестностях', eink_eyebrow:'Магазины', eink_h:'Супермаркеты &', eink_hi:'Магазины поблизости', map_open:'Открыть в Google Maps →', cal_arrival:'Заезд', cal_departure:'Выезд', loc_eyebrow:'Расположение', loc_h:'Бениса,', loc_hi:'Коста-Бланка', viewer_eyebrow:'Виртуальный тур', viewer_h:'Исследуйте виллу', viewer_hi:'в 3D',, book_departure:'Выезд', book_guests:'Гостей', book_fname:'Имя',
     book_lname:'Фамилия', book_msg:'Сообщение', book_msg_ph:'Пожелания, вопросы…',
     book_btn:'Отправить запрос →', book_trust:'SSL-шифрование · Без комиссий · Напрямую с Софи и Лизой',
     season_low:'Низкий сезон · Октябрь – Апрель', season_mid:'Межсезонье · Май, Июн, Сен, Окт',
@@ -2082,7 +2100,7 @@ translations.es = {
   book_eyebrow:'Precios y reservas', book_h:'Precios transparentes,', book_hi:'reserva sencilla',
   book_p:'Sin comisiones de reserva. Directamente con Sophie y Lisa – personal y sin intermediarios.',
   book_form_h:'Enviar consulta', book_form_p:'Sophie y Lisa responderán personalmente en 24 horas.',
-  book_arrival:'Llegada', book_departure:'Salida', book_guests:'Huéspedes', book_fname:'Nombre',
+  book_arrival:'Llegada', book_email:'E-Mail', book_phone:'Teléfono', book_lang:'Idioma', rest_eyebrow:'Guía gastronómica', rest_h:'Mejores restaurantes', rest_hi:'Moraira & CV-746', act_eyebrow:'Actividades & Excursiones', act_h:'Experiencias inolvidables', act_hi:'alrededor de Moraira', seh_eyebrow:'Lugares de interés', seh_h:'Playas y Naturaleza', seh_hi:'en los alrededores', eink_eyebrow:'Compras', eink_h:'Supermercados &', eink_hi:'Compras cerca', map_open:'Abrir en Google Maps →', cal_arrival:'Llegada', cal_departure:'Salida', loc_eyebrow:'Ubicación', loc_h:'Benissa,', loc_hi:'Costa Blanca', viewer_eyebrow:'Tour virtual', viewer_h:'Explore la villa', viewer_hi:'en 3D',, book_departure:'Salida', book_guests:'Huéspedes', book_fname:'Nombre',
   book_lname:'Apellidos', book_msg:'Mensaje', book_msg_ph:'Peticiones especiales, preguntas…',
   book_btn:'Enviar consulta →', book_trust:'Cifrado SSL · Sin comisiones · Directamente con Sophie y Lisa',
   season_low:'Temporada baja · Octubre – Abril', season_mid:'Temporada media · May, Jun, Sep, Oct',
@@ -2113,7 +2131,19 @@ function setLang(lang) {
     if (t[key] !== undefined) el.textContent = t[key];
   });
 
-  // 2. Section headings with italic
+  // 1b. All data-t-h / data-t-hi headings (h + italic em)
+  document.querySelectorAll('[data-t-h]').forEach(function(el) {
+    var kh = el.getAttribute('data-t-h');
+    var khi = el.getAttribute('data-t-hi');
+    if (t[kh] && t[khi]) el.innerHTML = t[kh] + '<br><em>' + t[khi] + '</em>';
+    else if (t[kh]) el.innerHTML = t[kh];
+  });
+
+  // 1c. Placeholder translations
+  document.querySelectorAll('[data-ph]').forEach(function(el) {
+    var key = el.getAttribute('data-ph');
+    if (t[key]) el.placeholder = t[key];
+  });
   function setH(selector, plain, italic) {
     var el = document.querySelector(selector);
     if (el && t[plain] && t[italic]) el.innerHTML = t[plain] + '<br><em>' + t[italic] + '</em>';
