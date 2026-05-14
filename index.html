@@ -430,7 +430,7 @@ footer{background:#0E0C08;padding:3rem 4rem}
 .ft-copy{color:rgba(253,250,245,.25);font-size:.7rem}
 #modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:2rem}
 #modal.open{display:flex}
-.modal-box{background:var(--b0);border-radius:10px;max-width:460px;width:100%;padding:2.8rem;text-align:center;position:relative;animation:risein .3s ease}
+.modal-box{background:var(--b0);border-radius:10px;max-width:580px;width:100%;padding:2.8rem;text-align:center;position:relative;animation:risein .3s ease}
 .modal-box h3{font-size:1.9rem;color:var(--ink);margin-bottom:.5rem}
 .modal-box p{color:var(--ink3);font-size:.88rem;line-height:1.7;margin-bottom:1.5rem}
 .modal-close{position:absolute;top:1rem;right:1.3rem;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--b4)}
@@ -1122,7 +1122,7 @@ footer{background:var(--b2);padding:3rem 4rem}
 
       <div class="rest-card" data-cat="moraira" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJ9Z54iQkHnhIRmTFS5UhSfLY','_blank')" style="cursor:pointer">
         <div class="rest-card-top">
-          <img src="https://images.unsplash.com/photo-1551024709-8f23befc548e?w=500&q=75" alt="Algas l'Andragó">
+          <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&q=75" alt="Algas l'Andragó">
           <span class="rest-dist">📍 10 km · 12 Min. · CV-746</span>
           <span class="rest-stars">★ 4.3 <span>3.137 Bewertungen</span></span>
         </div>
@@ -1320,7 +1320,7 @@ footer{background:var(--b2);padding:3rem 4rem}
       </div>
 
       <div class="rest-card" data-akat="wasser" onclick="window.open('https://www.google.com/maps/place/?q=place_id:ChIJkWXi8bAHnhIRNv5N2uBITlE','_blank')" style="cursor:pointer">
-        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1544551763-92ab974cef09?w=500&q=75" alt="Scuba Moraira"><span class="rest-dist">📍 12 km · CV-746</span><span class="rest-stars">★ 4.7 <span>91 Bewertungen</span></span></div>
+        <div class="rest-card-top"><img src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=500&q=75" alt="Scuba Moraira"><span class="rest-dist">📍 12 km · CV-746</span><span class="rest-stars">★ 4.7 <span>91 Bewertungen</span></span></div>
         <div class="rest-body">
           <div class="rest-cat">Tauchen · PADI · Moraira</div>
           <div class="rest-name">Scuba Moraira</div>
@@ -2513,7 +2513,47 @@ function sendBooking(){
   document.getElementById('modal').classList.add('open');
 }
 function sendContact(){document.getElementById('mic').textContent='mail';document.getElementById('mtitle').textContent='Nachricht erhalten!';document.getElementById('mtext').textContent='Herzlichen Dank. Familie Wunsch meldet sich innerhalb von 24 Stunden persoenlich bei Ihnen.';document.getElementById('modal').classList.add('open');}
-function showLegal(t){document.getElementById('mic').textContent=t==='impressum'?'doc':'lock';document.getElementById('mtitle').textContent=t==='impressum'?'Impressum':'Datenschutz';document.getElementById('mtext').textContent=t==='impressum'?'Villa Las Hermanas - Inhaber: Familie Wunsch - Benissa, Alicante, Espana - E-Mail: info@villa-las-hermanas.com':'Ihre Daten werden ausschliesslich zur Bearbeitung Ihrer Anfrage genutzt und nicht an Dritte weitergegeben (DSGVO).';document.getElementById('modal').classList.add('open');}
+function showLegal(t){
+  var box = document.querySelector('.modal-box');
+  document.getElementById('mic').textContent = t==='impressum' ? '📄' : '🔒';
+  document.getElementById('mtitle').textContent = t==='impressum' ? 'Impressum' : 'Datenschutzerklärung';
+  if(box){box.style.maxHeight='82vh';box.style.overflowY='auto';box.style.maxWidth='640px';}
+
+  var imp = '<div style="text-align:left;font-size:.82rem;line-height:1.8;color:var(--ink3)">'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Angaben gemäß § 5 TMG</p>'
+    + '<p style="margin-bottom:1rem"><strong>Sophie Wunsch & Lisa Wunsch-Zöllner</strong></p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Kontakt</p>'
+    + '<p style="margin-bottom:1rem">E-Mail: <a href="mailto:info@villa-las-hermanas.com" style="color:var(--teal)">info@villa-las-hermanas.com</a></p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</p>'
+    + '<p style="margin-bottom:1rem">Sophie Wunsch & Lisa Wunsch-Zöllner</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Streitschlichtung</p>'
+    + '<p style="margin-bottom:1rem">Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color:var(--teal)">ec.europa.eu/consumers/odr</a>. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Haftung für Inhalte</p>'
+    + '<p style="margin-bottom:1rem">Als Diensteanbieterinnen sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieterinnen nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">Urheberrecht</p>'
+    + '<p>Die durch die Seitenbetreiberinnen erstellten Inhalte auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung und Verbreitung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der Autorinnen.</p>'
+    + '</div>';
+
+  var dse = '<div style="text-align:left;font-size:.82rem;line-height:1.8;color:var(--ink3)">'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">1. Verantwortliche (Art. 4 Nr. 7 DSGVO)</p>'
+    + '<p style="margin-bottom:1rem">Sophie Wunsch & Lisa Wunsch-Zöllner<br>E-Mail: <a href="mailto:info@villa-las-hermanas.com" style="color:var(--teal)">info@villa-las-hermanas.com</a></p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">2. Erhebung personenbezogener Daten</p>'
+    + '<p style="margin-bottom:1rem">Bei Nutzung unseres Kontakt- oder Buchungsformulars erheben wir: Name, E-Mail-Adresse, Telefonnummer, Reisezeitraum und Ihre Nachricht. Diese Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben.</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">3. Rechtsgrundlage</p>'
+    + '<p style="margin-bottom:1rem">Die Verarbeitung erfolgt zur Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO) sowie auf Grundlage Ihres Einverständnisses (Art. 6 Abs. 1 lit. a DSGVO).</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">4. Speicherdauer</p>'
+    + '<p style="margin-bottom:1rem">Ihre Daten werden gelöscht, sobald sie für den Zweck ihrer Erhebung nicht mehr notwendig sind, spätestens nach 2 Jahren.</p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">5. Ihre Rechte</p>'
+    + '<p style="margin-bottom:1rem">Sie haben das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18) und Widerspruch (Art. 21 DSGVO). Kontakt: <a href="mailto:info@villa-las-hermanas.com" style="color:var(--teal)">info@villa-las-hermanas.com</a></p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">6. Externe Dienste</p>'
+    + '<p style="margin-bottom:1rem">Diese Website nutzt Google Maps (Google Ireland Limited, Gordon House, Dublin 4, Irland). Bei Nutzung können Daten an Google-Server übertragen werden. Datenschutzerklärung: <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--teal)">policies.google.com/privacy</a></p>'
+    + '<p style="margin-bottom:.3rem;font-weight:500;color:var(--ink)">7. Beschwerderecht</p>'
+    + '<p>Sie haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren. Zuständig: Bundesbeauftragter für den Datenschutz und die Informationsfreiheit (BfDI), <a href="https://www.bfdi.bund.de" target="_blank" style="color:var(--teal)">www.bfdi.bund.de</a></p>'
+    + '</div>';
+
+  document.getElementById('mtext').innerHTML = t==='impressum' ? imp : dse;
+  document.getElementById('modal').classList.add('open');
+}
 function closeModal(e){if(!e||e.target===document.getElementById('modal')||!e.target)document.getElementById('modal').classList.remove('open');}
 function filterRest(cat,btn){document.querySelectorAll('.rf-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');document.querySelectorAll('.rest-card').forEach(function(c){var cats=c.getAttribute('data-cat')||'';c.style.display=(cat==='all'||cats.includes(cat))?'flex':'none';});}
 function filterSeh(cat,btn){document.querySelectorAll('#sehenswuerdigkeiten .rf-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');document.querySelectorAll('#seh-grid .rest-card').forEach(function(c){var cats=c.getAttribute('data-scat')||'';c.style.display=(cat==='all'||cats.includes(cat))?'flex':'none';});}
