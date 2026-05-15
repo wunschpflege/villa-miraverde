@@ -3,21 +3,32 @@ const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-
+ 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'villa-las-hermanas-secret-2025';
-
+ 
 // Database
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
-
+ 
 // Middleware
 app.use(express.json());
+ 
+// ── KEIN CACHING für HTML-Dateien ──
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html') || req.path === '/' || req.path === '/admin') {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+  next();
+});
+ 
 app.use(express.static(path.join(__dirname)));
-
+ 
 // ── DB SETUP ──
 async function setupDB() {
   try {
@@ -32,7 +43,7 @@ async function setupDB() {
         approved BOOLEAN DEFAULT false,
         created_at TIMESTAMP DEFAULT NOW()
       );
-
+ 
       CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
         firstname VARCHAR(100),
@@ -46,7 +57,7 @@ async function setupDB() {
         status VARCHAR(20) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT NOW()
       );
-
+ 
       CREATE TABLE IF NOT EXISTS blocked_dates (
         id SERIAL PRIMARY KEY,
         date_from DATE NOT NULL,
@@ -60,7 +71,7 @@ async function setupDB() {
     console.error('DB setup error:', err.message);
   }
 }
-
+ 
 // ── AUTH MIDDLEWARE ──
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
@@ -72,7 +83,7 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: 'Token ungültig' });
   }
 }
-
+ 
 // ── AUTH ROUTES ──
 app.post('/api/login', async (req, res) => {
   const { password } = req.body;
@@ -84,7 +95,7 @@ app.post('/api/login', async (req, res) => {
     res.status(401).json({ error: 'Falsches Passwort' });
   }
 });
-
+ 
 // ── REVIEWS PUBLIC ──
 app.get('/api/reviews', async (req, res) => {
   try {
@@ -96,7 +107,7 @@ app.get('/api/reviews', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+ 
 app.post('/api/reviews', async (req, res) => {
   const { name, country, date, rating, text } = req.body;
   if (!name || !text || !rating) return res.status(400).json({ error: 'Pflichtfelder fehlen' });
@@ -110,24 +121,24 @@ app.post('/api/reviews', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+ 
 // ── REVIEWS ADMIN ──
 app.get('/api/admin/reviews', authMiddleware, async (req, res) => {
   const result = await pool.query('SELECT * FROM reviews ORDER BY created_at DESC');
   res.json(result.rows);
 });
-
+ 
 app.patch('/api/admin/reviews/:id', authMiddleware, async (req, res) => {
   const { approved } = req.body;
   await pool.query('UPDATE reviews SET approved=$1 WHERE id=$2', [approved, req.params.id]);
   res.json({ success: true });
 });
-
+ 
 app.delete('/api/admin/reviews/:id', authMiddleware, async (req, res) => {
   await pool.query('DELETE FROM reviews WHERE id=$1', [req.params.id]);
   res.json({ success: true });
 });
-
+ 
 // ── BOOKINGS PUBLIC ──
 app.post('/api/bookings', async (req, res) => {
   const { firstname, lastname, email, phone, checkin, checkout, guests, message } = req.body;
@@ -142,45 +153,45 @@ app.post('/api/bookings', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+ 
 // ── BOOKINGS ADMIN ──
 app.get('/api/admin/bookings', authMiddleware, async (req, res) => {
   const result = await pool.query('SELECT * FROM bookings ORDER BY created_at DESC');
   res.json(result.rows);
 });
-
+ 
 app.patch('/api/admin/bookings/:id', authMiddleware, async (req, res) => {
   const { status } = req.body;
   await pool.query('UPDATE bookings SET status=$1 WHERE id=$2', [status, req.params.id]);
   res.json({ success: true });
 });
-
+ 
 app.delete('/api/admin/bookings/:id', authMiddleware, async (req, res) => {
   await pool.query('DELETE FROM bookings WHERE id=$1', [req.params.id]);
   res.json({ success: true });
 });
-
+ 
 // ── BLOCKED DATES ──
 app.get('/api/blocked-dates', async (req, res) => {
   const result = await pool.query('SELECT * FROM blocked_dates ORDER BY date_from');
   res.json(result.rows);
 });
-
+ 
 app.post('/api/admin/blocked-dates', authMiddleware, async (req, res) => {
   const { date_from, date_to, label } = req.body;
   await pool.query('INSERT INTO blocked_dates (date_from, date_to, label) VALUES ($1,$2,$3)', [date_from, date_to, label]);
   res.json({ success: true });
 });
-
+ 
 app.delete('/api/admin/blocked-dates/:id', authMiddleware, async (req, res) => {
   await pool.query('DELETE FROM blocked_dates WHERE id=$1', [req.params.id]);
   res.json({ success: true });
 });
-
+ 
 // ── SERVE PAGES ──
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
+ 
 // Start
 setupDB().then(() => {
   app.listen(PORT, () => console.log(`🏠 Villa Las Hermanas läuft auf Port ${PORT}`));
