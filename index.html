@@ -98,7 +98,7 @@ img{display:block;max-width:100%}
 }
 .tab:hover{color:var(--teal);background:var(--teal3)}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500}
-.tab .tab-icon{font-size:1rem;line-height:1}
+.tab .tab-icon{width:15px;height:15px;flex-shrink:0}
 
 /* ═══════════════════════════════════════
    CONTENT AREA
@@ -506,7 +506,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
     border:none;background:none;font-family:'DM Sans',sans-serif;
     border-top:2px solid transparent;transition:color .2s,border-color .2s;
   }
-  .mob-tab .tab-icon{font-size:1.15rem}
+  .mob-tab .tab-icon{width:18px;height:18px}
   .mob-tab.active{color:var(--teal);border-top-color:var(--teal)}
   #content{margin-top:calc(var(--nav-h) + var(--tab-h));margin-bottom:58px}
 
@@ -587,23 +587,66 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
 
 <!-- ═══ DESKTOP TAB BAR ═══ -->
 <div id="tabbar">
-  <button class="tab active" data-tab="start" onclick="showTab('start')"><span class="tab-icon">🏠</span><span data-t="tab_start">Start</span></button>
-  <button class="tab" data-tab="ausstattung" onclick="showTab('ausstattung')"><span class="tab-icon">✨</span><span data-t="tab_amenities">Ausstattung</span></button>
-  <button class="tab" data-tab="buchen" onclick="showTab('buchen')"><span class="tab-icon">📅</span><span data-t="tab_book">Buchen</span></button>
-  <button class="tab" data-tab="restaurants" onclick="showTab('restaurants')"><span class="tab-icon">🍽️</span><span data-t="tab_restaurants">Restaurants</span></button>
-  <button class="tab" data-tab="aktivitaeten" onclick="showTab('aktivitaeten')"><span class="tab-icon">🏄</span><span data-t="tab_activities">Aktivitäten</span></button>
-  <button class="tab" data-tab="straende" onclick="showTab('straende')"><span class="tab-icon">🏖️</span><span data-t="tab_beaches">Strände</span></button>
-  <button class="tab" data-tab="einkaufen" onclick="showTab('einkaufen')"><span class="tab-icon">🛒</span><span data-t="tab_shopping">Einkaufen</span></button>
-  <button class="tab" data-tab="lage" onclick="showTab('lage')"><span class="tab-icon">📍</span><span data-t="tab_location">Lage & Kontakt</span></button>
+  <button class="tab active" data-tab="start" onclick="showTab('start')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span data-t="tab_start">Start</span>
+  </button>
+  <button class="tab" data-tab="ausstattung" onclick="showTab('ausstattung')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span data-t="tab_amenities">Ausstattung</span>
+  </button>
+  <button class="tab" data-tab="buchen" onclick="showTab('buchen')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-t="tab_book">Buchen</span>
+  </button>
+  <button class="tab" data-tab="restaurants" onclick="showTab('restaurants')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    <span data-t="tab_restaurants">Restaurants</span>
+  </button>
+  <button class="tab" data-tab="aktivitaeten" onclick="showTab('aktivitaeten')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8l4 4-4 4"/></svg>
+    <span data-t="tab_activities">Aktivitäten</span>
+  </button>
+  <button class="tab" data-tab="straende" onclick="showTab('straende')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V10l8-6 8 6v10"/><path d="M10 20v-5h4v5"/></svg>
+    <span data-t="tab_beaches">Strände</span>
+  </button>
+  <button class="tab" data-tab="einkaufen" onclick="showTab('einkaufen')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span data-t="tab_shopping">Einkaufen</span>
+  </button>
+  <button class="tab" data-tab="ueber-uns" onclick="showTab('ueber-uns')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    <span data-t="tab_about">Über uns</span>
+  </button>
+  <button class="tab" data-tab="lage" onclick="showTab('lage')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <span data-t="tab_location">Lage &amp; Kontakt</span>
+  </button>
 </div>
 
 <!-- ═══ MOBILE BOTTOM TAB BAR ═══ -->
 <div id="mob-tabbar">
-  <button class="mob-tab active" data-tab="start" onclick="showTab('start')"><span class="tab-icon">🏠</span><span data-t="tab_start">Start</span></button>
-  <button class="mob-tab" data-tab="buchen" onclick="showTab('buchen')"><span class="tab-icon">📅</span><span data-t="tab_book">Buchen</span></button>
-  <button class="mob-tab" data-tab="restaurants" onclick="showTab('restaurants')"><span class="tab-icon">🍽️</span><span data-t="tab_restaurants">Essen</span></button>
-  <button class="mob-tab" data-tab="straende" onclick="showTab('straende')"><span class="tab-icon">🏖️</span><span data-t="tab_beaches">Strände</span></button>
-  <button class="mob-tab" data-tab="lage" onclick="showTab('lage')"><span class="tab-icon">📍</span><span data-t="tab_location">Lage</span></button>
+  <button class="mob-tab active" data-tab="start" onclick="showTab('start')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span data-t="tab_start">Start</span>
+  </button>
+  <button class="mob-tab" data-tab="buchen" onclick="showTab('buchen')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-t="tab_book">Buchen</span>
+  </button>
+  <button class="mob-tab" data-tab="restaurants" onclick="showTab('restaurants')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    <span data-t="tab_restaurants">Essen</span>
+  </button>
+  <button class="mob-tab" data-tab="ueber-uns" onclick="showTab('ueber-uns')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <span data-t="tab_about">Über uns</span>
+  </button>
+  <button class="mob-tab" data-tab="lage" onclick="showTab('lage')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <span data-t="tab_location">Lage</span>
+  </button>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -967,6 +1010,67 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
     <div style="height:3rem"></div>
   </div>
 
+  <!-- ══ PAGE: ÜBER UNS ══ -->
+  <div id="page-ueber-uns" class="page">
+    <div class="container" style="padding-top:3rem;padding-bottom:5rem;max-width:900px">
+      <div class="eyebrow">Über uns</div>
+      <h2 class="section-h">Ihre Gastgeberinnen<br><em>Sophie &amp; Lisa Wunsch</em></h2>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;margin-top:3rem">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem">
+          <div class="host-avatar" style="width:130px;height:130px;font-size:1.8rem">SW<br><span style="font-size:1rem;opacity:.6;font-family:'DM Sans',sans-serif;letter-spacing:.05em">LW</span></div>
+          <div class="host-badges" style="flex-direction:column;align-items:center">
+            <span class="hbadge">5★ Bewertungen</span>
+            <span class="hbadge">Antwortet &lt; 24h</span>
+            <span class="hbadge">DE · EN · ES</span>
+          </div>
+        </div>
+        <div>
+          <div>
+            <span class="host-name-gold">Sophie Wunsch</span>
+            <span class="host-name-sep"> &amp; </span>
+            <span class="host-name-gold">Lisa Wunsch</span>
+          </div>
+          <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1.4rem">Wir sind zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.</p>
+          <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Irgendwann fragten wir uns: Was wäre, wenn wir dieses Gefühl mit anderen teilen könnten? So entstand der Traum – und aus dem Traum wurde die Villa Las Hermanas. Ein Haus, das wir von Grund auf nach unseren eigenen Wünschen und Vorstellungen gebaut haben.</p>
+          <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Wir möchten, dass Sie dasselbe erleben, was uns Moraira bedeutet – und wir sind jederzeit persönlich für Sie da.</p>
+        </div>
+      </div>
+
+      <div class="section-sep" style="padding:2.5rem 0"><span class="section-sep-icon">🫒</span></div>
+
+      <!-- Values -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--b3);border-radius:10px;overflow:hidden">
+        <div style="background:var(--b0);padding:2rem 1.8rem">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif">Persönlichkeit</h4>
+          <p style="font-size:.8rem;color:var(--ink3);line-height:1.65">Kein anonymes Ferienhaus – wir sind immer persönlich für Sie erreichbar und kümmern uns um jedes Detail.</p>
+        </div>
+        <div style="background:var(--b0);padding:2rem 1.8rem">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif">Vertrauen</h4>
+          <p style="font-size:.8rem;color:var(--ink3);line-height:1.65">Alle Bewertungen sind 5 Sterne. Keine versteckten Kosten, keine Überraschungen – nur Ehrlichkeit und Transparenz.</p>
+        </div>
+        <div style="background:var(--b0);padding:2rem 1.8rem">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif">Schnelligkeit</h4>
+          <p style="font-size:.8rem;color:var(--ink3);line-height:1.65">Wir antworten auf jede Anfrage innerhalb von 24 Stunden – persönlich, auf Deutsch, Englisch oder Spanisch.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;text-align:center">
+        <button class="btn-solid" onclick="showTab('buchen')" style="margin-right:.9rem">Jetzt anfragen</button>
+        <button class="btn-ghost" onclick="showTab('lage')">Kontakt &amp; Lage</button>
+      </div>
+    </div>
+  </div><!-- /page-ueber-uns -->
+
   <!-- ══ PAGE: LAGE & KONTAKT ══ -->
   <div id="page-lage" class="page">
     <div class="container" style="padding-top:3rem;padding-bottom:5rem">
@@ -1010,25 +1114,6 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Mercadona+Benissa" target="_blank"><span class="pin-dot" style="background:#27AE60"></span>🛒 Mercadona</a>
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Penyal+d+Ifac+Calpe" target="_blank"><span class="pin-dot" style="background:#E67E22"></span>🏔️ Peñón d'Ifach</a>
             <a class="map-pin-btn" href="#" target="_blank"><span class="pin-dot" style="background:#9B59B6"></span>✈️ Flughafen ~55 Min.</a>
-          </div>
-
-          <!-- Host card -->
-          <div class="host-card">
-            <div class="host-avatar">SW<br><span style="font-size:.85rem;opacity:.6;font-family:'DM Sans',sans-serif;letter-spacing:.05em">LW</span></div>
-            <div class="host-info">
-              <div class="eyebrow" style="margin-bottom:.5rem">Ihre Gastgeberinnen</div>
-              <div>
-                <span class="host-name-gold">Sophie Wunsch</span>
-                <span class="host-name-sep"> &amp; </span>
-                <span class="host-name-gold">Lisa Wunsch</span>
-              </div>
-              <p>Wir sind zwei Schwestern, die Moraira seit vielen Jahren lieben. Villa Las Hermanas ist unser Herzstück – ein Haus, das wir von Grund auf nach unseren eigenen Wünschen gebaut haben.</p>
-              <div class="host-badges">
-                <span class="hbadge">5★ Bewertungen</span>
-                <span class="hbadge">Antwortet &lt; 24h</span>
-                <span class="hbadge">DE · EN · ES</span>
-              </div>
-            </div>
           </div>
 
           <!-- Guestbook -->
@@ -1098,7 +1183,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
 // ═══════════════════════════════════════
 // TAB NAVIGATION
 // ═══════════════════════════════════════
-var pages = ['start','ausstattung','buchen','restaurants','aktivitaeten','straende','einkaufen','lage'];
+var pages = ['start','ausstattung','buchen','restaurants','aktivitaeten','straende','einkaufen','ueber-uns','lage'];
 
 function showTab(id) {
   // Deactivate all pages & tabs
@@ -1131,14 +1216,15 @@ function toggleMobTabbar() {
   overlay.id = 'mob-extra-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;top:56px;z-index:8990;background:rgba(253,250,245,.98);backdrop-filter:blur(20px);display:flex;flex-direction:column;padding:1.4rem 1.4rem;gap:.2rem;overflow-y:auto';
   var items = [
-    ['ausstattung','✨','Ausstattung'],
-    ['aktivitaeten','🏄','Aktivitäten'],
-    ['einkaufen','🛒','Einkaufen'],
+    ['ausstattung','Ausstattung'],
+    ['aktivitaeten','Aktivitäten'],
+    ['einkaufen','Einkaufen'],
+    ['ueber-uns','Über uns'],
   ];
   items.forEach(function(item){
     var a = document.createElement('button');
     a.style.cssText = 'padding:.85rem 0;font-size:.95rem;color:var(--ink);text-align:left;background:none;border:none;border-bottom:1px solid var(--b2);font-family:"DM Sans",sans-serif;display:flex;align-items:center;gap:.7rem;cursor:pointer';
-    a.innerHTML = '<span style="font-size:1.2rem">'+item[1]+'</span>'+item[2];
+    a.innerHTML = item[1];
     a.onclick = function(){ showTab(item[0]); overlay.classList.remove('open'); overlay.style.display='none'; };
     overlay.appendChild(a);
   });
@@ -1156,9 +1242,9 @@ function toggleMobTabbar() {
 var langFlags = {de:'🇩🇪',en:'🇬🇧',fr:'🇫🇷',nl:'🇳🇱',pl:'🇵🇱',ru:'🇷🇺',es:'🇪🇸'};
 var langCodes = {de:'DE',en:'EN',fr:'FR',nl:'NL',pl:'PL',ru:'RU',es:'ES'};
 var T = {
-  de:{tab_start:'Start',tab_amenities:'Ausstattung',tab_book:'Buchen',tab_restaurants:'Restaurants',tab_activities:'Aktivitäten',tab_beaches:'Strände',tab_shopping:'Einkaufen',tab_location:'Lage & Kontakt',hero_location:'Benissa · Costa Blanca · Spanien',hero_tagline:'Eine außergewöhnliche Architektenvilla hoch über dem Mittelmeer – mit atemberaubendem Meerblick, privatem Pool und der einzigartigen Gastfreundschaft von Sophie & Lisa.',hero_btn1:'Verfügbarkeit prüfen',hero_btn2:'Villa entdecken',hl1_title:'Panorama-Meerblick',hl1_text:'Unverbaubarer Blick auf das türkisblaue Mittelmeer aus allen Haupträumen',hl2_title:'Pool 8 × 4 m',hl2_text:'Privatpool exklusiv für Ihre Gruppe – täglich gepflegt, niemals geteilt',hl3_title:'4 Schlafbereiche',hl3_text:'1 Masterbedroom und 3 Schlafbereiche – jedes Zimmer mit eigenem Bad',hl4_title:'Kulinarischer Guide',hl4_text:'Michelin-verdächtige Restaurants direkt vor der Tür – unser exklusiver Guide hilft',avbar_btn:'Verfügbarkeit prüfen →'},
-  en:{tab_start:'Home',tab_amenities:'Amenities',tab_book:'Book',tab_restaurants:'Restaurants',tab_activities:'Activities',tab_beaches:'Beaches',tab_shopping:'Shopping',tab_location:'Location',hero_location:'Benissa · Costa Blanca · Spain',hero_tagline:'An extraordinary architect villa high above the Mediterranean – with breathtaking sea views, private pool and the unique hospitality of Sophie & Lisa.',hero_btn1:'Check Availability',hero_btn2:'Explore Villa',hl1_title:'Sea View',hl1_text:'Unobstructed views of the turquoise Mediterranean from all main rooms',hl2_title:'Pool 8 × 4 m',hl2_text:'Private pool exclusively for your group – maintained daily, never shared',hl3_title:'4 Bedrooms',hl3_text:'1 Master Bedroom and 3 bedrooms – each with its own private bathroom',hl4_title:'Restaurant Guide',hl4_text:'Michelin-worthy restaurants right on your doorstep – our exclusive guide helps',avbar_btn:'Check Availability →'},
-  es:{tab_start:'Inicio',tab_amenities:'Equipamiento',tab_book:'Reservar',tab_restaurants:'Restaurantes',tab_activities:'Actividades',tab_beaches:'Playas',tab_shopping:'Compras',tab_location:'Ubicación',hero_location:'Benissa · Costa Blanca · España',hero_tagline:'Una extraordinaria villa de arquitecto sobre el Mediterráneo – con impresionantes vistas al mar, piscina privada y la hospitalidad única de Sophie y Lisa.',hero_btn1:'Comprobar disponibilidad',hero_btn2:'Explorar villa',hl1_title:'Vistas al mar',hl1_text:'Vistas despejadas al turquesa Mediterráneo desde todas las estancias principales',hl2_title:'Piscina 8 × 4 m',hl2_text:'Piscina exclusiva para su grupo – mantenida diariamente, nunca compartida',hl3_title:'4 Dormitorios',hl3_text:'1 dormitorio principal y 3 habitaciones – cada una con baño privado',hl4_title:'Guía gastronómica',hl4_text:'Restaurantes de nivel Michelin a la puerta – nuestra guía exclusiva le ayuda',avbar_btn:'Comprobar disponibilidad →'},
+  de:{tab_start:'Start',tab_amenities:'Ausstattung',tab_book:'Buchen',tab_restaurants:'Restaurants',tab_activities:'Aktivitäten',tab_beaches:'Strände',tab_shopping:'Einkaufen',tab_about:'Über uns',tab_location:'Lage & Kontakt',hero_location:'Benissa · Costa Blanca · Spanien',hero_tagline:'Eine außergewöhnliche Architektenvilla hoch über dem Mittelmeer – mit atemberaubendem Meerblick, privatem Pool und der einzigartigen Gastfreundschaft von Sophie & Lisa.',hero_btn1:'Verfügbarkeit prüfen',hero_btn2:'Villa entdecken',hl1_title:'Panorama-Meerblick',hl1_text:'Unverbaubarer Blick auf das türkisblaue Mittelmeer aus allen Haupträumen',hl2_title:'Pool 8 × 4 m',hl2_text:'Privatpool exklusiv für Ihre Gruppe – täglich gepflegt, niemals geteilt',hl3_title:'4 Schlafbereiche',hl3_text:'1 Masterbedroom und 3 Schlafbereiche – jedes Zimmer mit eigenem Bad',hl4_title:'Kulinarischer Guide',hl4_text:'Michelin-verdächtige Restaurants direkt vor der Tür – unser exklusiver Guide hilft',avbar_btn:'Verfügbarkeit prüfen →'},
+  en:{tab_start:'Home',tab_amenities:'Amenities',tab_book:'Book',tab_restaurants:'Restaurants',tab_activities:'Activities',tab_beaches:'Beaches',tab_shopping:'Shopping',tab_about:'About us',tab_location:'Location',hero_location:'Benissa · Costa Blanca · Spain',hero_tagline:'An extraordinary architect villa high above the Mediterranean – with breathtaking sea views, private pool and the unique hospitality of Sophie & Lisa.',hero_btn1:'Check Availability',hero_btn2:'Explore Villa',hl1_title:'Sea View',hl1_text:'Unobstructed views of the turquoise Mediterranean from all main rooms',hl2_title:'Pool 8 × 4 m',hl2_text:'Private pool exclusively for your group – maintained daily, never shared',hl3_title:'4 Bedrooms',hl3_text:'1 Master Bedroom and 3 bedrooms – each with its own private bathroom',hl4_title:'Restaurant Guide',hl4_text:'Michelin-worthy restaurants right on your doorstep – our exclusive guide helps',avbar_btn:'Check Availability →'},
+  es:{tab_start:'Inicio',tab_amenities:'Equipamiento',tab_book:'Reservar',tab_restaurants:'Restaurantes',tab_activities:'Actividades',tab_beaches:'Playas',tab_shopping:'Compras',tab_about:'Nosotras',tab_location:'Ubicación',hero_location:'Benissa · Costa Blanca · España',hero_tagline:'Una extraordinaria villa de arquitecto sobre el Mediterráneo – con impresionantes vistas al mar, piscina privada y la hospitalidad única de Sophie y Lisa.',hero_btn1:'Comprobar disponibilidad',hero_btn2:'Explorar villa',hl1_title:'Vistas al mar',hl1_text:'Vistas despejadas al turquesa Mediterráneo desde todas las estancias principales',hl2_title:'Piscina 8 × 4 m',hl2_text:'Piscina exclusiva para su grupo – mantenida diariamente, nunca compartida',hl3_title:'4 Dormitorios',hl3_text:'1 dormitorio principal y 3 habitaciones – cada una con baño privado',hl4_title:'Guía gastronómica',hl4_text:'Restaurantes de nivel Michelin a la puerta – nuestra guía exclusiva le ayuda',avbar_btn:'Comprobar disponibilidad →'},
   fr:{tab_start:'Accueil',tab_amenities:'Équipements',tab_book:'Réserver',tab_restaurants:'Restaurants',tab_activities:'Activités',tab_beaches:'Plages',tab_shopping:'Shopping',tab_location:'Situation',hero_location:'Benissa · Costa Blanca · Espagne',hero_tagline:'Une villa d\'architecte exceptionnelle surplombant la Méditerranée – avec vue mer imprenable, piscine privée et l\'hospitalité unique de Sophie & Lisa.',hero_btn1:'Vérifier la disponibilité',hero_btn2:'Explorer la villa',hl1_title:'Vue sur mer',hl1_text:'Vue imprenable sur la Méditerranée turquoise depuis toutes les pièces',hl2_title:'Piscine 8 × 4 m',hl2_text:'Piscine exclusive – entretenue quotidiennement, jamais partagée',hl3_title:'4 Chambres',hl3_text:'1 chambre master et 3 chambres – chacune avec salle de bain privée',hl4_title:'Guide gastronomique',hl4_text:'Restaurants dignes du Michelin à deux pas – notre guide exclusif vous aide',avbar_btn:'Vérifier la disponibilité →'},
   nl:{tab_start:'Start',tab_amenities:'Voorzieningen',tab_book:'Boeken',tab_restaurants:'Restaurants',tab_activities:'Activiteiten',tab_beaches:'Stranden',tab_shopping:'Winkelen',tab_location:'Ligging',hero_location:'Benissa · Costa Blanca · Spanje',hero_tagline:'Een buitengewone architectenvilla hoog boven de Middellandse Zee – met adembenemend zeezicht, privézwembad en de unieke gastvrijheid van Sophie & Lisa.',hero_btn1:'Beschikbaarheid controleren',hero_btn2:'Villa ontdekken',hl1_title:'Zeezicht',hl1_text:'Onbelemmerd uitzicht op de turquoise Middellandse Zee vanuit alle hoofdruimtes',hl2_title:'Zwembad 8 × 4 m',hl2_text:'Privézwembad exclusief voor uw groep – dagelijks onderhouden, nooit gedeeld',hl3_title:'4 Slaapkamers',hl3_text:'1 master bedroom en 3 slaapkamers – elk met eigen badkamer',hl4_title:'Restaurantgids',hl4_text:'Michelin-waardige restaurants vlakbij – onze gids helpt u',avbar_btn:'Beschikbaarheid controleren →'},
   pl:{tab_start:'Start',tab_amenities:'Udogodnienia',tab_book:'Rezerwuj',tab_restaurants:'Restauracje',tab_activities:'Aktywności',tab_beaches:'Plaże',tab_shopping:'Zakupy',tab_location:'Lokalizacja',hero_location:'Benissa · Costa Blanca · Hiszpania',hero_tagline:'Wyjątkowa willa architektów wysoko nad Morzem Śródziemnym – z zapierającym dech widokiem na morze, prywatnym basenem i niepowtarzalną gościnnością Sophie i Lisy.',hero_btn1:'Sprawdź dostępność',hero_btn2:'Odkryj willę',hl1_title:'Widok na morze',hl1_text:'Nieograniczony widok na turkusowe Morze Śródziemne ze wszystkich głównych pomieszczeń',hl2_title:'Basen 8 × 4 m',hl2_text:'Prywatny basen – pielęgnowany codziennie, nigdy współdzielony',hl3_title:'4 Sypialnie',hl3_text:'1 sypialnia główna i 3 sypialnie – każda z własną łazienką',hl4_title:'Przewodnik po restauracjach',hl4_text:'Restauracje godne Michelin tuż za drzwiami – nasz przewodnik pomoże',avbar_btn:'Sprawdź dostępność →'},
