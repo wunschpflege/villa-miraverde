@@ -1364,7 +1364,8 @@ function setLang(lang) {
   // 1. data-t Elemente
   document.querySelectorAll('[data-t]').forEach(function(el) {
     var k = el.getAttribute('data-t');
-    if (t[k]) el.textContent = t[k];
+    if (tx[k]) el.textContent = tx[k];
+    else if (t[k]) el.textContent = t[k];
   });
 
   // 2. Sprach-Switcher
