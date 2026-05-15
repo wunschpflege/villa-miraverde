@@ -87,6 +87,14 @@ img{display:block;max-width:100%}
   scrollbar-width:none;
 }
 #tabbar::-webkit-scrollbar{display:none}
+@media(max-width:767px){
+  #tabbar{display:none !important}
+  #mob-tabbar{display:flex !important}
+  .hero-pills{display:none !important}
+  .nav-phone{display:none !important}
+  .nav-logo-sub{display:none !important}
+  #content{margin-top:52px !important;margin-bottom:58px !important}
+}
 
 .tab{
   display:flex;align-items:center;gap:.5rem;
