@@ -87,6 +87,8 @@ img{display:block;max-width:100%}
   scrollbar-width:none;
 }
 #tabbar::-webkit-scrollbar{display:none}
+/* mob-tabbar versteckt auf Desktop, sichtbar nur auf Handy via Media Query */
+#mob-tabbar{display:none}
 @media(max-width:767px){
   #tabbar{display:none !important}
   #mob-tabbar{display:flex !important}
@@ -117,6 +119,14 @@ img{display:block;max-width:100%}
 #content{
   margin-top:calc(var(--nav-h) + var(--tab-h));
   min-height:calc(100vh - var(--nav-h) - var(--tab-h));
+}
+/* Auf Handy: nur Navbar oben, Tab-Bar unten */
+@media(max-width:767px){
+  #content{
+    margin-top:var(--nav-h) !important;
+    margin-bottom:58px !important;
+    min-height:calc(100vh - var(--nav-h) - 58px) !important;
+  }
 }
 
 /* Page transition */
@@ -678,9 +688,6 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
         <div class="lang-option" onclick="setLang('es')"><span class="flag">🇪🇸</span><span>Español</span><span class="lang-native">ES</span></div>
       </div>
     </div>
-    <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobTabbar()">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
