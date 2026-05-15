@@ -2,7 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1E1812">
 <title>Villa Las Hermanas – Benissa · Costa Blanca</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -464,10 +467,14 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
 .section-sep::before,.section-sep::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--b3),transparent)}
 .section-sep-icon{color:var(--gold);font-size:1rem;opacity:.5;flex-shrink:0}
 
+/* iOS Safe Area (iPhone X+, Notch) */
+.device-ios #mob-tabbar{padding-bottom:env(safe-area-inset-bottom)}
+.device-ios #content{margin-bottom:calc(58px + env(safe-area-inset-bottom))}
+
+
 /* ═══════════════════════════════════════
    MOBILE HAMBURGER
-═══════════════════════════════════════ */
-.mob-menu-btn{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:.35rem}
+═══════════════════════════════════════ */flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:.35rem}
 .mob-menu-btn span{display:block;width:20px;height:1.5px;background:#fff;border-radius:2px;transition:all .28s}
 .mob-menu-open .mob-menu-btn span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
 .mob-menu-open .mob-menu-btn span:nth-child(2){opacity:0}
@@ -476,7 +483,43 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
 /* ═══════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════ */
-@media(max-width:900px){
+/* ═══════════════════════════════════════
+   TABLET / iPad (768–1024px)
+═══════════════════════════════════════ */
+@media(min-width:768px) and (max-width:1024px){
+  :root{--nav-h:60px;--tab-h:52px}
+  #topnav{padding:0 1.8rem}
+  #tabbar{overflow-x:auto}
+  .tab{padding:0 1rem;font-size:.7rem}
+  .container{padding:0 1.6rem}
+  .book-wrap,.loc-wrap,.viewer-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .hero-wrap{height:75vh}
+  .hero-content{padding:0 2rem 3.5rem;max-width:100%}
+  .hero-pills{right:2rem;bottom:3.5rem}
+  .hl-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-strip{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px}
+  .am-featured{grid-template-columns:1fr 1fr}
+  .am-feat-side{flex-direction:column}
+  .am-grid{grid-template-columns:repeat(3,1fr)}
+  .am-promise{grid-template-columns:repeat(3,1fr)}
+  .listing-hero-inner{flex-direction:column;gap:1.5rem}
+  .listing-note{max-width:100%}
+  #mob-tabbar{display:none}
+  .start-cta{padding:2.5rem 2rem}
+  .frow{grid-template-columns:1fr}
+  #page-ueber-uns .container > div[style*="grid-template-columns:auto"]{grid-template-columns:1fr;text-align:center}
+  #page-ueber-uns .host-avatar{margin:0 auto}
+  .map-box iframe{height:320px}
+}
+
+/* ═══════════════════════════════════════
+   LARGE DESKTOP (>1400px)
+═══════════════════════════════════════ */
+@media(min-width:1400px){
+  .container{max-width:1340px}
+  .tab{padding:0 1.8rem;font-size:.78rem}
+  .hero-h1{font-size:6rem}
+}
   .book-wrap,.loc-wrap,.viewer-wrap{grid-template-columns:1fr;gap:2.5rem}
   .am-featured{grid-template-columns:1fr 1fr}
   .am-grid{grid-template-columns:repeat(3,1fr)}
@@ -1014,7 +1057,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   <div id="page-ueber-uns" class="page">
     <div class="container" style="padding-top:3rem;padding-bottom:5rem;max-width:900px">
       <div class="eyebrow">Über uns</div>
-      <h2 class="section-h">Ihre Gastgeberinnen<br><em>Sophie &amp; Lisa Wunsch</em></h2>
+      <h2 class="section-h">Ihre Gastgeberinnen<br><em style="color:var(--gold)">Sophie Wunsch &amp; Lisa Wunsch</em></h2>
 
       <div style="display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;margin-top:3rem">
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem">
@@ -1026,12 +1069,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
           </div>
         </div>
         <div>
-          <div>
-            <span class="host-name-gold">Sophie Wunsch</span>
-            <span class="host-name-sep"> &amp; </span>
-            <span class="host-name-gold">Lisa Wunsch</span>
-          </div>
-          <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1.4rem">Wir sind zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.</p>
+          <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:.4rem">Wir sind zwei Schwestern, die Moraira seit vielen Jahren lieben. Was als Kindheitserinnerung begann, wurde mit den Jahren zu einer tiefen Verbundenheit mit dieser Küste, diesem Licht und diesem besonderen Gefühl, das nur die Costa Blanca schenkt.</p>
           <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Irgendwann fragten wir uns: Was wäre, wenn wir dieses Gefühl mit anderen teilen könnten? So entstand der Traum – und aus dem Traum wurde die Villa Las Hermanas. Ein Haus, das wir von Grund auf nach unseren eigenen Wünschen und Vorstellungen gebaut haben.</p>
           <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Wir möchten, dass Sie dasselbe erleben, was uns Moraira bedeutet – und wir sind jederzeit persönlich für Sie da.</p>
         </div>
@@ -1180,6 +1218,21 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// ═══════════════════════════════════════
+// DEVICE DETECTION
+// ═══════════════════════════════════════
+(function(){
+  var w = window.innerWidth;
+  var ua = navigator.userAgent;
+  var isTablet = /iPad|Tablet/i.test(ua) || (w >= 768 && w <= 1024);
+  var isMobile = /iPhone|Android|Mobile/i.test(ua) || w < 768;
+  document.documentElement.classList.add(isMobile ? 'device-mobile' : isTablet ? 'device-tablet' : 'device-desktop');
+  // iOS safe area support
+  if (/iPhone|iPad/i.test(ua)) {
+    document.documentElement.classList.add('device-ios');
+  }
+})();
+
 // ═══════════════════════════════════════
 // TAB NAVIGATION
 // ═══════════════════════════════════════
