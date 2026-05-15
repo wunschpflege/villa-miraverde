@@ -45,7 +45,7 @@ img{display:block;max-width:100%}
 .nav-logo-sub{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:2px}
 
 .nav-right{display:flex;align-items:center;gap:1rem}
-.nav-phone{font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.06em}
+.nav-phone{display:none;font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.06em}
 .nav-phone strong{color:var(--gold)}
 
 /* Lang switcher */
@@ -83,14 +83,20 @@ img{display:block;max-width:100%}
 ═══════════════════════════════════════ */
 #tabbar{
   position:fixed;top:var(--nav-h);left:0;right:0;z-index:8999;
-  height:var(--tab-h);
-  background:var(--b0);
+  height:var(--tab-h);background:var(--b0);
   border-bottom:1.5px solid var(--b3);
-  display:flex;align-items:stretch;overflow-x:auto;
+  display:none;align-items:stretch;overflow-x:auto;
   scrollbar-width:none;
 }
 #tabbar::-webkit-scrollbar{display:none}
 #mob-tabbar{display:none}
+@media(min-width:768px){
+  #tabbar{display:flex !important}
+  .hero-pills{display:flex !important}
+  .nav-phone{display:flex !important}
+  #mob-tabbar{display:none !important}
+  #content{margin-top:calc(var(--nav-h) + var(--tab-h)) !important;margin-bottom:0 !important}
+}
 
 .tab{
   display:flex;align-items:center;gap:.5rem;
@@ -170,7 +176,7 @@ img{display:block;max-width:100%}
 .hero-btns .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35)}
 .hero-btns .btn-ghost:hover{border-color:var(--gold);color:var(--gold);background:transparent}
 
-.hero-pills{position:absolute;right:3rem;bottom:4rem;z-index:2;display:flex;flex-direction:column;gap:1rem}
+.hero-pills{position:absolute;right:3rem;bottom:4rem;z-index:2;display:none;flex-direction:column;gap:1rem}
 .pill{display:flex;align-items:center;gap:.7rem;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:.5rem .9rem .5rem .5rem}
 .pill-num{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:#fff;line-height:1;background:rgba(184,146,74,.22);border-radius:30px;padding:.1rem .55rem}
 .pill-txt{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58)}
@@ -588,9 +594,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .container{padding:0 1.1rem}
   .host-card{padding:1.4rem;gap:1.3rem}
 }
-@media(min-width:768px){
-  #mob-tabbar{display:none !important}
-}
+
 @media(max-width:480px){
   .hl-grid{grid-template-columns:1fr}
   .am-feat-side{flex-direction:column}
