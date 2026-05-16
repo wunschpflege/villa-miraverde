@@ -1202,6 +1202,8 @@ function showTab(id) {
   if (id === 'ausstattung' && !window._3dInit) { init3D(); window._3dInit = true; }
   // Init calendar if buchen
   if (id === 'buchen' && !window._calInit) { renderCalendar(); window._calInit = true; }
+  // Kacheln übersetzen wenn Empfehlungen geöffnet wird
+  if (id === 'empfehlungen') { setTimeout(function(){ rebuildGridForLang(currentLang || 'de'); }, 50); }
   // Übersetzung auf neue Seite anwenden
   if (currentLang && currentLang !== 'de') { setTimeout(function(){ setLang(currentLang); }, 50); }
 }
@@ -1556,6 +1558,9 @@ function rebuildGridForLang(lang) {
   if (t.akt) updateCards(aktCards, t.akt);
   if (t.seh) updateCards(sehCards, t.seh);
   if (t.eink) updateCards(einkCards, t.eink);
+  if (currentLang && currentLang !== 'de') {
+    setTimeout(function(){ rebuildGridForLang(currentLang); }, 100);
+  }
 }
 
 function filterEmpf(cat, btn) {
