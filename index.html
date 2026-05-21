@@ -153,7 +153,7 @@ img{display:block;max-width:100%}
 ═══════════════════════════════════════ */
 #page-start{background:var(--b0)}
 
-.hero-wrap{position:relative;height:100vh;min-height:600px;overflow:hidden}
+.hero-wrap{position:relative;height:140vh;min-height:700px;overflow:hidden}
 .hero-bg{
   position:absolute;inset:-12%;
   background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85') center 52%/cover no-repeat;
@@ -166,9 +166,9 @@ img{display:block;max-width:100%}
 .hero-eyebrow{position:absolute;top:2.8rem;left:0;right:0;text-align:center;z-index:3;display:flex;align-items:center;justify-content:center;gap:.85rem;font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:30px;height:1px;background:var(--gold);opacity:.65}
 /* Title block — center, scroll-revealed */
-.hero-title-block{position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-50% + 36px));text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem}
-.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,3vw,1.85rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:-.08em}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,12vw,9rem);font-weight:300;line-height:.95;color:#fff;letter-spacing:.04em;margin:0}
+.hero-title-block{position:absolute;left:0;right:0;top:36%;transform:translateY(calc(-50% + 36px));text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem}
+.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:-.08em}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 /* Content — bottom, scroll-revealed */
 .hero-tagline{font-size:1.05rem;color:var(--gold);font-weight:300;line-height:1.75;margin:0 auto 2rem;max-width:500px;opacity:.92}
@@ -511,7 +511,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .tab{padding:0 1rem;font-size:.7rem}
   .container{padding:0 1.6rem}
   .book-wrap,.loc-wrap,.viewer-wrap{grid-template-columns:1fr;gap:2.5rem}
-  .hero-wrap{height:75vh}
+  .hero-wrap{height:110vh}
   .hero-content{padding:0 2rem 3.5rem;max-width:100%}
   .hero-pills{right:2rem;bottom:3.5rem}
   .hl-grid{grid-template-columns:repeat(2,1fr)}
@@ -1962,15 +1962,15 @@ function closeLb(){document.getElementById('lb').classList.remove('open');}
     // 1. BG zoom: scale 0.96 → 1.18 over full hero
     heroBg.style.transform = 'scale('+(0.96 + (s/wH)*0.22)+')';
 
-    // 2. Title: fades + rises in from scroll 8%→28% of hero height
-    var tp = ease(clamp((s - wH*0.08)/(wH*0.20), 0, 1));
+    // 2. Title: fades + rises in from scroll 4%→18% of hero height
+    var tp = ease(clamp((s - wH*0.04)/(wH*0.14), 0, 1));
     if(titleBlock){
       titleBlock.style.opacity   = tp;
       titleBlock.style.transform = 'translateY(calc(-50% + '+(36-tp*36)+'px))';
     }
 
-    // 3. Content (tagline + btns): reveals from 26%→44%
-    var cp = ease(clamp((s - wH*0.13)/(wH*0.16), 0, 1));
+    // 3. Content (tagline): reveals from 9%→22%
+    var cp = ease(clamp((s - wH*0.09)/(wH*0.13), 0, 1));
     if(heroContent){
       heroContent.style.opacity   = cp;
       heroContent.style.transform = 'translateY('+(22-cp*22)+'px)';
