@@ -166,7 +166,7 @@ img{display:block;max-width:100%}
 .hero-eyebrow{position:absolute;top:2.8rem;left:0;right:0;text-align:center;z-index:3;display:flex;align-items:center;justify-content:center;gap:.85rem;font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:30px;height:1px;background:var(--gold);opacity:.65}
 /* Title block — center, scroll-revealed */
-.hero-title-block{position:absolute;left:0;right:0;top:52%;transform:translateY(calc(-50% + 36px));text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem}
+.hero-title-block{position:absolute;left:0;right:0;top:62%;transform:translateY(calc(-50% + 36px));text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem}
 .hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:-.08em}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
@@ -203,14 +203,14 @@ img{display:block;max-width:100%}
 .hl-line{width:22px;height:1px;background:rgba(42,107,107,.3);margin-bottom:.9rem}
 
 /* Facts Bar – Villa-Kennzahlen */
-.facts-bar{display:flex;align-items:stretch;border-top:1px solid var(--b3);border-bottom:1px solid var(--b3)}
+.facts-bar{display:flex;align-items:stretch;border-bottom:1px solid var(--b3)}
 .facts-item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1rem;flex:1;transition:background .22s;cursor:default;text-align:center;min-width:0}
 .facts-item:hover{background:var(--b1)}
 .facts-div{width:1px;background:var(--b3);flex-shrink:0;align-self:stretch}
-.facts-num{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--ink);line-height:1;letter-spacing:-.01em}
-.facts-num small{font-size:1.05rem;color:var(--ink2);font-weight:300;margin-left:.08em;vertical-align:text-top}
-.facts-check{font-size:1.6rem;color:var(--teal);line-height:1;font-weight:400}
-.facts-lbl{font-size:.6rem;color:var(--ink3);letter-spacing:.16em;text-transform:uppercase;margin-top:.45rem;white-space:nowrap}
+.facts-num{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--gold);line-height:1;letter-spacing:-.01em}
+.facts-num small{font-size:1.05rem;color:var(--gold);opacity:.75;font-weight:300;margin-left:.08em;vertical-align:text-top}
+.facts-check{font-size:1.55rem;color:var(--gold);line-height:1}
+.facts-lbl{font-size:.6rem;color:var(--gold);opacity:.8;letter-spacing:.16em;text-transform:uppercase;margin-top:.45rem;white-space:nowrap}
 
 /* START: Gallery strip */
 .gallery-strip{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;grid-template-rows:240px;gap:3px;margin-top:3px}
@@ -229,16 +229,18 @@ img{display:block;max-width:100%}
 .start-cta-left p{font-size:.85rem;color:rgba(255,255,255,.48);line-height:1.7}
 .start-cta-btns{display:flex;gap:.9rem;flex-wrap:wrap}
 
-/* Availability bar */
-.avail-bar{background:var(--b2);border-bottom:1px solid var(--b3)}
+/* Availability bar — glass overlay on hero bottom */
+.avail-bar{position:relative;z-index:10;margin-top:-64px;background:rgba(8,14,11,.80);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:none;border-top:1px solid rgba(184,146,74,.22)}
 .avail-inner{display:flex;align-items:stretch;max-width:100%}
-.avf{flex:1;min-width:120px;padding:1rem 1.5rem;border-right:1px solid var(--b3);transition:background .15s;cursor:pointer}
-.avf:hover{background:rgba(42,107,107,.06)}
-.avf label{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.3rem;cursor:pointer}
-.avf input,.avf select{background:none;border:none;outline:none;width:100%;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:pointer}
-.avf select option{background:var(--b1)}
-.avbar-btn{background:var(--teal);border:none;padding:0 2rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap;font-weight:500}
-.avbar-btn:hover{background:var(--teal2)}
+.avf{flex:1;min-width:120px;padding:1rem 1.5rem;border-right:1px solid rgba(255,255,255,.08);transition:background .15s;cursor:pointer}
+.avf:hover{background:rgba(255,255,255,.04)}
+.avf label{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;cursor:pointer}
+.avf input,.avf select{background:none;border:none;outline:none;width:100%;color:rgba(255,255,255,.88);font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:pointer}
+.avf input::placeholder{color:rgba(255,255,255,.35)}
+.avf input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.45);cursor:pointer}
+.avf select option{background:#0f1a15}
+.avbar-btn{background:var(--gold);border:none;padding:0 2rem;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap;font-weight:700}
+.avbar-btn:hover{background:var(--gold2)}
 
 /* ═══════════════════════════════════════
    PAGE: BUCHEN
@@ -571,8 +573,9 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .hero-btns{flex-direction:column;gap:.5rem}
   .btn-solid,.btn-ghost{width:100%;text-align:center;padding:.85rem 1.5rem}
   .hero-pills{display:none !important}
+  .avail-bar{margin-top:0;border-top:none}
   .avail-inner{flex-direction:column}
-  .avf{border-right:none;border-bottom:1px solid var(--b3);padding:.75rem 1.1rem}
+  .avf{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.1rem}
   .avbar-btn{padding:.9rem;text-align:center;width:100%}
   .hl-grid{grid-template-columns:1fr 1fr}
   .hl-card{padding:1.4rem 1rem}
@@ -783,12 +786,12 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
       </div>
       <div class="facts-div"></div>
       <div class="facts-item">
-        <div class="facts-check">✦</div>
-        <div class="facts-lbl" data-t="pill_sea">Panorama-Meerblick</div>
+        <div class="facts-check">👁</div>
+        <div class="facts-lbl" data-t="pill_sea">Meerblick</div>
       </div>
       <div class="facts-div"></div>
       <div class="facts-item">
-        <div class="facts-check">✦</div>
+        <div class="facts-check">🌅</div>
         <div class="facts-lbl">Dachterrasse</div>
       </div>
     </div>
