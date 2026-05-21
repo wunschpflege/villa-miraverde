@@ -171,7 +171,7 @@ img{display:block;max-width:100%}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,12vw,9rem);font-weight:300;line-height:.95;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 /* Content — bottom, scroll-revealed */
-.hero-tagline{font-size:.9rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.82;margin:0 auto 2rem;max-width:460px}
+.hero-tagline{font-size:1.05rem;color:var(--gold);font-weight:300;line-height:1.75;margin:0 auto 2rem;max-width:500px;opacity:.92}
 .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
 .hero-btns .btn-solid{background:var(--teal)}
 .hero-btns .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35)}
@@ -567,7 +567,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .hero-wrap{height:calc(100svh - 110px);min-height:400px}
   .hero-content{padding:0 1.2rem 2rem;max-width:100%}
   .hero-h1{font-size:clamp(3rem,11vw,5rem)}
-  .hero-tagline{font-size:.82rem;max-width:100%;margin-bottom:1.4rem}
+  .hero-tagline{font-size:.92rem;max-width:100%;margin-bottom:1.4rem}
   .hero-btns{flex-direction:column;gap:.5rem}
   .btn-solid,.btn-ghost{width:100%;text-align:center;padding:.85rem 1.5rem}
   .hero-pills{display:none !important}
@@ -1991,7 +1991,7 @@ function closeLb(){document.getElementById('lb').classList.remove('open');}
     }
 
     // 3. Content (tagline + btns): reveals from 26%→44%
-    var cp = ease(clamp((s - wH*0.24)/(wH*0.18), 0, 1));
+    var cp = ease(clamp((s - wH*0.13)/(wH*0.16), 0, 1));
     if(heroContent){
       heroContent.style.opacity   = cp;
       heroContent.style.transform = 'translateY('+(22-cp*22)+'px)';
