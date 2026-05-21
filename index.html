@@ -202,15 +202,15 @@ img{display:block;max-width:100%}
 .hl-card p{font-size:.77rem;color:var(--ink3);line-height:1.65}
 .hl-line{width:22px;height:1px;background:rgba(42,107,107,.3);margin-bottom:.9rem}
 
-/* Facts Bar (slim replacement for hl-grid) */
-.facts-bar{display:flex;align-items:stretch;border-top:1px solid var(--b3)}
-.facts-item{display:flex;align-items:center;gap:.95rem;padding:1.35rem 2rem;flex:1;transition:background .22s;cursor:default;justify-content:center}
+/* Facts Bar – Villa-Kennzahlen */
+.facts-bar{display:flex;align-items:stretch;border-top:1px solid var(--b3);border-bottom:1px solid var(--b3)}
+.facts-item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1rem;flex:1;transition:background .22s;cursor:default;text-align:center;min-width:0}
 .facts-item:hover{background:var(--b1)}
 .facts-div{width:1px;background:var(--b3);flex-shrink:0;align-self:stretch}
-.facts-ic{width:40px;height:40px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.facts-ic svg{width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.facts-title{font-size:.875rem;color:var(--ink);font-weight:500;margin-bottom:.18rem}
-.facts-sub{font-size:.68rem;color:var(--ink3);line-height:1.42}
+.facts-num{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--ink);line-height:1;letter-spacing:-.01em}
+.facts-num small{font-size:1.05rem;color:var(--ink2);font-weight:300;margin-left:.08em;vertical-align:text-top}
+.facts-check{font-size:1.6rem;color:var(--teal);line-height:1;font-weight:400}
+.facts-lbl{font-size:.6rem;color:var(--ink3);letter-spacing:.16em;text-transform:uppercase;margin-top:.45rem;white-space:nowrap}
 
 /* START: Gallery strip */
 .gallery-strip{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;grid-template-rows:240px;gap:3px;margin-top:3px}
@@ -539,7 +539,9 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .tab{padding:0 1.8rem;font-size:.78rem}
 }
 @media(max-width:900px){
-  .facts-item{padding:1.1rem 1.3rem;gap:.75rem}
+  .facts-item{padding:1.3rem .8rem}
+  .facts-num{font-size:2rem}
+  .facts-lbl{letter-spacing:.1em}
   .listing-grid{grid-template-columns:repeat(2,1fr)}
   .book-wrap,.loc-wrap,.viewer-wrap{grid-template-columns:1fr;gap:2.5rem}
   .am-featured{grid-template-columns:1fr 1fr}
@@ -576,11 +578,10 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .hl-card{padding:1.4rem 1rem}
   .hl-num{font-size:2.2rem;margin-bottom:1rem}
   .facts-bar{flex-wrap:wrap}
-  .facts-item{flex:0 0 50%;justify-content:flex-start;padding:1rem 1.4rem}
+  .facts-item{flex:0 0 50%;padding:1.4rem 1rem}
   .facts-div{display:none}
-  .facts-item:nth-child(3){border-top:1px solid var(--b3)}
   .facts-item:nth-child(5){border-top:1px solid var(--b3)}
-  .gallery-strip{grid-template-columns:1fr 1fr;grid-template-rows:130px 130px}
+  .facts-item:nth-child(9){border-top:1px solid var(--b3);flex:0 0 100%}
   .start-cta{padding:2rem 1.2rem;flex-direction:column;gap:1.2rem}
   .start-cta-btns{flex-direction:column;gap:.6rem;width:100%}
   .start-cta-btns .btn-solid,.start-cta-btns .btn-ghost{width:100%;text-align:center}
@@ -788,44 +789,29 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
     <!-- Facts Bar -->
     <div class="facts-bar">
       <div class="facts-item">
-        <div class="facts-ic"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <div>
-          <div class="facts-title" data-t="hl1_title">Panorama-Meerblick</div>
-          <div class="facts-sub">Mittelmeer · aus allen Haupträumen</div>
-        </div>
+        <div class="facts-num">4</div>
+        <div class="facts-lbl" data-t="pill_bed">Schlafzimmer</div>
       </div>
       <div class="facts-div"></div>
       <div class="facts-item">
-        <div class="facts-ic"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 12c0 4.4 3.6 8 8 8s8-3.6 8-8"/><path d="M8 12V7a4 4 0 018 0v5"/></svg></div>
-        <div>
-          <div class="facts-title" data-t="hl2_title">Exklusiver Privatpool</div>
-          <div class="facts-sub">8 × 4 m · nur für Sie · niemals geteilt</div>
-        </div>
+        <div class="facts-num">4</div>
+        <div class="facts-lbl" data-t="pill_bath">Bäder</div>
       </div>
       <div class="facts-div"></div>
       <div class="facts-item">
-        <div class="facts-ic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <div>
-          <div class="facts-title" data-t="hl3_title">4 Schlafzimmer</div>
-          <div class="facts-sub">1 Masterbedroom · 3 En-Suite-Bäder</div>
-        </div>
+        <div class="facts-num">240<small>m²</small></div>
+        <div class="facts-lbl" data-t="pill_area">Wohnfläche</div>
       </div>
       <div class="facts-div"></div>
       <div class="facts-item">
-        <div class="facts-ic"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
-        <div>
-          <div class="facts-title" data-t="hl4_title">Persönlicher Guide</div>
-          <div class="facts-sub">Restaurants · Strände · Ausflüge</div>
-        </div>
+        <div class="facts-check">✦</div>
+        <div class="facts-lbl" data-t="pill_sea">Panorama-Meerblick</div>
       </div>
-    </div>
-
-    <!-- Gallery strip -->
-    <div class="gallery-strip">
-      <div class="gs-item" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&q=80" alt="Villa" loading="lazy"><div class="gs-lbl">Außenansicht</div></div>
-      <div class="gs-item" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&q=80" alt="Pool" loading="lazy"><div class="gs-lbl">Privatpool</div></div>
-      <div class="gs-item" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Meer" loading="lazy"><div class="gs-lbl">Meerblick</div></div>
-      <div class="gs-item" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500&q=80" alt="Wohnzimmer" loading="lazy"><div class="gs-lbl">Wohnzimmer</div></div>
+      <div class="facts-div"></div>
+      <div class="facts-item">
+        <div class="facts-check">✦</div>
+        <div class="facts-lbl">Dachterrasse</div>
+      </div>
     </div>
 
     <!-- CTA strip -->
