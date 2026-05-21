@@ -776,10 +776,10 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
         <div class="avf" onclick="document.getElementById('qi').showPicker?document.getElementById('qi').showPicker():document.getElementById('qi').focus()"><label for="qi" data-t="cal_arrival">Anreise</label><input type="date" id="qi"></div>
         <div class="avf" onclick="document.getElementById('qo').showPicker?document.getElementById('qo').showPicker():document.getElementById('qo').focus()"><label for="qo" data-t="cal_dep">Abreise</label><input type="date" id="qo"></div>
         <div class="avf"><label data-t="lbl_guests">Gäste</label><select id="qg">
-          <option data-t="opt_2p">2 Personen</option>
-          <option data-t="opt_4p">4 Personen</option>
-          <option data-t="opt_6p">6 Personen</option>
-          <option data-t="opt_8p">8 Personen</option>
+          <option value="2" data-t="opt_2p">2 Personen</option>
+          <option value="4" data-t="opt_4p">4 Personen</option>
+          <option value="6" data-t="opt_6p">6 Personen</option>
+          <option value="8" data-t="opt_8p">8 Personen</option>
         </select></div>
         <button class="avbar-btn" onclick="quickCheck()" data-t="avbar_btn">Verfügbarkeit prüfen →</button>
       </div>
@@ -1869,6 +1869,40 @@ function calNext(){if(calState.offset<18){calState.offset++;renderCalendar();}}
 function quickCheck(){
   showTab('buchen');
   if(!window._calInit){renderCalendar();window._calInit=true;}
+
+  // ── Daten aus der Hero-Leiste übernehmen ──
+  var qi=document.getElementById('qi');
+  var qo=document.getElementById('qo');
+  var qg=document.getElementById('qg');
+
+  // Datum-String (YYYY-MM-DD) → lokales Date-Objekt (kein UTC-Versatz)
+  function parseLD(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+
+  var from = qi&&qi.value ? parseLD(qi.value) : null;
+  var to   = qo&&qo.value ? parseLD(qo.value) : null;
+
+  if(from && !isBooked(from)){
+    calState.selStart = from;
+    // Kalender-Ansicht auf den Anreisemonat springen
+    var today=new Date();
+    var off=(from.getFullYear()-today.getFullYear())*12+(from.getMonth()-today.getMonth());
+    calState.offset = Math.max(0, off);
+  }
+  if(to && from && to>from && !isRangeBlocked(from,to)){
+    calState.selEnd = to;
+  }
+
+  // Gäste-Auswahl synchronisieren
+  var fg=document.getElementById('fg-guests');
+  if(qg&&fg) fg.selectedIndex = qg.selectedIndex;
+
+  renderCalendar();
+  updateCalSelection();
+  calcCalPrice();
+
+  // Sanft zum Buchungsformular scrollen
+  var bf=document.querySelector('.book-form');
+  if(bf) setTimeout(function(){bf.scrollIntoView({behavior:'smooth',block:'start'});},160);
 }
 
 async function sendBooking(){
