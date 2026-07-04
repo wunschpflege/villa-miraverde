@@ -295,13 +295,32 @@ function doLogout(){
   location.reload();
 }
 
+// Ungueltiges/abgelaufenes Token -> zurueck zum Login
+function forceLogout(){
+  localStorage.removeItem('admin_token');
+  token = null;
+  location.reload();
+}
+
 function showApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   loadAll();
 }
 
-if(token){ showApp(); }
+// Token beim Laden serverseitig pruefen – nicht nur auf Vorhandensein.
+// Ein abgelaufenes oder ungueltiges Token fuehrt zurueck zum Passwort-Bildschirm.
+async function initAuth(){
+  if(!token) return; // kein Token -> Login-Screen bleibt sichtbar
+  try {
+    var res = await fetch('/api/admin/bookings',{headers:{Authorization:'Bearer '+token}});
+    if(res.status===401){ localStorage.removeItem('admin_token'); token=null; return; }
+    showApp();
+  } catch(e){
+    showApp(); // Netzwerkfehler: nicht aussperren
+  }
+}
+initAuth();
 
 // ── LOAD DATA ──
 async function loadAll(){
@@ -312,6 +331,7 @@ async function loadAll(){
 async function loadBookings(){
   try {
     var res = await fetch('/api/admin/bookings',{headers:{Authorization:'Bearer '+token}});
+    if(res.status===401){ return forceLogout(); }
     allBookings = await res.json();
     renderBookings();
     updateBadges();
@@ -321,6 +341,7 @@ async function loadBookings(){
 async function loadReviews(){
   try {
     var res = await fetch('/api/admin/reviews',{headers:{Authorization:'Bearer '+token}});
+    if(res.status===401){ return forceLogout(); }
     allReviews = await res.json();
     renderReviews();
     updateBadges();
