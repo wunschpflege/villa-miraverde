@@ -168,7 +168,7 @@ app.post('/api/login', async (req, res) => {
   }
   if (password === ADMIN_PASSWORD) {
     loginAttempts.delete(ip);
-    const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '12h' });
     res.json({ token });
   } else {
     const rec = loginAttempts.get(ip) || { count: 0, first: now };
