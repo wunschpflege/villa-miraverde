@@ -269,7 +269,9 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
 <div class="toast" id="toast"></div>
 
 <script>
-var token = localStorage.getItem('admin_token');
+// Token in sessionStorage: wird beim Schliessen des Tabs automatisch geloescht.
+localStorage.removeItem('admin_token'); // alte, dauerhaft gespeicherte Tokens entfernen
+var token = sessionStorage.getItem('admin_token');
 var allBookings = [];
 var allReviews = [];
 var allBlocked = [];
@@ -281,7 +283,7 @@ async function doLogin(){
     var res = await fetch('/api/login', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
     var data = await res.json();
     if(data.token){
-      localStorage.setItem('admin_token',data.token);
+      sessionStorage.setItem('admin_token',data.token);
       token = data.token;
       showApp();
     } else {
@@ -291,13 +293,13 @@ async function doLogin(){
 }
 
 function doLogout(){
-  localStorage.removeItem('admin_token');
+  sessionStorage.removeItem('admin_token');
   location.reload();
 }
 
 // Ungueltiges/abgelaufenes Token -> zurueck zum Login
 function forceLogout(){
-  localStorage.removeItem('admin_token');
+  sessionStorage.removeItem('admin_token');
   token = null;
   location.reload();
 }
@@ -306,6 +308,7 @@ function showApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   loadAll();
+  resetIdleTimer();
 }
 
 // Token beim Laden serverseitig pruefen – nicht nur auf Vorhandensein.
@@ -314,13 +317,29 @@ async function initAuth(){
   if(!token) return; // kein Token -> Login-Screen bleibt sichtbar
   try {
     var res = await fetch('/api/admin/bookings',{headers:{Authorization:'Bearer '+token}});
-    if(res.status===401){ localStorage.removeItem('admin_token'); token=null; return; }
+    if(res.status===401){ sessionStorage.removeItem('admin_token'); token=null; return; }
     showApp();
   } catch(e){
     showApp(); // Netzwerkfehler: nicht aussperren
   }
 }
+// ── AUTO-LOGOUT bei Inaktivitaet (schuetzt Mieterdaten) ──
+var IDLE_MINUTES = 30;
+var idleTimer = null;
+function resetIdleTimer(){
+  clearTimeout(idleTimer);
+  if(!token) return; // nur wenn eingeloggt
+  idleTimer = setTimeout(function(){
+    alert('Aus Sicherheitsgruenden wurdest du nach '+IDLE_MINUTES+' Minuten Inaktivitaet abgemeldet.');
+    forceLogout();
+  }, IDLE_MINUTES*60*1000);
+}
+['click','keydown','mousemove','touchstart','scroll'].forEach(function(ev){
+  document.addEventListener(ev, resetIdleTimer, {passive:true});
+});
+
 initAuth();
+resetIdleTimer();
 
 // ── LOAD DATA ──
 async function loadAll(){
