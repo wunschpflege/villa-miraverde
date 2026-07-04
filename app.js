@@ -1122,12 +1122,12 @@ window.addEventListener('DOMContentLoaded', function(){
     var pre = document.getElementById('preloader');
     function reveal(){
       document.body.classList.add('loaded');
-      if(pre) setTimeout(function(){ pre.style.display = 'none'; }, 1700);
+      if(pre) setTimeout(function(){ pre.style.display = 'none'; }, 2900);
     }
     if(reduce){ if(pre) pre.style.display='none'; document.body.classList.add('loaded'); return; }
-    if(document.readyState === 'complete') setTimeout(reveal, 750);
-    else window.addEventListener('load', function(){ setTimeout(reveal, 750); });
-    setTimeout(function(){ if(!document.body.classList.contains('loaded')) reveal(); }, 3200);
+    if(document.readyState === 'complete') setTimeout(reveal, 1900);
+    else window.addEventListener('load', function(){ setTimeout(reveal, 1900); });
+    setTimeout(function(){ if(!document.body.classList.contains('loaded')) reveal(); }, 4400);
   })();
 
   if(reduce) return;
@@ -1140,22 +1140,28 @@ window.addEventListener('DOMContentLoaded', function(){
         eyeb=document.querySelector('.hero-eyebrow'),
         cont=document.querySelector('.hero-content'),
         spot=document.getElementById('fx-spotlight');
-    var px=0, py=0, raf=false;
-    function apply(){
-      raf=false;
+    // Zielwerte (t*) und sanft nachgezogene Istwerte (c*) für butterweiche Bewegung
+    var tpx=0, tpy=0, cpx=0, cpy=0;
+    var tsx=window.innerWidth/2, tsy=window.innerHeight*0.4, csx=tsx, csy=tsy;
+    function loop(){
+      cpx += (tpx-cpx)*0.055; cpy += (tpy-cpy)*0.055;   // Ebenen langsam nachziehen
+      csx += (tsx-csx)*0.10;  csy += (tsy-csy)*0.10;    // Spotlight etwas flotter
       if(window.scrollY < window.innerHeight){
-        if(bg)    bg.style.translate    = (-px*24)+'px '+(-py*24)+'px';
-        if(caus)  caus.style.translate  = (-px*46)+'px '+(-py*46)+'px';
-        if(title) title.style.translate = (px*12)+'px '+(py*8)+'px';
-        if(eyeb)  eyeb.style.translate  = (px*8)+'px '+(py*5)+'px';
-        if(cont)  cont.style.translate  = (px*6)+'px '+(py*4)+'px';
+        if(bg)    bg.style.translate    = (-cpx*26).toFixed(2)+'px '+(-cpy*26).toFixed(2)+'px';
+        if(caus)  caus.style.translate  = (-cpx*50).toFixed(2)+'px '+(-cpy*50).toFixed(2)+'px';
+        if(title) title.style.translate = (cpx*13).toFixed(2)+'px '+(cpy*9).toFixed(2)+'px';
+        if(eyeb)  eyeb.style.translate  = (cpx*8).toFixed(2)+'px '+(cpy*5).toFixed(2)+'px';
+        if(cont)  cont.style.translate  = (cpx*6).toFixed(2)+'px '+(cpy*4).toFixed(2)+'px';
       }
+      if(spot){ spot.style.setProperty('--mx', csx.toFixed(1)+'px'); spot.style.setProperty('--my', csy.toFixed(1)+'px'); }
+      requestAnimationFrame(loop);
     }
+    requestAnimationFrame(loop);
     window.addEventListener('mousemove', function(e){
-      px = e.clientX/window.innerWidth - 0.5;
-      py = e.clientY/window.innerHeight - 0.5;
-      if(spot){ spot.style.setProperty('--mx', e.clientX+'px'); spot.style.setProperty('--my', e.clientY+'px'); spot.style.opacity='1'; }
-      if(!raf){ requestAnimationFrame(apply); raf=true; }
+      tpx = e.clientX/window.innerWidth - 0.5;
+      tpy = e.clientY/window.innerHeight - 0.5;
+      tsx = e.clientX; tsy = e.clientY;
+      if(spot) spot.style.opacity='1';
     }, {passive:true});
     document.addEventListener('mouseleave', function(){ if(spot) spot.style.opacity='0'; });
   }
