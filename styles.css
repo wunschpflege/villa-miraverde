@@ -623,3 +623,59 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .gallery-strip{grid-template-columns:1fr}
   .gallery-strip{grid-template-rows:160px 140px 140px 140px}
 }
+
+/* ═══════════════════════════════════════
+   SPECIAL FX
+═══════════════════════════════════════ */
+/* Preloader mit Vorhang-Reveal */
+#preloader{position:fixed;inset:0;z-index:99999;pointer-events:none}
+#preloader .pre-panel-top,#preloader .pre-panel-bot{position:absolute;left:0;right:0;height:51%;background:var(--ink);transition:transform 1.05s cubic-bezier(.76,0,.24,1) .35s}
+#preloader .pre-panel-top{top:0}
+#preloader .pre-panel-bot{bottom:0}
+#preloader .pre-mark{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,5vw,3.2rem);letter-spacing:.14em;color:#fff;opacity:0;animation:preIn 1s ease .15s forwards;transition:opacity .4s ease}
+#preloader .pre-mark em{font-style:italic;color:var(--gold)}
+@keyframes preIn{from{opacity:0;transform:translateY(-50%) translateY(16px)}to{opacity:1;transform:translateY(-50%)}}
+body:not(.loaded) #preloader{pointer-events:all}
+body.loaded #preloader .pre-panel-top{transform:translateY(-100%)}
+body.loaded #preloader .pre-panel-bot{transform:translateY(100%)}
+body.loaded #preloader .pre-mark{opacity:0;transition:opacity .3s ease}
+
+/* Hero-Intro erst nach dem Laden abspielen */
+.hero-eyebrow,.hero-title-block,.hero-rule,.hero-content,.hero-scroll-hint{animation-play-state:paused}
+body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,body.loaded .hero-content,body.loaded .hero-scroll-hint{animation-play-state:running}
+
+/* Maus-Spotlight */
+#fx-spotlight{position:fixed;inset:0;z-index:8500;pointer-events:none;opacity:0;transition:opacity .5s ease;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(212,172,92,.15),rgba(212,172,92,.04) 45%,transparent 70%);mix-blend-mode:screen}
+
+/* Filmkorn */
+#fx-grain{position:fixed;inset:0;z-index:8600;pointer-events:none;opacity:.055;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:130px 130px}
+
+/* Hero-Lichtebenen */
+.hero-caustics{position:absolute;inset:-25%;z-index:2;pointer-events:none;opacity:.55;mix-blend-mode:soft-light;background:radial-gradient(55% 40% at 28% 22%,rgba(255,240,205,.6),transparent 62%),radial-gradient(50% 38% at 78% 68%,rgba(180,220,255,.45),transparent 60%),radial-gradient(40% 30% at 60% 45%,rgba(255,225,170,.35),transparent 60%);animation:caustics 20s ease-in-out infinite alternate;will-change:transform}
+@keyframes caustics{0%{transform:translate(0,0) scale(1)}100%{transform:translate(3%,-2.5%) scale(1.1)}}
+.hero-tod{position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:soft-light;background:transparent;transition:background 2.5s ease}
+.hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(125% 95% at 50% 38%,transparent 52%,rgba(6,10,8,.55) 100%)}
+
+/* Gold-Shimmer über dem Titel */
+.hero-h1 em{background:linear-gradient(100deg,var(--gold) 40%,#fff4d6 50%,var(--gold) 60%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% 100%;background-position:120% 0;animation:goldSweep 7.5s ease-in-out 2.6s infinite}
+@keyframes goldSweep{0%,16%{background-position:120% 0}58%,100%{background-position:-45% 0}}
+
+/* Scroll-Choreografie */
+[data-reveal]{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
+[data-reveal].in{opacity:1;transform:none}
+
+/* Ruhige Variante */
+@media (prefers-reduced-motion: reduce){
+  #preloader{display:none !important}
+  #fx-spotlight,#fx-grain,.hero-caustics{display:none !important}
+  .hero-h1 em{animation:none !important}
+  [data-reveal]{opacity:1 !important;transform:none !important}
+  .hero-eyebrow,.hero-rule,.hero-content,.hero-scroll-hint{animation:none !important;opacity:1 !important}
+  .hero-title-block{animation:none !important;opacity:1 !important}
+}
+/* Mobil: Spotlight/Korn dezenter */
+@media (max-width:640px){
+  #fx-spotlight{display:none}
+  #fx-grain{opacity:.04}
+  .hero-caustics{opacity:.4}
+}
