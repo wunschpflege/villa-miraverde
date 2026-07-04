@@ -78,7 +78,7 @@
     <span class="nav-logo-sub">Benissa · Costa Blanca</span>
   </a>
   <div class="nav-right">
-    <span class="nav-phone">Kontakt: <strong>+34 600 000 000</strong></span>
+    <span class="nav-phone"><span data-t="nav_contact">Kontakt:</span> <strong>+34 600 000 000</strong></span>
     <div class="lang-switcher">
       <button class="lang-btn" onclick="toggleLangDropdown()">
         <span id="current-flag">🇩🇪</span>
@@ -231,7 +231,7 @@
       <div class="facts-div"></div>
       <div class="facts-item">
         <div class="facts-check">🌅</div>
-        <div class="facts-lbl">Dachterrasse</div>
+        <div class="facts-lbl" data-t="fact_roof">Dachterrasse</div>
       </div>
     </div>
 
@@ -242,7 +242,7 @@
         <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('buchen')">📅 Verfügbarkeit &amp; Preise</button>
+        <button class="btn-solid" onclick="showTab('buchen')" data-t="cta_book">📅 Verfügbarkeit &amp; Preise</button>
         <button class="btn-ghost" onclick="showTab('lage')">📍 Lage &amp; Kontakt</button>
       </div>
     </div>
@@ -259,7 +259,7 @@
           <li><a href="#" onclick="showLegal('impressum')">Impressum</a></li>
           <li><a href="#" onclick="showLegal('datenschutz')">Datenschutz</a></li>
         </ul>
-        <div class="ft-copy">© 2026 Villa Las Hermanas · Familie Wunsch · Benissa, Costa Blanca</div>
+        <div class="ft-copy" data-t="footer_copy">© 2026 Villa Las Hermanas · Familie Wunsch · Benissa, Costa Blanca</div>
       </div>
     </footer>
   </div><!-- /page-start -->
@@ -272,9 +272,9 @@
       <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800&q=85') center/cover no-repeat;animation:hzoom 20s ease-in-out infinite alternate"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.08) 0%,rgba(18,30,28,.35) 50%,rgba(15,20,14,.82) 100%)"></div>
       <div style="position:relative;z-index:2;padding:0 3rem 3rem;max-width:700px">
-        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span>Exklusiver Neubau · Vermietungsstart 2027</div>
-        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.08;color:#fff;letter-spacing:.03em;margin-bottom:.5rem">Die Villa <em style="font-style:italic;color:var(--gold)">im Detail</em></h1>
-        <p style="font-size:.9rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.75;max-width:420px">240 m² Wohnfläche, vier Etagen, unverbaubarer Blick auf Meer, Berge und Natur – entdecken Sie jedes Detail dieser außergewöhnlichen Architekturvilla.</p>
+        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="ax_eyebrow">Exklusiver Neubau · Vermietungsstart 2027</span></div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.08;color:#fff;letter-spacing:.03em;margin-bottom:.5rem"><span data-t="ax_h1">Die Villa</span> <em style="font-style:italic;color:var(--gold)" data-t="ax_h1i">im Detail</em></h1>
+        <p style="font-size:.9rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.75;max-width:420px" data-t="ax_intro">240 m² Wohnfläche, vier Etagen, unverbaubarer Blick auf Meer, Berge und Natur – entdecken Sie jedes Detail dieser außergewöhnlichen Architekturvilla.</p>
       </div>
     </div>
 
@@ -285,7 +285,7 @@
         <div>
           <div class="eyebrow" style="margin-bottom:.6rem" data-t="tour_eyebrow">Virtuelle Tour</div>
           <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:.9rem"><span data-t="tour_h">Erkunden Sie die Villa</span><br><em style="color:var(--teal)" data-t="tour_hi">in 3D</em></h3>
-          <p class="section-p">Drehen, zoomen und jede Ebene erkunden – so als wären Sie schon vor Ort.</p>
+          <p class="section-p" data-t="ax_tour_p">Drehen, zoomen und jede Ebene erkunden – so als wären Sie schon vor Ort.</p>
           <div class="viewer-feats" style="margin-top:2rem">
             <div class="vfeat"><div class="vfeat-dot">🏠</div><div><h4 data-t="feat1_h">Drei Ebenen</h4><p data-t="feat1_p">Wohnbereich, 4 Schlafzimmer, Dachterrasse</p></div></div>
             <div class="vfeat"><div class="vfeat-dot">🛋️</div><div><h4 data-t="feat2_h">Vollmöbliert</h4><p data-t="feat2_p">Lounge, vollausgestattete Küche, alle 4 Schlafzimmer</p></div></div>
@@ -369,12 +369,12 @@
     <!-- CTA Strip -->
     <div class="start-cta">
       <div class="start-cta-left">
-        <h2><span>Jetzt Ihren Urlaub</span><br><em>planen</em></h2>
-        <p>Direkt bei Sophie &amp; Lisa anfragen – persönlich, ohne Buchungsgebühren.</p>
+        <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
+        <p data-t="ax_cta_p">Direkt bei Sophie &amp; Lisa anfragen – persönlich, ohne Buchungsgebühren.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('buchen')">📅 Verfügbarkeit &amp; Preise</button>
-        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)">📍 Lage &amp; Kontakt</button>
+        <button class="btn-solid" onclick="showTab('buchen')" data-t="cta_book">📅 Verfügbarkeit &amp; Preise</button>
+        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)" data-t="cta_loc">📍 Lage &amp; Kontakt</button>
       </div>
     </div>
   </div><!-- /page-ausstattung -->
@@ -387,15 +387,15 @@
       <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1800&q=85') center/cover no-repeat"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.1) 0%,rgba(18,30,28,.4) 50%,rgba(15,20,14,.88) 100%)"></div>
       <div style="position:relative;z-index:2;padding:0 3rem 2.8rem">
-        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span>Preise &amp; Verfügbarkeit</div>
-        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.1;color:#fff">Transparente Preise,<br><em style="font-style:italic;color:var(--gold)">einfache Buchung</em></h1>
+        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="bk_eyebrow_hero">Preise &amp; Verfügbarkeit</span></div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.1;color:#fff"><span data-t="book_h">Transparente Preise,</span><br><em style="font-style:italic;color:var(--gold)" data-t="book_hi">einfache Buchung</em></h1>
       </div>
     </div>
 
     <div class="container" style="padding-top:3rem;padding-bottom:5rem">
       <div class="book-wrap">
         <div>
-          <div class="eyebrow">Preise &amp; Buchung</div>
+          <div class="eyebrow" data-t="bk_eyebrow">Preise &amp; Buchung</div>
           <h2 class="section-h"><span data-t="book_h">Transparente Preise,</span><br><em data-t="book_hi">einfache Buchung</em></h2>
           <p class="section-p">Buchen Sie direkt bei uns – ohne Gebühren, ohne Zwischenhändler, mit persönlichem Service von Sophie &amp; Lisa.</p>
 
@@ -462,12 +462,12 @@
     <!-- CTA Strip -->
     <div class="start-cta">
       <div class="start-cta-left">
-        <h2><span>Jetzt Ihren Urlaub</span><br><em>planen</em></h2>
-        <p>Fragen? Wir sind jederzeit persönlich für Sie da – per WhatsApp, E-Mail oder Telefon.</p>
+        <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
+        <p data-t="bk_cta_p">Fragen? Wir sind jederzeit persönlich für Sie da – per WhatsApp, E-Mail oder Telefon.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('lage')">📍 Lage &amp; Kontakt</button>
-        <button class="btn-ghost" onclick="showTab('empfehlungen')" style="color:#fff;border-color:rgba(255,255,255,.35)">★ Unsere Empfehlungen</button>
+        <button class="btn-solid" onclick="showTab('lage')" data-t="cta_loc">📍 Lage &amp; Kontakt</button>
+        <button class="btn-ghost" onclick="showTab('empfehlungen')" style="color:#fff;border-color:rgba(255,255,255,.35)" data-t="cta_rec">★ Unsere Empfehlungen</button>
       </div>
     </div>
   </div><!-- /page-buchen -->
@@ -495,12 +495,12 @@
     <!-- CTA Strip -->
     <div class="start-cta">
       <div class="start-cta-left">
-        <h2><span>Jetzt Ihren Urlaub</span><br><em>planen</em></h2>
-        <p>Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
+        <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
+        <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('buchen')">📅 Verfügbarkeit &amp; Preise</button>
-        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)">📍 Lage &amp; Kontakt</button>
+        <button class="btn-solid" onclick="showTab('buchen')" data-t="cta_book">📅 Verfügbarkeit &amp; Preise</button>
+        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)" data-t="cta_loc">📍 Lage &amp; Kontakt</button>
       </div>
     </div>
   </div>
@@ -513,8 +513,8 @@
       <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85') center/cover no-repeat"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.1) 0%,rgba(18,30,28,.4) 55%,rgba(15,20,14,.9) 100%)"></div>
       <div style="position:relative;z-index:2;padding:0 3rem 2.8rem">
-        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span>Über uns</div>
-        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.1;color:#fff">Ihre Gastgeberinnen –<br><em style="font-style:italic;color:var(--gold)">Sophie &amp; Lisa Wunsch</em></h1>
+        <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="about_eyebrow">Über uns</span></div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.1;color:#fff"><span data-t="ab_hero_h1">Ihre Gastgeberinnen –</span><br><em style="font-style:italic;color:var(--gold)" data-t="ab_hero_h1i">Sophie &amp; Lisa Wunsch</em></h1>
       </div>
     </div>
 
@@ -529,7 +529,7 @@
             <span class="hbadge">5★ Bewertungen</span>
             <span class="hbadge">Antwortet &lt; 24h</span>
             <span class="hbadge">DE · ES · EN</span>
-            <span class="hbadge" style="background:rgba(184,146,74,.15);color:var(--gold2);border-color:rgba(184,146,74,.3)">Neubau · Vermietung ab 2027</span>
+            <span class="hbadge" style="background:rgba(184,146,74,.15);color:var(--gold2);border-color:rgba(184,146,74,.3)" data-t="ab_badge">Neubau · Vermietung ab 2027</span>
           </div>
         </div>
         <div>
@@ -576,12 +576,12 @@
     <!-- CTA Strip -->
     <div class="start-cta">
       <div class="start-cta-left">
-        <h2><span>Jetzt Ihren Urlaub</span><br><em>planen</em></h2>
-        <p>Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
+        <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
+        <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('buchen')">📅 Verfügbarkeit &amp; Preise</button>
-        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)">📍 Lage &amp; Kontakt</button>
+        <button class="btn-solid" onclick="showTab('buchen')" data-t="cta_book">📅 Verfügbarkeit &amp; Preise</button>
+        <button class="btn-ghost" onclick="showTab('lage')" style="color:#fff;border-color:rgba(255,255,255,.35)" data-t="cta_loc">📍 Lage &amp; Kontakt</button>
       </div>
     </div>
   </div><!-- /page-ueber-uns -->
@@ -591,9 +591,9 @@
 
     <!-- Claim Banner -->
     <div style="background:var(--ink);padding:3rem 3rem 2.8rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.07)">
-      <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span>Lage &amp; Kontakt<span style="display:block;width:28px;height:1px;background:var(--gold)"></span></div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:.8rem">Hoch über dem Meer –<br><em style="font-style:italic;color:var(--gold)">mitten im Herzen der Costa Blanca</em></h2>
-      <p style="font-size:.9rem;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto;line-height:1.8">Benissa, eine der schönsten und authentischsten Gemeinden der Region – ruhig gelegen, und doch alles in Reichweite.</p>
+      <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="lg_claim_eyebrow">Lage &amp; Kontakt</span><span style="display:block;width:28px;height:1px;background:var(--gold)"></span></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:.8rem"><span data-t="lg_claim_h">Hoch über dem Meer –</span><br><em style="font-style:italic;color:var(--gold)" data-t="lg_claim_hi">mitten im Herzen der Costa Blanca</em></h2>
+      <p style="font-size:.9rem;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto;line-height:1.8" data-t="lg_claim_p">Benissa, eine der schönsten und authentischsten Gemeinden der Region – ruhig gelegen, und doch alles in Reichweite.</p>
     </div>
 
     <div class="container" style="padding-top:3rem;padding-bottom:5rem">
@@ -611,9 +611,9 @@
 
           <!-- Contact ways -->
           <div style="margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem">
-            <a href="tel:+34600000000" style="display:flex;gap:1.1rem;align-items:center;text-decoration:none;padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--b3);background:var(--b0);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal3)'" onmouseout="this.style.borderColor='var(--b3)';this.style.background='var(--b0)'"><div style="width:46px;height:46px;border-radius:50%;background:var(--teal3);border:1.5px solid rgba(42,107,107,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📞</div><div><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem">Telefon</div><div style="font-size:.92rem;color:var(--ink);font-weight:500">+34 600 000 000</div></div></a>
+            <a href="tel:+34600000000" style="display:flex;gap:1.1rem;align-items:center;text-decoration:none;padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--b3);background:var(--b0);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal3)'" onmouseout="this.style.borderColor='var(--b3)';this.style.background='var(--b0)'"><div style="width:46px;height:46px;border-radius:50%;background:var(--teal3);border:1.5px solid rgba(42,107,107,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📞</div><div><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem" data-t="lbl_phone">Telefon</div><div style="font-size:.92rem;color:var(--ink);font-weight:500">+34 600 000 000</div></div></a>
             <a href="mailto:info@villa-las-hermanas.com" style="display:flex;gap:1.1rem;align-items:center;text-decoration:none;padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--b3);background:var(--b0);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal3)'" onmouseout="this.style.borderColor='var(--b3)';this.style.background='var(--b0)'"><div style="width:46px;height:46px;border-radius:50%;background:var(--teal3);border:1.5px solid rgba(42,107,107,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">✉️</div><div><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem">E-Mail</div><div style="font-size:.92rem;color:var(--ink);font-weight:500">info@villa-las-hermanas.com</div></div></a>
-            <a href="https://wa.me/34600000000" target="_blank" style="display:flex;gap:1.1rem;align-items:center;text-decoration:none;padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--b3);background:var(--b0);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal3)'" onmouseout="this.style.borderColor='var(--b3)';this.style.background='var(--b0)'"><div style="width:46px;height:46px;border-radius:50%;background:var(--teal3);border:1.5px solid rgba(42,107,107,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">💬</div><div><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem">WhatsApp</div><div style="font-size:.92rem;color:var(--ink);font-weight:500">Direkt schreiben →</div></div></a>
+            <a href="https://wa.me/34600000000" target="_blank" style="display:flex;gap:1.1rem;align-items:center;text-decoration:none;padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--b3);background:var(--b0);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal3)'" onmouseout="this.style.borderColor='var(--b3)';this.style.background='var(--b0)'"><div style="width:46px;height:46px;border-radius:50%;background:var(--teal3);border:1.5px solid rgba(42,107,107,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">💬</div><div><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.2rem">WhatsApp</div><div style="font-size:.92rem;color:var(--ink);font-weight:500" data-t="contact_wa">Direkt schreiben →</div></div></a>
           </div>
 
           <!-- Contact form -->
@@ -636,7 +636,7 @@
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Moraira+Alicante" target="_blank"><span class="pin-dot" style="background:var(--gold)"></span>⚓ Moraira</a>
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Mercadona+Benissa" target="_blank"><span class="pin-dot" style="background:#27AE60"></span>🛒 Mercadona</a>
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Penyal+d+Ifac+Calpe" target="_blank"><span class="pin-dot" style="background:#E67E22"></span>🏔️ Peñón d'Ifach</a>
-            <a class="map-pin-btn" href="#" target="_blank"><span class="pin-dot" style="background:#9B59B6"></span>✈️ Flughafen ~55 Min.</a>
+            <a class="map-pin-btn" href="#" target="_blank"><span class="pin-dot" style="background:#9B59B6"></span><span data-t="lg_pin_air">✈️ Flughafen ~55 Min.</span></a>
           </div>
 
         </div>
@@ -646,12 +646,12 @@
     <!-- CTA Strip -->
     <div class="start-cta">
       <div class="start-cta-left">
-        <h2><span>Jetzt Ihren Urlaub</span><br><em>planen</em></h2>
-        <p>Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
+        <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
+        <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
       </div>
       <div class="start-cta-btns">
-        <button class="btn-solid" onclick="showTab('buchen')">📅 Verfügbarkeit &amp; Preise</button>
-        <button class="btn-ghost" onclick="showTab('empfehlungen')" style="color:#fff;border-color:rgba(255,255,255,.35)">★ Unsere Empfehlungen</button>
+        <button class="btn-solid" onclick="showTab('buchen')" data-t="cta_book">📅 Verfügbarkeit &amp; Preise</button>
+        <button class="btn-ghost" onclick="showTab('empfehlungen')" style="color:#fff;border-color:rgba(255,255,255,.35)" data-t="cta_rec">★ Unsere Empfehlungen</button>
       </div>
     </div>
   </div><!-- /page-lage -->
