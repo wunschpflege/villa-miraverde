@@ -677,3 +677,42 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
   #fx-grain{opacity:.04}
   .hero-caustics{opacity:.4}
 }
+
+/* ═══════════════════════════════════════
+   BUCHEN FX
+═══════════════════════════════════════ */
+/* Ken-Burns im Buchen-Banner */
+.book-hero-bg{will-change:transform;animation:heroKen 34s ease-in-out infinite alternate}
+
+/* Premium-Preiskarten */
+.price-stack .pc{background:var(--b0);transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease,border-color .35s ease}
+.price-stack .pc:hover{transform:translateY(-6px);box-shadow:0 22px 46px -22px rgba(30,24,18,.42);border-color:var(--gold)}
+.price-stack .pc .pc-price{transition:color .35s ease}
+.price-stack .pc:hover .pc-price{color:var(--gold2)}
+.pc.hot{border:1.5px solid transparent !important;background:linear-gradient(var(--b0),var(--b0)) padding-box,linear-gradient(135deg,var(--gold),var(--teal)) border-box;box-shadow:0 16px 44px -22px rgba(42,107,107,.5);animation:pcFloat 5.5s ease-in-out infinite}
+.pc.hot:hover{transform:translateY(-6px);box-shadow:0 28px 54px -22px rgba(42,107,107,.55)}
+.pc.hot .pc-badge{background:linear-gradient(120deg,var(--gold2),var(--gold));box-shadow:0 6px 16px -5px rgba(184,146,74,.65)}
+@keyframes pcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* Formular: Tiefe + goldener Fokus-Ring */
+.book-form{box-shadow:0 26px 64px -34px rgba(30,24,18,.5)}
+.book-form input,.book-form textarea,.book-form select{transition:border-color .25s ease,box-shadow .25s ease}
+.book-form input:focus,.book-form textarea:focus,.book-form select:focus{border-color:var(--teal) !important;box-shadow:0 0 0 3px var(--teal3);outline:none}
+
+/* Buchen-Button: Licht-Sweep + Glow */
+.btn-book{position:relative;overflow:hidden}
+.btn-book::after{content:'';position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none}
+.btn-book:hover::after{left:130%}
+.btn-book:hover{box-shadow:0 14px 34px -14px rgba(42,107,107,.65)}
+
+/* Gesamtpreis pulsiert bei Änderung */
+#pt{display:inline-block;will-change:transform}
+#pt.bump{animation:ptBump .55s ease}
+@keyframes ptBump{0%{transform:scale(1)}38%{transform:scale(1.16);color:var(--gold2)}100%{transform:scale(1)}}
+
+/* Kalenderauswahl smoother */
+.cal-day{transition:all .2s cubic-bezier(.22,1,.36,1)}
+.cal-day.selected-start,.cal-day.selected-end{box-shadow:0 4px 12px -3px rgba(42,107,107,.55)}
+
+/* Buchen: gestaffelte Reveals */
+#page-buchen .book-form[data-reveal]{transition-delay:.18s}
