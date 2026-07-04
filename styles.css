@@ -32,6 +32,7 @@ img{display:block;max-width:100%}
 .nav-right{display:flex;align-items:center;gap:1rem}
 .nav-phone{display:none;font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.06em}
 .nav-phone strong{color:var(--gold)}
+.nav-live{display:none;align-items:center;gap:.5rem;font-size:.72rem;color:rgba(255,255,255,.62);letter-spacing:.04em;white-space:nowrap}
 
 /* Lang switcher */
 .lang-switcher{position:relative}
@@ -79,6 +80,7 @@ img{display:block;max-width:100%}
   #tabbar{display:flex !important}
   .hero-pills{display:flex !important}
   .nav-phone{display:flex !important}
+  .nav-live{display:flex !important}
   #mob-tabbar{display:none !important}
   #content{margin-top:calc(var(--nav-h) + var(--tab-h)) !important;margin-bottom:0 !important}
 }
@@ -550,6 +552,7 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .nav-logo-top{font-size:1rem;letter-spacing:.1em}
   .nav-logo-sub{display:none !important}
   .nav-phone{display:none !important}
+  .nav-live{display:none !important}
   .mob-menu-btn{display:none !important}
   #tabbar{display:none !important}
   #mob-tabbar{display:flex !important;position:fixed;bottom:0;left:0;right:0;z-index:9999;height:58px;background:var(--b0);border-top:1px solid var(--b3);align-items:stretch;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;}

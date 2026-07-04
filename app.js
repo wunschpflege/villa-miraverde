@@ -851,7 +851,7 @@ function closeLb(){document.getElementById('lb').classList.remove('open');}
 // LIVE-CHIP: Uhrzeit, Temperatur & Sonnenuntergang in Benissa
 // ═══════════════════════════════════════
 (function(){
-  var el = document.getElementById('heroLive');
+  var el = document.getElementById('navLive');
   if(!el) return;
   var LAT = 38.7155, LON = 0.0517, TZ = 'Europe/Madrid';
   var temp = null;
