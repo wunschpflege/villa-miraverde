@@ -801,53 +801,102 @@ function closeLb(){document.getElementById('lb').classList.remove('open');}
 // ═══════════════════════════════════════
 // HERO CINEMATIC SCROLL REVEAL
 // ═══════════════════════════════════════
+// Hero: Titel & Text erscheinen jetzt beim Laden (CSS-Intro). Beim Scrollen
+// blendet nur der Scroll-Hinweis dezent aus.
 (function(){
-  var heroBg     = document.querySelector('.hero-bg');
-  var titleBlock = document.querySelector('.hero-title-block');
-  var heroContent= document.querySelector('.hero-content');
   var scrollHint = document.querySelector('.hero-scroll-hint');
   var heroWrap   = document.querySelector('.hero-wrap');
-  if(!heroBg || !heroWrap) return;
-
-  var ticking = false;
-
-  function clamp(v,mn,mx){return v<mn?mn:v>mx?mx:v;}
-  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
-
-  function update(){
-    var s  = window.scrollY;
-    var wH = heroWrap.offsetHeight;
-    if(s > wH){ ticking=false; return; }
-
-    // 1. BG zoom: scale 0.96 → 1.18 over full hero
-    heroBg.style.transform = 'scale('+(0.96 + (s/wH)*0.22)+')';
-
-    // 2. Title: fades + rises in from scroll 4%→18% of hero height
-    var tp = ease(clamp((s - wH*0.04)/(wH*0.14), 0, 1));
-    if(titleBlock){
-      titleBlock.style.opacity   = tp;
-      titleBlock.style.transform = 'translateY(calc(-50% + '+(36-tp*36)+'px))';
-    }
-
-    // 3. Content (tagline): reveals from 9%→22%
-    var cp = ease(clamp((s - wH*0.09)/(wH*0.13), 0, 1));
-    if(heroContent){
-      heroContent.style.opacity   = cp;
-      heroContent.style.transform = 'translateY('+(22-cp*22)+'px)';
-    }
-
-    // 4. Scroll hint fades out quickly
-    if(scrollHint){
-      scrollHint.style.opacity = Math.max(0, 1 - s/(wH*0.10));
-    }
-    ticking = false;
-  }
-
+  if(!scrollHint || !heroWrap) return;
   window.addEventListener('scroll', function(){
-    if(!ticking){ requestAnimationFrame(update); ticking=true; }
+    var s = window.scrollY, wH = heroWrap.offsetHeight;
+    if(s > 1) scrollHint.style.opacity = Math.max(0, 1 - s/(wH*0.15));
   }, {passive:true});
+})();
 
-  update();
+// ═══════════════════════════════════════
+// FAKTEN-LEISTE: Zahlen zählen hoch, sobald sichtbar
+// ═══════════════════════════════════════
+(function(){
+  var bar = document.querySelector('.facts-bar');
+  if(!bar) return;
+  var done = false;
+  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function run(){
+    if(done) return; done = true;
+    bar.querySelectorAll('.facts-num').forEach(function(el){
+      var small = el.querySelector('small');
+      var raw = small ? (el.childNodes[0] ? el.childNodes[0].nodeValue : '') : el.textContent;
+      var target = parseInt((raw||'').replace(/\D/g,''), 10);
+      if(isNaN(target)) return;
+      var suffix = small ? small.outerHTML : '';
+      var dur = 1300, t0 = null;
+      function step(ts){
+        if(t0===null) t0 = ts;
+        var p = Math.min((ts - t0)/dur, 1);
+        el.innerHTML = Math.round(target*ease(p)) + suffix;
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting) run(); });
+    }, {threshold:.45});
+    io.observe(bar);
+  } else { run(); }
+})();
+
+// ═══════════════════════════════════════
+// LIVE-CHIP: Uhrzeit, Temperatur & Sonnenuntergang in Benissa
+// ═══════════════════════════════════════
+(function(){
+  var el = document.getElementById('heroLive');
+  if(!el) return;
+  var LAT = 38.7155, LON = 0.0517, TZ = 'Europe/Madrid';
+  var temp = null;
+  function fmt(d){
+    try { return new Intl.DateTimeFormat('de-DE',{timeZone:TZ,hour:'2-digit',minute:'2-digit'}).format(d); }
+    catch(e){ return d.getHours()+':'+('0'+d.getMinutes()).slice(-2); }
+  }
+  // Sonnenuntergang (astronomische Näherung, NOAA)
+  function sunset(){
+    var now = new Date();
+    var y = now.getUTCFullYear(), mo = now.getUTCMonth()+1, da = now.getUTCDate();
+    var N = Math.floor(275*mo/9) - Math.floor((mo+9)/12)*(1+Math.floor((y-4*Math.floor(y/4)+2)/3)) + da - 30;
+    var rad = Math.PI/180;
+    var lngHour = LON/15;
+    var t = N + ((18 - lngHour)/24);
+    var M = (0.9856*t) - 3.289;
+    var L = M + (1.916*Math.sin(M*rad)) + (0.020*Math.sin(2*M*rad)) + 282.634; L = (L+360)%360;
+    var RA = Math.atan(0.91764*Math.tan(L*rad))/rad; RA = (RA+360)%360;
+    RA = RA + (Math.floor(L/90)*90 - Math.floor(RA/90)*90); RA = RA/15;
+    var sinDec = 0.39782*Math.sin(L*rad);
+    var cosDec = Math.cos(Math.asin(sinDec));
+    var cosH = (Math.cos(90.833*rad) - (sinDec*Math.sin(LAT*rad))) / (cosDec*Math.cos(LAT*rad));
+    if(cosH > 1 || cosH < -1) return null;
+    var H = (Math.acos(cosH)/rad)/15;
+    var T = H + RA - (0.06571*t) - 6.622;
+    var UT = ((T - lngHour) % 24 + 24) % 24;
+    var hh = Math.floor(UT), mm = Math.round((UT-hh)*60);
+    if(mm===60){hh++;mm=0;}
+    return new Date(Date.UTC(y, mo-1, da, hh, mm, 0));
+  }
+  function render(){
+    var parts = ['📍 Benissa', '🕐 ' + fmt(new Date())];
+    if(temp !== null) parts.push('🌡 ' + temp + '°C');
+    var ss = sunset(); if(ss) parts.push('🌅 ' + fmt(ss));
+    el.textContent = parts.join('   ·   ');
+  }
+  render();
+  setInterval(render, 30000);
+  // Temperatur vom Browser des Besuchers holen (kostenlos, ohne Schlüssel; fällt still weg)
+  try {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current=temperature_2m')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ if(j && j.current && typeof j.current.temperature_2m === 'number'){ temp = Math.round(j.current.temperature_2m); render(); } })
+      .catch(function(){});
+  } catch(e){}
 })();
 
 // ═══════════════════════════════════════
