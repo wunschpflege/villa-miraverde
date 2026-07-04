@@ -71,6 +71,15 @@
 </head>
 <body>
 
+<!-- ═══ SPECIAL FX OVERLAYS ═══ -->
+<div id="preloader">
+  <div class="pre-panel-top"></div>
+  <div class="pre-panel-bot"></div>
+  <div class="pre-mark">Villa <em>Las Hermanas</em></div>
+</div>
+<div id="fx-spotlight" aria-hidden="true"></div>
+<div id="fx-grain" aria-hidden="true"></div>
+
 <!-- ═══ TOP NAVBAR ═══ -->
 <nav id="topnav">
   <a href="#" class="nav-logo" onclick="showTab('start');return false">
@@ -175,6 +184,9 @@
     <div class="hero-wrap">
       <div class="hero-bg"></div>
       <div class="hero-veil"></div>
+      <div class="hero-caustics" aria-hidden="true"></div>
+      <div class="hero-tod" id="heroTod" aria-hidden="true"></div>
+      <div class="hero-vignette" aria-hidden="true"></div>
       <!-- Eyebrow always visible -->
       <div class="hero-eyebrow" data-t="hero_location">Benissa · Costa Blanca · Spanien</div>
       <!-- Title reveals on scroll -->
@@ -210,7 +222,7 @@
     </div>
 
     <!-- Facts Bar -->
-    <div class="facts-bar">
+    <div class="facts-bar" data-reveal>
       <div class="facts-item">
         <div class="facts-num">4</div>
         <div class="facts-lbl" data-t="pill_bed">Schlafzimmer</div>
@@ -238,7 +250,7 @@
     </div>
 
     <!-- CTA strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
@@ -252,7 +264,7 @@
     <div class="section-sep"><span class="section-sep-icon">🫒</span></div>
 
     <footer>
-      <div class="ft-inner">
+      <div class="ft-inner" data-reveal>
         <div class="ft-logo">Villa <span>Las Hermanas</span></div>
         <ul class="ft-links">
           <li><a href="#" onclick="showTab('buchen');return false">Buchen</a></li>
@@ -369,7 +381,7 @@
     </div>
 
     <!-- CTA Strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="ax_cta_p">Direkt bei Sophie &amp; Lisa anfragen – persönlich, ohne Buchungsgebühren.</p>
@@ -462,7 +474,7 @@
       </div>
     </div>
     <!-- CTA Strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="bk_cta_p">Fragen? Wir sind jederzeit persönlich für Sie da – per WhatsApp, E-Mail oder Telefon.</p>
@@ -495,7 +507,7 @@
     <div style="height:3rem"></div>
 
     <!-- CTA Strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
@@ -576,7 +588,7 @@
     </div>
 
     <!-- CTA Strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>
@@ -646,7 +658,7 @@
     </div>
 
     <!-- CTA Strip -->
-    <div class="start-cta">
+    <div class="start-cta" data-reveal>
       <div class="start-cta-left">
         <h2><span data-t="cta_h">Jetzt Ihren Urlaub</span><br><em data-t="cta_hi">planen</em></h2>
         <p data-t="cta_p">Direkt bei Sophie &amp; Lisa buchen – keine Buchungsgebühren, persönlicher Service.</p>

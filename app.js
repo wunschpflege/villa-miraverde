@@ -1110,3 +1110,83 @@ window.addEventListener('DOMContentLoaded', function(){
   buildGrids();
   showTab('start');
 });
+
+// ═══════════════════════════════════════
+// SPECIAL FX: Preloader, Parallax/Spotlight, Tageszeit-Licht, Scroll-Reveal
+// ═══════════════════════════════════════
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1) Preloader -> Reveal (setzt body.loaded, das die Hero-Intro startet)
+  (function(){
+    var pre = document.getElementById('preloader');
+    function reveal(){
+      document.body.classList.add('loaded');
+      if(pre) setTimeout(function(){ pre.style.display = 'none'; }, 1700);
+    }
+    if(reduce){ if(pre) pre.style.display='none'; document.body.classList.add('loaded'); return; }
+    if(document.readyState === 'complete') setTimeout(reveal, 750);
+    else window.addEventListener('load', function(){ setTimeout(reveal, 750); });
+    setTimeout(function(){ if(!document.body.classList.contains('loaded')) reveal(); }, 3200);
+  })();
+
+  if(reduce) return;
+
+  // 2) Maus-Parallax (via CSS 'translate', kollidiert nicht mit transform) + Spotlight
+  if(window.matchMedia('(pointer:fine)').matches){
+    var bg=document.querySelector('.hero-bg'),
+        caus=document.querySelector('.hero-caustics'),
+        title=document.querySelector('.hero-title-block'),
+        eyeb=document.querySelector('.hero-eyebrow'),
+        cont=document.querySelector('.hero-content'),
+        spot=document.getElementById('fx-spotlight');
+    var px=0, py=0, raf=false;
+    function apply(){
+      raf=false;
+      if(window.scrollY < window.innerHeight){
+        if(bg)    bg.style.translate    = (-px*24)+'px '+(-py*24)+'px';
+        if(caus)  caus.style.translate  = (-px*46)+'px '+(-py*46)+'px';
+        if(title) title.style.translate = (px*12)+'px '+(py*8)+'px';
+        if(eyeb)  eyeb.style.translate  = (px*8)+'px '+(py*5)+'px';
+        if(cont)  cont.style.translate  = (px*6)+'px '+(py*4)+'px';
+      }
+    }
+    window.addEventListener('mousemove', function(e){
+      px = e.clientX/window.innerWidth - 0.5;
+      py = e.clientY/window.innerHeight - 0.5;
+      if(spot){ spot.style.setProperty('--mx', e.clientX+'px'); spot.style.setProperty('--my', e.clientY+'px'); spot.style.opacity='1'; }
+      if(!raf){ requestAnimationFrame(apply); raf=true; }
+    }, {passive:true});
+    document.addEventListener('mouseleave', function(){ if(spot) spot.style.opacity='0'; });
+  }
+
+  // 3) Tageszeit-Stimmung über dem Hero (echte Uhrzeit in Benissa)
+  (function(){
+    var tod = document.getElementById('heroTod'); if(!tod) return;
+    function hourMadrid(){
+      try { return parseInt(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',hour:'2-digit',hour12:false}).format(new Date()),10); }
+      catch(e){ return new Date().getHours(); }
+    }
+    function set(){
+      var h = hourMadrid(), g;
+      if(h<6)       g='linear-gradient(to bottom, rgba(10,18,45,.55), rgba(4,8,22,.4))';
+      else if(h<8)  g='linear-gradient(to bottom, rgba(120,80,110,.35), rgba(210,150,120,.28))';
+      else if(h<17) g='linear-gradient(to bottom, rgba(150,180,200,.10), rgba(120,150,170,.06))';
+      else if(h<19) g='linear-gradient(to bottom, rgba(230,150,70,.22), rgba(200,110,50,.18))';
+      else if(h<21) g='linear-gradient(to bottom, rgba(242,120,40,.32), rgba(180,60,50,.26))';
+      else          g='linear-gradient(to bottom, rgba(10,18,45,.55), rgba(4,8,22,.42))';
+      tod.style.background = g;
+    }
+    set(); setInterval(set, 60000);
+  })();
+
+  // 4) Scroll-Choreografie
+  (function(){
+    var els = document.querySelectorAll('[data-reveal]'); if(!els.length) return;
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.15});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+})();
