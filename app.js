@@ -682,7 +682,7 @@ function calcCalPrice(){
   var pn=document.getElementById('pn'),pr=document.getElementById('pr'),pt=document.getElementById('pt');
   if(pn)pn.textContent=nights+' Nächte';
   if(pr)pr.textContent='€ '+total.toLocaleString('de-DE');
-  if(pt)pt.textContent='€ '+grand.toLocaleString('de-DE');
+  if(pt){pt.textContent='€ '+grand.toLocaleString('de-DE');pt.classList.remove('bump');void pt.offsetWidth;pt.classList.add('bump');}
 }
 
 function calPrev(){if(calState.offset>0){calState.offset--;renderCalendar();}}
