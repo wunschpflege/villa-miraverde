@@ -6,7 +6,14 @@ const path = require('path');
  
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'villa-las-hermanas-secret-2025';
+
+// ── SICHERHEIT: Secret & Admin-Passwort NUR aus Umgebungsvariablen ──
+// Kein fester Fallback mehr im Code. Fehlt JWT_SECRET, wird pro Start ein
+// zufälliges Secret erzeugt (bestehende Logins werden dann ungültig).
+const JWT_SECRET = process.env.JWT_SECRET || require('crypto').randomBytes(48).toString('hex');
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || null;
+if (!process.env.JWT_SECRET) console.warn('⚠️  JWT_SECRET nicht gesetzt – es wird ein zufälliges Secret verwendet (Logins gehen bei jedem Neustart verloren). Bitte in Railway setzen.');
+if (!ADMIN_PASSWORD) console.warn('⚠️  ADMIN_PASSWORD nicht gesetzt – der Admin-Login ist deaktiviert, bis die Variable in Railway gesetzt ist.');
  
 // Database
 const pool = new Pool({
@@ -84,14 +91,89 @@ function authMiddleware(req, res, next) {
   }
 }
  
+// ── E-MAIL-BENACHRICHTIGUNG BEI NEUER BUCHUNG ──
+// Konfiguration über Umgebungsvariablen (Railway):
+//   SMTP_HOST, SMTP_PORT (z.B. 587), SMTP_USER, SMTP_PASS,
+//   BOOKING_NOTIFY_TO   (Empfänger, z.B. a.markus@wunschpflege.de)
+//   BOOKING_NOTIFY_FROM (Absender, Standard = SMTP_USER)
+// Ist nichts konfiguriert, wird die Mail lautlos übersprungen.
+let mailTransport = null;
+function getMailTransport() {
+  if (mailTransport) return mailTransport;
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) return null;
+  try {
+    const nodemailer = require('nodemailer');
+    mailTransport = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587', 10),
+      secure: process.env.SMTP_SECURE === 'true' || parseInt(process.env.SMTP_PORT || '587', 10) === 465,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    });
+    return mailTransport;
+  } catch (err) {
+    console.warn('⚠️  E-Mail-Versand nicht möglich (nodemailer fehlt?):', err.message);
+    return null;
+  }
+}
+
+async function sendBookingNotification(b) {
+  const transport = getMailTransport();
+  const to = process.env.BOOKING_NOTIFY_TO;
+  if (!transport || !to) return; // nicht konfiguriert -> überspringen
+  const esc = (v) => String(v == null ? '' : v).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+  const name = `${b.firstname || ''} ${b.lastname || ''}`.trim() || '(ohne Namen)';
+  try {
+    await transport.sendMail({
+      from: process.env.BOOKING_NOTIFY_FROM || process.env.SMTP_USER,
+      to,
+      replyTo: b.email || undefined,
+      subject: `🏠 Neue Buchungsanfrage – ${name} (${b.checkin} → ${b.checkout})`,
+      html: `
+        <h2>Neue Buchungsanfrage – Villa Las Hermanas</h2>
+        <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif">
+          <tr><td><b>Name</b></td><td>${esc(name)}</td></tr>
+          <tr><td><b>E-Mail</b></td><td>${esc(b.email)}</td></tr>
+          <tr><td><b>Telefon</b></td><td>${esc(b.phone)}</td></tr>
+          <tr><td><b>Anreise</b></td><td>${esc(b.checkin)}</td></tr>
+          <tr><td><b>Abreise</b></td><td>${esc(b.checkout)}</td></tr>
+          <tr><td><b>Gäste</b></td><td>${esc(b.guests)}</td></tr>
+          <tr><td><b>Nachricht</b></td><td>${esc(b.message)}</td></tr>
+        </table>
+        <p style="color:#888;font-size:12px">Verwalten im Admin-Bereich: /admin</p>`,
+    });
+  } catch (err) {
+    console.error('E-Mail-Versand fehlgeschlagen:', err.message);
+  }
+}
+
 // ── AUTH ROUTES ──
+// ── LOGIN mit einfachem Rate-Limiting (Brute-Force-Schutz, ohne Zusatzpaket) ──
+const loginAttempts = new Map(); // ip -> { count, first }
+const MAX_ATTEMPTS = 8;
+const WINDOW_MS = 15 * 60 * 1000; // 15 Minuten
+
 app.post('/api/login', async (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip || 'unknown';
+  const now = Date.now();
+  const entry = loginAttempts.get(ip);
+  if (entry && now - entry.first > WINDOW_MS) loginAttempts.delete(ip);
+  const current = loginAttempts.get(ip);
+  if (current && current.count >= MAX_ATTEMPTS) {
+    return res.status(429).json({ error: 'Zu viele Versuche. Bitte in 15 Minuten erneut versuchen.' });
+  }
+
   const { password } = req.body;
-  const adminPass = process.env.ADMIN_PASSWORD || 'hermanas2025';
-  if (password === adminPass) {
+  if (!ADMIN_PASSWORD) {
+    return res.status(503).json({ error: 'Admin-Login ist nicht konfiguriert.' });
+  }
+  if (password === ADMIN_PASSWORD) {
+    loginAttempts.delete(ip);
     const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '7d' });
     res.json({ token });
   } else {
+    const rec = loginAttempts.get(ip) || { count: 0, first: now };
+    rec.count += 1;
+    loginAttempts.set(ip, rec);
     res.status(401).json({ error: 'Falsches Passwort' });
   }
 });
@@ -149,6 +231,8 @@ app.post('/api/bookings', async (req, res) => {
       [firstname, lastname, email, phone, checkin, checkout, guests || 2, message]
     );
     res.json({ success: true });
+    // Benachrichtigung im Hintergrund senden (blockiert die Antwort nicht)
+    sendBookingNotification({ firstname, lastname, email, phone, checkin, checkout, guests: guests || 2, message });
   } catch(err) {
     res.status(500).json({ error: err.message });
   }
