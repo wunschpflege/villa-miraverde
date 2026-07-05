@@ -72,6 +72,14 @@ async function setupDB() {
         label VARCHAR(200),
         created_at TIMESTAMP DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS waitlist (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(120),
+        email VARCHAR(200) NOT NULL UNIQUE,
+        lang VARCHAR(10),
+        created_at TIMESTAMP DEFAULT NOW()
+      );
     `);
     console.log('✅ Database tables ready');
   } catch(err) {
@@ -113,6 +121,31 @@ function getMailTransport() {
   } catch (err) {
     console.warn('⚠️  E-Mail-Versand nicht möglich (nodemailer fehlt?):', err.message);
     return null;
+  }
+}
+
+async function sendWaitlistNotification(w) {
+  const transport = getMailTransport();
+  const to = process.env.BOOKING_NOTIFY_TO;
+  if (!transport || !to) return; // nicht konfiguriert -> überspringen
+  const esc = (v) => String(v == null ? '' : v).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+  try {
+    await transport.sendMail({
+      from: process.env.BOOKING_NOTIFY_FROM || process.env.SMTP_USER,
+      to,
+      replyTo: w.email || undefined,
+      subject: `🔔 Neue Warteliste-Anmeldung – ${w.email}`,
+      html: `
+        <h2>Neue Warteliste-Anmeldung – Villa Las Hermanas</h2>
+        <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif">
+          <tr><td><b>Name</b></td><td>${esc(w.name)}</td></tr>
+          <tr><td><b>E-Mail</b></td><td>${esc(w.email)}</td></tr>
+          <tr><td><b>Sprache</b></td><td>${esc(w.lang)}</td></tr>
+        </table>
+        <p style="color:#888;font-size:12px">Interessent:in möchte benachrichtigt werden, sobald die Villa buchbar ist.</p>`,
+    });
+  } catch (err) {
+    console.error('E-Mail-Versand (Warteliste) fehlgeschlagen:', err.message);
   }
 }
 
@@ -255,6 +288,31 @@ app.delete('/api/admin/bookings/:id', authMiddleware, async (req, res) => {
   res.json({ success: true });
 });
  
+// ── WARTELISTE (Vormerkung bis Vermietungsstart) ──
+app.post('/api/waitlist', async (req, res) => {
+  const { name, email, lang } = req.body;
+  const mail = (email || '').trim();
+  if (!mail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
+    return res.status(400).json({ error: 'Bitte eine gültige E-Mail-Adresse angeben.' });
+  }
+  try {
+    await pool.query(
+      `INSERT INTO waitlist (name, email, lang) VALUES ($1,$2,$3)
+       ON CONFLICT (email) DO UPDATE SET name = COALESCE(NULLIF(EXCLUDED.name,''), waitlist.name)`,
+      [(name || '').trim(), mail, (lang || '').slice(0, 10)]
+    );
+    res.json({ success: true });
+    sendWaitlistNotification({ name, email: mail, lang }); // Hintergrund
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/admin/waitlist', authMiddleware, async (req, res) => {
+  const result = await pool.query('SELECT * FROM waitlist ORDER BY created_at DESC');
+  res.json(result.rows);
+});
+
 // ── BLOCKED DATES ──
 app.get('/api/blocked-dates', async (req, res) => {
   const result = await pool.query('SELECT * FROM blocked_dates ORDER BY date_from');

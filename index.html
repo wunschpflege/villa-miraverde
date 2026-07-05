@@ -227,6 +227,21 @@
       </div>
     </div>
 
+    <!-- Warteliste / Vormerkung bis Vermietungsstart -->
+    <div class="wl-band" data-reveal>
+      <div class="wl-inner">
+        <div class="wl-eyebrow" data-t="wl_eyebrow">Vermietungsstart 2027</div>
+        <h2 class="wl-h" data-t="wl_h">Als Erste dabei sein</h2>
+        <p class="wl-p" data-t="wl_p">Die Villa öffnet 2027. Tragen Sie sich unverbindlich ein – wir benachrichtigen Sie, sobald Buchungen möglich sind.</p>
+        <div id="wl-form" class="wl-form">
+          <input type="text" id="wl-name" class="wl-input" placeholder="Name">
+          <input type="email" id="wl-email" class="wl-input" placeholder="name@email.com" required>
+          <button class="btn-solid wl-btn" onclick="submitWaitlist()" data-t="wl_btn">Benachrichtigt werden</button>
+        </div>
+        <div class="wl-note" data-t="wl_note">Kein Spam. Jederzeit abbestellbar.</div>
+      </div>
+    </div>
+
     <!-- Facts Bar -->
     <div class="facts-bar" data-reveal>
       <div class="facts-item">
@@ -503,6 +518,35 @@
         </div>
       </div>
     </div>
+
+    <!-- FAQ -->
+    <div class="faq-section" data-reveal>
+      <div class="eyebrow" data-t="faq_eyebrow">Gut zu wissen</div>
+      <h2 class="section-h"><em data-t="faq_h">Häufige Fragen</em></h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span data-t="faq_q1">Wann kann ich ein- und auschecken?</span><span class="faq-ico" aria-hidden="true"></span></button>
+          <div class="faq-a"><p data-t="faq_a1">Check-in ab 16:00 Uhr, Check-out bis 10:00 Uhr – individuelle Zeiten gerne auf Anfrage.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span data-t="faq_q2">Gibt es einen Mindestaufenthalt?</span><span class="faq-ico" aria-hidden="true"></span></button>
+          <div class="faq-a"><p data-t="faq_a2">In der Nebensaison ab 4 Nächten, in der Hauptsaison ab 7 Nächten.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span data-t="faq_q3">Wird eine Kaution fällig?</span><span class="faq-ico" aria-hidden="true"></span></button>
+          <div class="faq-a"><p data-t="faq_a3">Ja, eine Kaution wird vor Anreise hinterlegt und nach schadensfreier Abreise vollständig zurückerstattet.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span data-t="faq_q4">Sind Endreinigung und WLAN inklusive?</span><span class="faq-ico" aria-hidden="true"></span></button>
+          <div class="faq-a"><p data-t="faq_a4">Ja, Endreinigung und Glasfaser-WLAN sind im Preis enthalten – ohne versteckte Kosten.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span data-t="faq_q5">Wie kann ich stornieren?</span><span class="faq-ico" aria-hidden="true"></span></button>
+          <div class="faq-a"><p data-t="faq_a5">Kostenfreie Stornierung bis 30 Tage vor Anreise; danach gelten faire, transparente Bedingungen, die wir vorab mitteilen.</p></div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA Strip -->
     <div class="start-cta" data-reveal>
       <div class="start-cta-left">
@@ -672,7 +716,11 @@
 
         <div>
           <div class="map-box" data-reveal>
-            <iframe src="https://maps.google.com/maps?q=Benissa,+Alicante,+Spanien&z=13&output=embed" title="Villa Las Hermanas – Benissa, Costa Blanca" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="map-consent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <p data-t="map_consent_p">Zum Schutz Ihrer Daten wird die Google-Karte erst nach Ihrer Zustimmung geladen. Dabei werden Daten an Google übertragen.</p>
+              <button class="btn-solid" onclick="loadMap()" data-t="map_consent_btn">Karte laden</button>
+            </div>
           </div>
           <div class="map-pins">
             <a class="map-pin-btn" href="https://www.google.com/maps/search/?api=1&query=Benissa+Alicante" target="_blank"><span class="pin-dot" style="background:var(--teal)"></span>Villa</a>
