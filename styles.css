@@ -35,7 +35,7 @@ img{display:block;max-width:100%}
 .nav-right{display:flex;align-items:center;gap:1rem}
 .nav-phone{display:none;font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.06em}
 .nav-phone strong{color:var(--gold)}
-.nav-live{display:none;align-items:center;gap:.5rem;font-size:.72rem;color:rgba(255,255,255,.62);letter-spacing:.04em;white-space:nowrap}
+.nav-live{display:none;align-items:center;gap:.55rem;font-size:.72rem;color:var(--ink3);letter-spacing:.04em;white-space:nowrap;margin-left:auto;padding:0 2rem 0 1.5rem;align-self:center;flex-shrink:0}
 
 /* Lang switcher */
 .lang-switcher{position:relative}
