@@ -543,7 +543,7 @@
 
     <!-- Hero Banner -->
     <div style="position:relative;height:38vh;min-height:260px;overflow:hidden;display:flex;align-items:flex-end">
-      <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85') center/cover no-repeat"></div>
+      <div class="book-hero-bg" style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85') center/cover no-repeat"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.1) 0%,rgba(18,30,28,.4) 55%,rgba(15,20,14,.9) 100%)"></div>
       <div style="position:relative;z-index:2;padding:0 3rem 2.8rem">
         <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="about_eyebrow">Über uns</span></div>
@@ -555,7 +555,7 @@
       <div class="eyebrow">Über uns</div>
       <h2 class="section-h"><span data-t="about_h">Ihre Gastgeberinnen</span><br><em style="color:var(--gold)" data-t="about_hi">Sophie Wunsch &amp; Lisa Wunsch</em></h2>
 
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;margin-top:3rem">
+      <div data-reveal style="display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;margin-top:3rem">
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.2rem">
           <div class="host-avatar" style="width:130px;height:130px;font-size:1.8rem">SW<br><span style="font-size:1rem;opacity:.6;font-family:'DM Sans',sans-serif;letter-spacing:.05em">LW</span></div>
           <div class="host-badges" style="flex-direction:column;align-items:center">
@@ -569,30 +569,30 @@
           <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:.4rem">Wir sind zwei Schwestern, die Moraira seit frühester Kindheit lieben. Was als Sommererinnerung begann, wurde mit den Jahren zu einer tiefen Leidenschaft für diese Küste, dieses Licht und das besondere Lebensgefühl, das nur die Costa Blanca schenkt.</p>
           <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Irgendwann entstand die Idee, dieses Gefühl mit anderen zu teilen. So bauten wir die Villa Las Hermanas – von Grund auf, nach unseren eigenen Vorstellungen, mit einem Blick auf Meer, Berge und Natur, der uns jeden Morgen neu begeistert. Ein echtes Zuhause, das wir mit Freude vermieten.</p>
           <p style="font-size:.92rem;color:var(--ink3);line-height:1.9;margin-top:1rem">Die Villa öffnet ihre Türen erstmals <strong style="color:var(--ink)">2027</strong>. Wir freuen uns darauf, Sie persönlich willkommen zu heißen – und sind bis dahin jederzeit für Ihre Fragen da.</p>
-          <p style="font-size:.92rem;color:var(--teal);line-height:1.9;margin-top:1rem;font-style:italic">Herzlich, Sophie &amp; Lisa</p>
+          <p class="host-signature">Herzlich, Sophie &amp; Lisa</p>
         </div>
       </div>
 
       <div class="section-sep" style="padding:2.5rem 0"><span class="section-sep-icon">🫒</span></div>
 
       <!-- Values -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--b3);border-radius:10px;overflow:hidden">
-        <div style="background:var(--b0);padding:2rem 1.8rem">
-          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+      <div class="values-grid" data-reveal style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--b3);border-radius:10px;overflow:hidden">
+        <div class="value-cell" style="background:var(--b0);padding:2rem 1.8rem">
+          <div class="value-ic" style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           </div>
           <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif" data-t="val1_h">Persönlichkeit</h4>
           <p style="font-size:.8rem;color:var(--ink3);line-height:1.65" data-t="val1_p">Kein anonymes Ferienhaus – wir sind immer persönlich für Sie erreichbar und kümmern uns um jedes Detail.</p>
         </div>
-        <div style="background:var(--b0);padding:2rem 1.8rem">
-          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+        <div class="value-cell" style="background:var(--b0);padding:2rem 1.8rem">
+          <div class="value-ic" style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif" data-t="val2_h">Vertrauen</h4>
           <p style="font-size:.8rem;color:var(--ink3);line-height:1.65" data-t="val2_p">Alle Bewertungen sind 5 Sterne. Keine versteckten Kosten, keine Überraschungen – nur Ehrlichkeit und Transparenz.</p>
         </div>
-        <div style="background:var(--b0);padding:2rem 1.8rem">
-          <div style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+        <div class="value-cell" style="background:var(--b0);padding:2rem 1.8rem">
+          <div class="value-ic" style="width:42px;height:42px;border-radius:50%;background:var(--teal3);border:1px solid rgba(42,107,107,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </div>
           <h4 style="font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:.5rem;font-family:'Cormorant Garamond',serif" data-t="val3_h">Schnelligkeit</h4>
