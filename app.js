@@ -921,14 +921,15 @@ function init3D(){
   // ── Materialien
   function M(c,r,m){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?.85:r,metalness:m||0});}
   function GL(c,o,r){return new THREE.MeshStandardMaterial({color:c,transparent:true,opacity:o,roughness:r,metalness:.05});}
-  var mW=M(0xD9CFBD,.92),mW2=M(0xC9BEA8,.95),mF=M(0xB39468,.8),mR=M(0xC5BAA2,.88),
+  var mW=M(0xE6E0D3,.9),mW2=M(0xD3C9B5,.94),mF=M(0xB39468,.8),mR=M(0xC5BAA2,.88),
       mG=GL(0x8FBAD6,.34,.05),mFr=M(0x2C3034,.5,.35),
       mGr=M(0x5C9C46,.95),mHedge=M(0x437E30,.9),mD=M(0x4E3E2A,.95),
       mP=GL(0x18A6CE,.8,.04),mCop=M(0xD9D0BE,.7),mPv=M(0xB6AB92,.8),
       mWd=M(0x7C4F27,.8),mBd=M(0xE4DBCC,.85),mBH=M(0x5F4526,.7),mWh=M(0xEFEAE0,.9),
       mGn=M(0x347026,.9),mTrunk=M(0x7A5C3C,.9),mSofa=M(0x76828C,.85),mKit=M(0x272C30,.5,.25),
       mSl=new THREE.MeshStandardMaterial({color:0x13233A,roughness:.18,metalness:.55}),
-      mRail=M(0xDBDBDB,.4,.2),mStep=M(0xC1B79E,.8);
+      mRail=M(0xDBDBDB,.4,.2),mStep=M(0xC1B79E,.8),
+      mStone=M(0xAFA490,.92),mFl=M(0xC7B393,.75),mCeil=M(0xEDE8DE,.9);
   var g={eg:[],egc:[],og:[],ogc:[],roof:[],env:[]};
   function bx(w,h,d,m,x,y,z){var mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
   function cyl(r,h,m,x,y,z){var mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,16),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
@@ -948,83 +949,150 @@ function init3D(){
     }
   }
 
-  // ═══ UMGEBUNG (immer sichtbar) ═══
-  ad(bx(70,.6,52,mD,0,-.8,0),'env');
-  ad(bx(70,.2,52,mGr,0,-.4,0),'env');
-  ad(bx(24,.16,15,mPv,0,-.28,0),'env');            // Terrassenplatten ums Haus
-  // Pool (vorne links)
-  ad(bx(12,.2,11,mPv,-12.5,-.24,0),'env');
-  ad(bx(7.4,.5,7.4,mCop,-12.5,.02,0),'env');        // heller Poolrand
-  ad(bx(6.6,.7,6.6,mP,-12.5,.06,0),'env');          // Wasser
-  // Sonnenliegen am Pool
-  [[-12.5,-4.6],[-11,-4.6]].forEach(function(p){
-    ad(bx(.9,.24,2.1,mWh,p[0],.28,p[1]),'env');
-    ad(bx(.9,.6,.16,mWh,p[0],.5,p[1]-.95),'env');
-  });
-  // Gartenhecken
-  ad(bx(24,.7,.5,mHedge,0,.1,7.4),'env');ad(bx(.5,.7,15,mHedge,11.8,.1,0),'env');
-  // Palmen an den Ecken
-  [[-17,-9],[-18,7],[16,-10],[15,9]].forEach(function(p){
-    ad(cyl(.28,3.4,mTrunk,p[0],1.5,p[1]),'env');
-    ad(sph(1.5,mGn,p[0],3.5,p[1]),'env');
-    ad(sph(1.1,mGn,p[0]+.7,3.1,p[1]+.5),'env');
-  });
-  // Außentreppe zur Dachterrasse (rechte Hausseite)
-  for(var s=0;s<6;s++){ad(bx(2,.32,1.1,mStep,9.2,.55+s*.55,-3.5+s*.5),'env');}
+  // Reale Villa "C/ Dragonera 7": langer, weisser, moderner Flachdach-Bau am Hang.
+  // Grundriss ~18 x 7 m; Wohnebene unten, 5 Schlafzimmer oben, Dachterrasse; Pool an der Ostseite.
+  var L=18,D=7,WT=.25,X0=-9,X1=9,Z0=-3.5,Z1=3.5;
+  var LF=0,LWH=2.9,LCY=3.0,BF=3.1,BWH=2.75,BCY=5.95,RTOP=6.05; // Ebenen-Höhen (Meter)
+  function wallN(y,h,grp,m){return ad(bx(L,h,WT,m||mW,0,y,Z0),grp);}   // Rückwand (Norden, bergseitig)
+  function pillars(x0,x1,step,y,h,z,grp){for(var x=x0;x<=x1+.001;x+=step){ad(bx(.14,h,.14,mFr,x,y,z),grp);}}
+  function car(x,z,ry,col,by){                                 // einfaches Auto (Karosserie + Kabine + Räder)
+    by=by||0;
+    var b=bx(3.9,.55,1.75,M(col,.4,.4),x,by+.28,z);b.rotation.y=ry;ad(b,'env');
+    var c=bx(2.0,.55,1.55,GL(0x22303C,.55,.2),x,by+.72,z);c.rotation.y=ry;ad(c,'env');
+    var w=bx(4.0,.28,1.5,M(0x1C1C1E,.7),x,by+.14,z);w.rotation.y=ry;ad(w,'env');
+  }
 
-  var HW=14,HD=9,WT=.3;                              // Grundriss 14 × 9
-  // ═══ ERDGESCHOSS (Wohnbereich) ═══
-  var EY=.3;
-  ad(bx(HW,.3,HD,mF,0,EY+.15,0),'eg');                       // Bodenplatte
-  ad(bx(HW,3.3,WT,mW,0,EY+2,-4.5),'eg');                     // Wand hinten
-  ad(bx(HW,3.3,WT,mW,3.6,EY+2,4.5),'eg');ad(bx(4.6,3.3,WT,mW,-4.85,EY+2,4.5),'eg'); // Wand vorne (mit Türöffnung)
-  ad(bx(WT,3.3,HD,mW,-7,EY+2,0),'eg');ad(bx(WT,3.3,HD,mW,7,EY+2,0),'eg');           // Seitenwände
-  ad(bx(HW,.28,HD,mF,0,EY+3.65,0),'egc');                    // Decke EG (= Boden OG)
-  ad(bx(1.5,2.5,.14,mWd,-1.6,EY+1.4,4.5),'eg');             // Eingangstür
-  win(5,2.2,2.5,EY+2,-4.5,'z','eg');                        // Panoramafenster hinten
-  win(3.4,2.2,-7,EY+2,-1,'x','eg');                         // Fenster links
-  // Möblierung EG
-  ad(bx(4,.7,1.5,mSofa,-3.5,EY+.65,-3),'eg');ad(bx(4,.6,.4,mSofa,-3.5,EY+1.1,-3.7),'eg'); // Sofa
-  ad(bx(1.8,.35,1,mWd,-3.5,EY+.5,-1.2),'eg');              // Couchtisch
-  ad(bx(3.5,1.1,.7,mKit,5,EY+.85,-3.9),'eg');ad(bx(3.5,.1,.7,mStep,5,EY+1.45,-3.9),'eg'); // Küchenzeile
-  ad(bx(2.4,.78,1.2,mWd,4.2,EY+.69,2),'eg');              // Esstisch
-  // ═══ OBERGESCHOSS (4 Schlafzimmer) ═══
-  var OY=3.78;
-  ad(bx(HW,3.1,WT,mW,0,OY+1.9,-4.5),'og');ad(bx(HW,3.1,WT,mW,0,OY+1.9,4.5),'og');
-  ad(bx(WT,3.1,HD,mW,-7,OY+1.9,0),'og');ad(bx(WT,3.1,HD,mW,7,OY+1.9,0),'og');
-  ad(bx(WT,3.1,HD,mW2,0,OY+1.9,0),'og');ad(bx(HW,3.1,WT,mW2,0,OY+1.9,0),'og');       // innere Trennwände (4 Zimmer)
-  ad(bx(HW,.28,HD,mR,0,OY+3.55,0),'ogc');                   // Decke OG
-  win(3,2,-3.6,OY+2,-4.5,'z','og');win(3,2,3.6,OY+2,-4.5,'z','og');
-  win(3,2,-3.6,OY+2,4.5,'z','og');win(3,2,3.6,OY+2,4.5,'z','og');
-  function bed(x,z){var by=OY+.4;ad(bx(1.7,.4,2.1,mBd,x,by+.2,z),'og');ad(bx(1.7,.6,.2,mBH,x,by+.6,z-1.05),'og');ad(bx(1.6,.16,1.9,mWh,x,by+.5,z),'og');}
-  bed(-3.5,-2);bed(3.5,-2);bed(-3.5,2);bed(3.5,2);
-  // ═══ DACHTERRASSE + POOL/SOLAR ═══
-  var RY=7.05;
-  ad(bx(HW,.3,HD,mR,0,RY+.15,0),'roof');                    // Dachboden/Terrassenplatte
-  // Umlaufende Glasbrüstung
-  ad(bx(HW,.9,.1,mG,0,RY+.75,-4.45),'roof');ad(bx(HW,.9,.1,mG,0,RY+.75,4.45),'roof');
-  ad(bx(.1,.9,HD,mG,-6.95,RY+.75,0),'roof');ad(bx(.1,.9,HD,mG,6.95,RY+.75,0),'roof');
-  ad(bx(HW,.1,.16,mRail,0,RY+1.2,-4.45),'roof');ad(bx(HW,.1,.16,mRail,0,RY+1.2,4.45),'roof');
-  ad(bx(.16,.1,HD,mRail,-6.95,RY+1.2,0),'roof');ad(bx(.16,.1,HD,mRail,6.95,RY+1.2,0),'roof');
-  // kleines Treppenhaus + Pergola auf dem Dach
-  ad(bx(3.4,2.2,3,mW,4.6,RY+1.25,0),'roof');
-  ad(bx(5,.18,3.6,mWd,-3,RY+2.5,0),'roof');                 // Pergola-Dach
-  [[-5,-1.6],[-1,-1.6],[-5,1.6],[-1,1.6]].forEach(function(p){ad(cyl(.12,2.4,mWd,p[0],RY+1.35,p[1]),'roof');});
-  ad(bx(4.6,.7,1.2,mSofa,-3,RY+.5,0),'roof');              // Dach-Lounge
-  // Solarpaneele (leicht geneigt)
-  [[-1,-2.6],[1.6,-2.6],[-1,2.6],[1.6,2.6]].forEach(function(p){var pv=bx(2.3,.1,1.6,mSl,p[0],RY+.5,p[1]);pv.rotation.x=-.32;ad(pv,'roof');});
+  // ═══ GRUNDSTÜCK AM HANG (immer sichtbar) ═══
+  // Norden = bergseitig/höher (Zufahrt), Süden = talseitig/tiefer (Meerblick)
+  var mAsph=M(0x6A6E73,.9),mSea=M(0x5C93B4,.35,.12);
+  var PL=-.3;                                                 // Plateau-/Terrassenniveau
+  // Mittelmeer als weite, tief liegende Fläche (verläuft im Dunst zum Horizont)
+  ad(bx(700,.5,700,mSea,0,-8.5,200),'env');
+  // Haus-Plateau
+  ad(bx(64,.6,36,mD,2,PL-.35,-2),'env');                      // Erdsockel
+  ad(bx(60,.4,34,mGr,2,PL-.05,-1),'env');                     // Rasen-Plateau
+  ad(bx(40,.18,24,mPv,4,PL+.02,1),'env');                     // befestigte Terrasse (Haus & Pool)
+
+  // — Bergseite (Norden): fest aufgeschütteter Hang mit Stützmauern (schwebt nicht) —
+  ad(bx(60,3.4,7,mGr,0,-1.15,-13),'env');                     // Hangstufe 1 (Vollkörper, Rasen oben)
+  ad(bx(56,1.3,.4,mStone,0,PL+.35,-9.5),'env');               // Stützmauer 1
+  ad(bx(60,4.8,13,mGr,-2,-.7,-21),'env');                     // Hangstufe 2 (Vollkörper)
+  ad(bx(60,1.5,.4,mStone,0,PL+1.25,-16.5),'env');             // Stützmauer 2
+  ad(bx(30,.2,10,mAsph,-8,1.8,-21),'env');                    // Parkplatz auf oberer Stufe
+  car(-13,-21,.1,0xCBCFD4,1.7);car(-5,-21,.06,0x8A93A1,1.7);  // geparkte Autos
+  for(var rp=0;rp<5;rp++){ad(bx(4,.4,1.4,mAsph,7,PL+.25+rp*.36,-9.3-rp*1.35),'env');} // Zufahrtsrampe an der Hangflanke
+
+  // — Talseite (Süden): Stützmauer + tiefere Gartenterrasse (Meerblick) —
+  ad(bx(50,4.6,.6,mStone,3,PL-2.0,11.9),'env');               // Stützmauer talseitig
+  ad(bx(64,4,18,mGr,3,-6.4,22),'env');                        // untere Gartenterrasse (Vollkörper)
+
+  // Pool an der Ostseite (~32 m², talseitig auf Sockel erhöht)
+  ad(bx(5.7,1.8,8.5,mStone,13.2,PL-.55,1),'env');             // Pool-Sockel
+  ad(bx(5.4,.35,8.2,mCop,13.2,PL+.2,1),'env');                // Beckenrand
+  ad(bx(4.5,.5,7.3,mP,13.2,PL+.3,1),'env');                   // Wasser
+  [[10.5,-1.4],[10.5,.6],[10.5,2.6]].forEach(function(p){
+    ad(bx(.85,.22,2,mWh,p[0],PL+.5,p[1]),'env');ad(bx(.85,.5,.14,mWh,p[0],PL+.7,p[1]-.9),'env');
+  });
+
+  // Bepflanzung: Hecke, Palmen, Zypressen
+  ad(bx(30,.7,.45,mHedge,4,PL+.35,10.4),'env');
+  [[-22,-11,1.5],[-24,7,1.6],[19,-11,1.4],[18,12,1.5],[16,-8,1.3],[-16,13,1.6],[9,14,1.4]].forEach(function(p){
+    ad(cyl(.26,3.2,mTrunk,p[0],PL+1.6,p[1]),'env');
+    ad(sph(p[2],mGn,p[0],PL+3.4,p[1]),'env');ad(sph(p[2]*.7,mGn,p[0]+.7,PL+3.0,p[1]+.5),'env');
+  });
+  [[-14,11],[16,9],[-6,13]].forEach(function(p){var cy=cyl(.38,5,mGn,p[0],PL+2.5,p[1]);cy.scale.set(1,1,1);ad(cy,'env');ad(sph(.5,mGn,p[0],PL+5.1,p[1]),'env');}); // Zypressen
+
+  // Außentreppe zur Dachterrasse (Nordseite)
+  for(var s=0;s<14;s++){ad(bx(2.8,.42,.85,mStep,-6.5,PL+.5+s*.44,-4.0-s*.42),'env');}
+  // Glasbrüstung Süd-Terrasse + Kübel am Haus
+  ad(bx(24,.9,.05,mG,4,PL+.8,11.4),'env');ad(bx(24,.08,.12,mRail,4,PL+1.26,11.4),'env');
+  [[-9.3,3.6],[9.3,3.6]].forEach(function(p){ad(cyl(.32,.7,mStep,p[0],PL+.35,p[1]),'env');ad(sph(.65,mGn,p[0],PL+1.05,p[1]),'env');});
+
+  // ═══ WOHNEBENE (offener Wohn-/Ess-/Küchenbereich) ═══
+  ad(bx(L,.3,D,mFl,0,LF-.1,0),'eg');                          // Bodenplatte
+  wallN(LF+LWH/2,LWH,'eg');                                    // Rückwand geschlossen
+  ad(bx(WT,LWH,D,mW,X0,LF+LWH/2,0),'eg');                     // Westwand
+  ad(bx(.16,2.2,1.2,mWd,X0,LF+1.1,-1.8),'eg');               // Eingangstür (West, zur Zufahrt)
+  // Südfassade: raumhohe Verglasung + Rahmen
+  ad(bx(L-1,2.5,.1,mG,0,LF+1.35,Z1),'eg');pillars(-8,8,2.5,LF+1.35,2.5,Z1,'eg');
+  // Ostfassade zum Pool: große Schiebefront (PE3, 4,42 m)
+  ad(bx(.1,2.4,D-1,mG,X1,LF+1.3,0),'eg');pillars(-2.5,2.5,2.5,LF+1.3,2.4,0,'eg'); // Rahmen entlang Z geht nicht via pillars(x); Rahmen separat:
+  ad(bx(.12,2.4,.1,mFr,X1,LF+1.3,-2),'eg');ad(bx(.12,2.4,.1,mFr,X1,LF+1.3,0),'eg');ad(bx(.12,2.4,.1,mFr,X1,LF+1.3,2),'eg');
+  // Fenster in der Rückwand
+  win(1.6,1.2,-6,LF+1.5,Z0,'z','eg');win(1.6,1.2,-1,LF+1.5,Z0,'z','eg');win(1.6,1.2,4,LF+1.5,Z0,'z','eg');
+  ad(bx(L,.2,D,mCeil,0,LCY,0),'egc');                         // Decke Wohnebene (= Boden OG)
+  // Möblierung: Küchenzeile + Insel (West)
+  ad(bx(4.4,.9,.7,mKit,-6.4,LF+.45,-3.05),'eg');ad(bx(4.4,.08,.7,mStep,-6.4,LF+.94,-3.05),'eg');
+  ad(bx(2.6,.9,1,mKit,-6,LF+.45,-.9),'eg');ad(bx(2.6,.08,1,mStep,-6,LF+.94,-.9),'eg'); // Kochinsel
+  ad(bx(.95,.04,.5,mSl,-6,LF+.99,-3.05),'eg');                                          // Kochfeld
+  [-6.9,-6,-5.1].forEach(function(x){ad(cyl(.16,.5,mWd,x,LF+.25,-.1),'eg');});           // Barhocker
+  // ovaler Esstisch + Stühle
+  var tbl=cyl(1.15,.12,mWd,-1.6,LF+.74,0);tbl.scale.set(1,1,1.5);ad(tbl,'eg');ad(cyl(.12,.74,mWd,-1.6,LF+.37,0),'eg');
+  [[-3,-.9],[-1.6,-1.4],[-.2,-.9],[-3,.9],[-1.6,1.4],[-.2,.9]].forEach(function(p){ad(bx(.5,.9,.5,mWd,p[0],LF+.45,p[1]),'eg');});
+  // Wohnzimmer / Sofa (Ost, zum Pool)
+  ad(bx(3.6,.65,1,mSofa,5,LF+.33,2.3),'eg');ad(bx(3.6,.6,.35,mSofa,5,LF+.75,2.75),'eg');
+  ad(bx(1,.65,2.4,mSofa,3.4,LF+.33,1.4),'eg');
+  ad(bx(1.6,.32,.9,mWd,5,LF+.16,.6),'eg');                    // Couchtisch
+  // WC (Südwest-Ecke) + Treppe (Mitte)
+  ad(bx(.15,LWH,2.2,mW2,-6.4,LF+LWH/2,2.4),'eg');ad(bx(2.2,LWH,.15,mW2,-7.5,LF+LWH/2,1.3),'eg');
+  ad(bx(.5,.4,.35,mWh,-8,LF+.2,2.6),'eg');                    // WC-Becken
+  for(var st=0;st<7;st++){ad(bx(1.6,.18,.35,mStep,-.2,LF+.18+st*.4,-2.6+st*.34),'eg');} // Treppe hoch
+
+  // ═══ SCHLAFEBENE (5 Schlafzimmer + Bäder) ═══
+  wallN(BF+BWH/2,BWH,'og');                                    // Rückwand
+  ad(bx(L,BWH,WT,mW,0,BF+BWH/2,Z1),'og');                     // Südwand
+  ad(bx(WT,BWH,D,mW,X0,BF+BWH/2,0),'og');                     // Westwand
+  ad(bx(.1,2.4,D-1,mG,X1,BF+1.3,0),'og');                     // Ostfront Master verglast (zum Pool)
+  ad(bx(.12,2.4,.1,mFr,X1,BF+1.3,-1.8),'og');ad(bx(.12,2.4,.1,mFr,X1,BF+1.3,1.8),'og');
+  // innere Trennwände -> 5 Zimmer + Flur
+  [-6,-3,0,2.7].forEach(function(x){ad(bx(WT,BWH,4.6,mW2,x,BF+BWH/2,-1.2),'og');}); // Zimmertrenner (Nordband)
+  ad(bx(9,BWH,WT,mW2,-4.5,BF+BWH/2,1.1),'og');               // Flurwand (Süd = Bäder)
+  ad(bx(6.5,BWH,WT,mW2,5.5,BF+BWH/2,-.3),'og');              // Trennung Zimmer 4/5
+  // Fenster (Nord + Süd)
+  [-6,-3,-1.5,4].forEach(function(x){win(1.6,1.2,x,BF+1.5,Z0,'z','og');});
+  win(1.6,1.2,-7,BF+1.5,Z1,'z','og');
+  ad(bx(L,.2,D,mCeil,0,BCY,0),'ogc');                         // Decke OG (= Dachterrasse)
+  function bett(x,z,w){var by=BF; w=w||1.6;
+    ad(bx(w,.45,2.05,mBd,x,by+.22,z),'og');                            // Bettgestell
+    ad(bx(w,.6,.18,mBH,x,by+.6,z-1.02),'og');                          // Kopfteil
+    ad(bx(w-.1,.16,1.7,mWh,x,by+.5,z+.12),'og');                       // Bettdecke
+    ad(bx(w*.42,.13,.4,mWh,x-w*.24,by+.55,z-.72),'og');ad(bx(w*.42,.13,.4,mWh,x+w*.24,by+.55,z-.72),'og'); // Kissen
+    ad(bx(.42,.42,.42,mWd,x+w*.62+.06,by+.21,z-.85),'og');}            // Nachttisch
+  bett(-7.4,-1.6);bett(-4.5,-1.6);bett(-1.6,-1.6);bett(4,-1.6);bett(6.6,1.1,1.8); // Dorm 1-5 (5 = Master)
+  // ein paar Bad-Objekte (Südband)
+  [-7,-4,3.5,6.5].forEach(function(x){ad(bx(.5,.35,.35,mWh,x,BF+.18,2.7),'og');});
+
+  // ═══ DACHTERRASSE + PENTHOUSE + SOLAR ═══
+  ad(bx(L,.06,D,mStep,0,RTOP+.03,0),'roof');                  // Terrassenbelag
+  // umlaufende Glasbrüstung + Handlauf
+  ad(bx(L,.95,.08,mG,0,RTOP+.5,Z0+.05),'roof');ad(bx(L,.95,.08,mG,0,RTOP+.5,Z1-.05),'roof');
+  ad(bx(.08,.95,D,mG,X0+.05,RTOP+.5,0),'roof');ad(bx(.08,.95,D,mG,X1-.05,RTOP+.5,0),'roof');
+  ad(bx(L,.08,.14,mRail,0,RTOP+.98,Z0+.05),'roof');ad(bx(L,.08,.14,mRail,0,RTOP+.98,Z1-.05),'roof');
+  ad(bx(.14,.08,D,mRail,X0+.05,RTOP+.98,0),'roof');ad(bx(.14,.08,D,mRail,X1-.05,RTOP+.98,0),'roof');
+  // Penthouse-Aufbau (wie im Ansichtsplan, seitlich versetzt)
+  ad(bx(5.5,2.5,4.2,mW,-4.5,RTOP+1.3,-.3),'roof');
+  ad(bx(4,2.1,.1,mG,-4.5,RTOP+1.2,1.85),'roof');             // Fensterfront Penthouse
+  // Pergola (Lamellen-Sonnenschutz) + Lounge auf dem Dach
+  [[-.5,-1.6],[3.5,-1.6],[-.5,1.6],[3.5,1.6]].forEach(function(p){ad(cyl(.09,2.4,mWd,p[0],RTOP+1.2,p[1]),'roof');});
+  ad(bx(4.6,.12,.12,mWd,1.5,RTOP+2.36,-1.65),'roof');ad(bx(4.6,.12,.12,mWd,1.5,RTOP+2.36,1.65),'roof'); // Längsträger
+  for(var pl=0;pl<10;pl++){ad(bx(.08,.13,3.5,mWd,-.65+pl*.52,RTOP+2.43,0),'roof');}                     // Lamellen
+  ad(bx(3.4,.45,1.5,mSofa,1.5,RTOP+.32,1.2),'roof');ad(bx(3.4,.4,.28,mSofa,1.5,RTOP+.6,1.9),'roof');    // Lounge + Rücken
+  // Pflanzkübel als Deko
+  [[-7,-2.6],[-7,2.6]].forEach(function(p){ad(cyl(.35,.6,mStep,p[0],RTOP+.3,p[1]),'roof');ad(sph(.7,mGn,p[0],RTOP+.95,p[1]),'roof');});
+  // Solarpaneele (Osthälfte, geneigt)
+  [[5.5,-1.6],[7.8,-1.6],[5.5,1.4],[7.8,1.4]].forEach(function(p){var pv=bx(2.1,.1,1.5,mSl,p[0],RTOP+.45,p[1]);pv.rotation.x=-.32;ad(pv,'roof');});
 
   // ═══ KAMERA-STEUERUNG (gedämpft, mit Auto-Rotation) ═══
-  var theta=.7,phi=.60,radius=48,lx=0,ly=3.4;
-  var tTheta=theta,tPhi=phi,tRad=radius,tLy=ly;
+  var theta=.72,phi=.74,radius=42,lx=3,ly=4.4;
+  var tTheta=theta,tPhi=phi,tRad=radius,tLx=lx,tLy=ly;
   var isDrag=false,mx=0,my=0,td=false,tx=0,ty=0,last=nowMs();
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function nowMs(){return (window.performance&&performance.now)?performance.now():Date.now();}
   function bump(){last=nowMs();}
-  var ft=[{r:46,ly:3.2,ph:.80},{r:30,ly:2.6,ph:.52},{r:30,ly:5.8,ph:.50},{r:38,ly:6.5,ph:.32}];
+  var ft=[{r:50,lx:1,ly:3.8,ph:.66},{r:27,lx:0,ly:2.4,ph:.50},{r:27,lx:0,ly:5.4,ph:.48},{r:36,lx:5,ly:7,ph:.30}];
   window.setFloor=function(f,btn){
     document.querySelectorAll('.vbtn').forEach(function(b){b.classList.remove('on');});if(btn)btn.classList.add('on');
-    var t=ft[f];tRad=t.r;tLy=t.ly;tPhi=t.ph;bump();
+    var t=ft[f];tRad=t.r;tLx=t.lx;tLy=t.ly;tPhi=t.ph;bump();
     // 1 = Erdgeschoss (Decke offen), 2 = Obergeschoss (Decke offen, EG als Sockel), 3 = Dach
     var show={0:['env','eg','egc','og','ogc','roof'],1:['env','eg'],2:['env','eg','egc','og'],3:['env','eg','egc','og','ogc','roof']}[f];
     Object.keys(g).forEach(function(k){g[k].forEach(function(m){m.visible=false;});});
@@ -1040,7 +1108,7 @@ function init3D(){
   cv.addEventListener('touchmove',function(e){if(!td||e.touches.length!==1)return;tTheta-=(e.touches[0].clientX-tx)*.009;tPhi=Math.max(.14,Math.min(1.45,tPhi+(e.touches[0].clientY-ty)*.007));tx=e.touches[0].clientX;ty=e.touches[0].clientY;bump();},{passive:true});
   (function loop(){requestAnimationFrame(loop);
     if(!reduce&&!isDrag&&!td&&nowMs()-last>3500){tTheta-=.0016;}   // sanftes Kreisen bei Inaktivität
-    theta+=(tTheta-theta)*.09;phi+=(tPhi-phi)*.09;radius+=(tRad-radius)*.07;ly+=(tLy-ly)*.08;
+    theta+=(tTheta-theta)*.09;phi+=(tPhi-phi)*.09;radius+=(tRad-radius)*.07;lx+=(tLx-lx)*.08;ly+=(tLy-ly)*.08;
     var sp=Math.sin(phi),cp=Math.cos(phi);
     cam.position.set(lx+radius*sp*Math.sin(theta),ly+radius*cp,radius*sp*Math.cos(theta));
     cam.lookAt(lx,ly,0);rend.render(sc,cam);
