@@ -28,7 +28,7 @@ img{display:block;max-width:100%}
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 .nav-logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;flex-shrink:0}
-.nav-logo-top{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:#fff;letter-spacing:.15em}
+.nav-logo-top{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:#fff;letter-spacing:.15em;text-shadow:0 0 14px rgba(184,146,74,.55),0 0 6px rgba(255,244,214,.4)}
 .nav-logo-top span{color:var(--gold);font-style:italic}
 .nav-logo-sub{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:2px}
 
@@ -158,15 +158,15 @@ img{display:block;max-width:100%}
 .hero-eyebrow{position:absolute;top:2.8rem;left:0;right:0;text-align:center;z-index:3;display:flex;align-items:center;justify-content:center;gap:.85rem;font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:0;animation:risein 1.3s cubic-bezier(.22,1,.36,1) .55s both}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:30px;height:1px;background:var(--gold);opacity:.65}
 /* Title block — center, scroll-revealed */
-.hero-title-block{position:absolute;left:0;right:0;top:62%;transform:translateY(-50%);text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem;animation:heroTitleIn 2.1s cubic-bezier(.16,.84,.26,1) .85s both}
+.hero-title-block{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem;animation:heroTitleIn 2.1s cubic-bezier(.16,.84,.26,1) .85s both}
 @keyframes heroTitleIn{from{opacity:0;transform:translateY(calc(-50% + 46px))}to{opacity:1;transform:translateY(-50%)}}
 .hero-rule{width:0;height:1px;margin:1.6rem auto 0;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:heroRule 1.8s cubic-bezier(.22,1,.36,1) 1.7s both}
 @keyframes heroRule{from{width:0;opacity:0}to{width:220px;opacity:1}}
-.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:-.08em}
+.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:-.08em}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 /* Content — bottom, scroll-revealed */
-.hero-tagline{font-size:1.05rem;color:var(--gold);font-weight:300;line-height:1.75;margin:0 auto 2rem;max-width:500px;opacity:.92}
+.hero-tagline{font-size:1.08rem;color:var(--gold);font-weight:300;line-height:1.8;margin:2.4rem auto 2rem;max-width:520px;opacity:1;text-shadow:0 1px 12px rgba(0,0,0,.5)}
 .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
 .hero-btns .btn-solid{background:var(--teal)}
 .hero-btns .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35)}
@@ -639,15 +639,15 @@ footer{background:var(--b2);padding:3.6rem 2.5rem 1.8rem;border-top:1px solid va
 ═══════════════════════════════════════ */
 /* Preloader mit Vorhang-Reveal */
 #preloader{position:fixed;inset:0;z-index:99999;pointer-events:none}
-#preloader .pre-panel-top,#preloader .pre-panel-bot{position:absolute;left:0;right:0;height:51%;background:var(--ink);transition:transform 1.7s cubic-bezier(.7,0,.16,1) .9s}
+#preloader .pre-panel-top,#preloader .pre-panel-bot{position:absolute;left:0;right:0;height:51%;background:var(--ink);transition:transform 2.9s cubic-bezier(.36,.02,.2,1) .55s, opacity 2.2s ease .7s}
 #preloader .pre-panel-top{top:0}
 #preloader .pre-panel-bot{bottom:0}
 #preloader .pre-mark{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,5vw,3.2rem);letter-spacing:.14em;color:#fff;opacity:0;animation:preIn 1.4s ease .2s forwards;transition:opacity .55s ease}
 #preloader .pre-mark em{font-style:italic;color:var(--gold)}
 @keyframes preIn{from{opacity:0;transform:translateY(-50%) translateY(16px)}to{opacity:1;transform:translateY(-50%)}}
 body:not(.loaded) #preloader{pointer-events:all}
-body.loaded #preloader .pre-panel-top{transform:translateY(-100%)}
-body.loaded #preloader .pre-panel-bot{transform:translateY(100%)}
+body.loaded #preloader .pre-panel-top{transform:translateY(-100%);opacity:0}
+body.loaded #preloader .pre-panel-bot{transform:translateY(100%);opacity:0}
 body.loaded #preloader .pre-mark{animation:none;opacity:0;transition:opacity .6s ease}
 
 /* Hero-Intro erst nach dem Laden abspielen */
@@ -678,7 +678,7 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 @media (prefers-reduced-motion: reduce){
   #preloader{display:none !important}
   #fx-spotlight,#fx-grain,.hero-caustics{display:none !important}
-  .hero-h1 em{animation:none !important}
+  .hero-h1 em,.hero-h1 .soli{animation:none !important}
   [data-reveal]{opacity:1 !important;transform:none !important}
   .hero-eyebrow,.hero-rule,.hero-content,.hero-scroll-hint{animation:none !important;opacity:1 !important}
   .hero-title-block{animation:none !important;opacity:1 !important}
@@ -886,7 +886,7 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 
 /* ═══════ "Soli"-Signatur ═══════ */
 .soli{font-family:'Great Vibes',cursive;font-style:normal;font-weight:400;color:var(--gold);line-height:1;white-space:nowrap}
-.nav-logo-top .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.1em}
+.nav-logo-top .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.1em;text-shadow:0 0 16px rgba(184,146,74,.7),0 0 7px rgba(255,244,214,.5)}
 .ft-logo .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.12em}
 .pre-mark .soli{font-size:1.5em;vertical-align:-.1em;margin-left:.15em}
-.hero-h1 .soli{font-size:.36em;vertical-align:.28em;margin-left:.12em;-webkit-text-fill-color:var(--gold)}
+.hero-h1 .soli{font-size:.58em;vertical-align:.1em;margin-left:.14em;background:linear-gradient(100deg,var(--gold) 40%,#fff4d6 50%,var(--gold) 60%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% 100%;background-position:120% 0;animation:goldSweep 10s ease-in-out 3.6s infinite}
