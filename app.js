@@ -356,7 +356,7 @@ function buildCard(d, filterAttr) {
   var distClean = d.dist ? d.dist.replace('📍 ','') : '';
   var distHtml = d.dist ? '<div class="tile-dist" data-distraw="'+distClean+'">'+distClean+'</div>' : '';
   var card = document.createElement('div');
-  card.className = 'tile-card';
+  card.className = 'tile-card tile-reveal';
   card.setAttribute(filterAttr, d.cat);
   card.innerHTML =
     '<div class="tile-img-wrap"><img class="tile-img" src="'+d.img+'" alt="'+d.name+'" loading="lazy">'+badgeHtml+distHtml+'</div>'
@@ -1196,3 +1196,39 @@ window.addEventListener('DOMContentLoaded', function(){
     els.forEach(function(e){ io.observe(e); });
   })();
 })();
+
+// ═══════════════════════════════════════
+// EMPFEHLUNGEN FX: gestaffeltes Kachel-Reveal + sanfter 3D-Tilt
+// ═══════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cards = document.querySelectorAll('#empf-grid .tile-card');
+  if(!cards.length) return;
+
+  // Reveal beim Scrollen, zeilenweise gestaffelt
+  if(!reduce && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      var shown = entries.filter(function(e){ return e.isIntersecting; });
+      shown.forEach(function(e, i){
+        setTimeout(function(){ e.target.classList.add('in'); }, i*85);
+        io.unobserve(e.target);
+      });
+    }, {threshold:.12});
+    cards.forEach(function(c){ io.observe(c); });
+  } else {
+    cards.forEach(function(c){ c.classList.add('in'); });
+  }
+
+  // Sanfter 3D-Tilt zur Maus (nur Desktop, ruhige Variante ausgenommen)
+  if(!reduce && window.matchMedia('(pointer:fine)').matches){
+    cards.forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var rx = ((e.clientY - r.top)/r.height - 0.5) * -5;
+        var ry = ((e.clientX - r.left)/r.width  - 0.5) *  5;
+        card.style.transform = 'perspective(900px) rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg) translateY(-6px)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+    });
+  }
+});
