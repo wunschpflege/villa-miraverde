@@ -162,11 +162,11 @@ img{display:block;max-width:100%}
 @keyframes heroTitleIn{from{opacity:0;transform:translateY(calc(-50% + 46px))}to{opacity:1;transform:translateY(-50%)}}
 .hero-rule{width:0;height:1px;margin:1.6rem auto 0;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:heroRule 1.8s cubic-bezier(.22,1,.36,1) 1.7s both}
 @keyframes heroRule{from{width:0;opacity:0}to{width:220px;opacity:1}}
-.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:-.08em;text-shadow:0 0 20px rgba(184,146,74,.55),0 2px 12px rgba(0,0,0,.35)}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0;filter:drop-shadow(0 0 60px rgba(200,160,80,.45)) drop-shadow(0 0 26px rgba(212,170,88,.65)) drop-shadow(0 0 8px rgba(255,246,220,.6))}
+.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:-.08em}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 /* Content — bottom, scroll-revealed */
-.hero-tagline{font-size:1.08rem;color:var(--gold);font-weight:300;line-height:1.8;margin:2.4rem auto 2rem;max-width:520px;opacity:1;text-shadow:0 1px 14px rgba(0,0,0,.5),0 0 24px rgba(184,146,74,.3)}
+.hero-tagline{font-size:1.08rem;color:var(--gold);font-weight:300;line-height:1.8;margin:2.4rem auto 2rem;max-width:520px;opacity:1;text-shadow:0 1px 12px rgba(0,0,0,.5)}
 .hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
 .hero-btns .btn-solid{background:var(--teal)}
 .hero-btns .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35)}
@@ -678,7 +678,7 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 @media (prefers-reduced-motion: reduce){
   #preloader{display:none !important}
   #fx-spotlight,#fx-grain,.hero-caustics{display:none !important}
-  .hero-h1 em{animation:none !important}
+  .hero-h1 em,.hero-h1 .soli{animation:none !important}
   [data-reveal]{opacity:1 !important;transform:none !important}
   .hero-eyebrow,.hero-rule,.hero-content,.hero-scroll-hint{animation:none !important;opacity:1 !important}
   .hero-title-block{animation:none !important;opacity:1 !important}
@@ -889,4 +889,4 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 .nav-logo-top .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.1em;text-shadow:0 0 16px rgba(184,146,74,.7),0 0 7px rgba(255,244,214,.5)}
 .ft-logo .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.12em}
 .pre-mark .soli{font-size:1.5em;vertical-align:-.1em;margin-left:.15em}
-.hero-h1 .soli{font-size:.58em;vertical-align:.1em;margin-left:.14em;-webkit-text-fill-color:var(--gold);text-shadow:0 0 40px rgba(184,146,74,.6),0 0 20px rgba(205,164,84,.8),0 0 9px rgba(255,246,220,.65)}
+.hero-h1 .soli{font-size:.58em;vertical-align:.1em;margin-left:.14em;background:linear-gradient(100deg,var(--gold) 40%,#fff4d6 50%,var(--gold) 60%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% 100%;background-position:120% 0;animation:goldSweep 10s ease-in-out 3.6s infinite}
