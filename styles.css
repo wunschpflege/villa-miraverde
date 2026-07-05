@@ -787,3 +787,18 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 .value-cell:hover .value-ic svg{stroke:#fff}
 .value-cell h4{transition:color .3s ease}
 .value-cell:hover h4{color:var(--teal)}
+
+/* ═══════════════════════════════════════
+   LAGE & KONTAKT FX
+═══════════════════════════════════════ */
+.loc-mark svg{width:15px;height:15px;stroke:var(--teal)}
+.loc-mark{transition:background .3s ease,border-color .3s ease}
+#page-lage a svg{stroke:var(--teal)}
+/* Kontaktformular: Schatten + goldener Fokus-Ring */
+.contact-card{box-shadow:var(--shadow-soft)}
+.contact-card input:focus,.contact-card textarea:focus{border-color:var(--teal) !important;box-shadow:0 0 0 3px var(--teal3);outline:none}
+/* Karten-Pins: sanftes Anheben */
+.map-pin-btn{transition:transform .25s cubic-bezier(.22,1,.36,1),background .2s ease,border-color .2s ease,color .2s ease}
+.map-pin-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -10px rgba(30,24,18,.3)}
+/* Karte: weicher Rahmen */
+#page-lage .map-box{box-shadow:var(--shadow-soft)}
