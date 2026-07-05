@@ -802,3 +802,32 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 .map-pin-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -10px rgba(30,24,18,.3)}
 /* Karte: weicher Rahmen */
 #page-lage .map-box{box-shadow:var(--shadow-soft)}
+
+/* ═══════════════════════════════════════
+   AUSSTATTUNG FX
+═══════════════════════════════════════ */
+/* 3D-Viewer: Rahmen, Glow, Etagen-Buttons */
+.viewer-canvas-box{position:relative;border:1px solid rgba(42,107,107,.16);box-shadow:var(--shadow-lift)}
+.vbtn{border-radius:20px;padding:5px 14px;transition:all .25s cubic-bezier(.22,1,.36,1)}
+.vbtn:hover{background:var(--b3);color:var(--ink)}
+.vbtn.on{background:linear-gradient(120deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 6px 16px -6px rgba(42,107,107,.6)}
+/* Viewer-Feature-Icons */
+.vfeat-dot svg{width:16px;height:16px;stroke:var(--teal);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.vfeat-dot{transition:transform .35s cubic-bezier(.22,1,.36,1),background .25s ease}
+.vfeat:hover .vfeat-dot{transform:scale(1.12) rotate(-6deg);background:var(--teal)}
+.vfeat:hover .vfeat-dot svg{stroke:#fff}
+/* Highlights: Hover-Lift + Icon-Animation */
+.am-feat-main,.am-feat-card{transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,background .3s ease}
+.am-feat-main{z-index:0}
+.am-feat-main:hover,.am-feat-card:hover{box-shadow:var(--shadow-soft)}
+.am-feat-main .am-ic-big,.am-feat-card .am-ic{transition:transform .45s cubic-bezier(.22,1,.36,1),background .3s ease}
+.am-feat-main:hover .am-ic-big,.am-feat-card:hover .am-ic{transform:scale(1.1) rotate(-6deg)}
+/* Ausstattungs-Grid: Icon-Animation beim Hover */
+.am-cell .am-cell-wrap{transition:transform .4s cubic-bezier(.22,1,.36,1),background .25s ease,border-color .25s ease}
+.am-cell:hover .am-cell-wrap{transform:scale(1.12) rotate(-6deg);background:var(--teal);border-color:var(--teal)}
+.am-cell:hover .am-cell-wrap svg{stroke:#fff}
+.am-cell h4{transition:color .25s ease}
+.am-cell:hover h4{color:var(--teal)}
+/* Promise-Icons */
+.am-promise-num{opacity:1 !important;display:flex;align-items:center}
+.am-promise-num svg{width:2rem;height:2rem;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}

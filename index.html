@@ -302,7 +302,7 @@
 
     <!-- Hero Image -->
     <div style="position:relative;height:52vh;min-height:340px;overflow:hidden;display:flex;align-items:flex-end">
-      <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800&q=85') center/cover no-repeat;animation:hzoom 20s ease-in-out infinite alternate"></div>
+      <div class="book-hero-bg" style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800&q=85') center/cover no-repeat"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(170deg,rgba(12,20,24,.08) 0%,rgba(18,30,28,.35) 50%,rgba(15,20,14,.82) 100%)"></div>
       <div style="position:relative;z-index:2;padding:0 3rem 3rem;max-width:700px">
         <div style="display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span><span data-t="ax_eyebrow">Exklusiver Neubau · Vermietungsstart 2027</span></div>
@@ -314,15 +314,15 @@
     <div class="container" style="padding-top:3.5rem;padding-bottom:5rem">
 
       <!-- 3D Viewer -->
-      <div class="viewer-wrap" style="margin-top:2.5rem">
+      <div class="viewer-wrap" data-reveal style="margin-top:2.5rem">
         <div>
           <div class="eyebrow" style="margin-bottom:.6rem" data-t="tour_eyebrow">Virtuelle Tour</div>
           <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:.9rem"><span data-t="tour_h">Erkunden Sie die Villa</span><br><em style="color:var(--teal)" data-t="tour_hi">in 3D</em></h3>
           <p class="section-p" data-t="ax_tour_p">Drehen, zoomen und jede Ebene erkunden – so als wären Sie schon vor Ort.</p>
           <div class="viewer-feats" style="margin-top:2rem">
-            <div class="vfeat"><div class="vfeat-dot">🏠</div><div><h4 data-t="feat1_h">Drei Ebenen</h4><p data-t="feat1_p">Wohnbereich, 4 Schlafzimmer, Dachterrasse</p></div></div>
-            <div class="vfeat"><div class="vfeat-dot">🛋️</div><div><h4 data-t="feat2_h">Vollmöbliert</h4><p data-t="feat2_p">Lounge, vollausgestattete Küche, alle 4 Schlafzimmer</p></div></div>
-            <div class="vfeat"><div class="vfeat-dot">🌿</div><div><h4 data-t="feat3_h">Mediterrane Anlage</h4><p data-t="feat3_p">1.079 m² Garten, Pool und Panoramaterrassen</p></div></div>
+            <div class="vfeat"><div class="vfeat-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div><h4 data-t="feat1_h">Drei Ebenen</h4><p data-t="feat1_p">Wohnbereich, 4 Schlafzimmer, Dachterrasse</p></div></div>
+            <div class="vfeat"><div class="vfeat-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11v6M22 11v6M2 14h20M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/></svg></div><div><h4 data-t="feat2_h">Vollmöbliert</h4><p data-t="feat2_p">Lounge, vollausgestattete Küche, alle 4 Schlafzimmer</p></div></div>
+            <div class="vfeat"><div class="vfeat-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M6 21c4-4 8-6 12-8"/></svg></div><div><h4 data-t="feat3_h">Mediterrane Anlage</h4><p data-t="feat3_p">1.079 m² Garten, Pool und Panoramaterrassen</p></div></div>
           </div>
         </div>
         <div>
@@ -343,7 +343,7 @@
 
       <!-- Featured amenities -->
       <div class="am-section-title" data-t="am_highlights">Highlights</div>
-      <div class="am-featured">
+      <div class="am-featured" data-reveal>
         <div class="am-feat-main">
           <div class="am-ic-big"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <h3 data-t="am_sea_h">Meerblick</h3>
@@ -375,7 +375,7 @@
       <!-- All amenities grid -->
       <div class="section-sep" style="padding:2.5rem 0"><span class="section-sep-icon">✦</span></div>
       <div class="am-section-title" data-t="am_all">Komplette Ausstattung</div>
-      <div class="am-grid">
+      <div class="am-grid" data-reveal>
         <div class="am-cell"><div class="am-cell-wrap"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12" y2="20"/></svg></div><h4 data-t="am_wifi_h">Glasfaser-WLAN</h4><p data-t="am_wifi_p">Highspeed Internet überall, auch auf der Terrasse</p></div>
         <div class="am-cell"><div class="am-cell-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg></div><h4 data-t="am_ac_h">Klimaanlage</h4><p data-t="am_ac_p">Inverter-Klimaanlage in allen Räumen, individuell regelbar</p></div>
         <div class="am-cell"><div class="am-cell-wrap"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h4 data-t="am_park_h">2 Privatstellplätze</h4><p data-t="am_park_p">Geschützte Stellplätze direkt am Haus, inkl. Wallbox</p></div>
@@ -391,10 +391,10 @@
       </div>
 
       <!-- Promise -->
-      <div class="am-promise">
-        <div class="am-promise-item"><div class="am-promise-num" style="font-size:1.6rem">💬</div><div class="am-promise-txt"><h5>Unkompliziert erreichbar</h5><p>Während Ihres Aufenthalts direkt per WhatsApp – persönlich und schnell</p></div></div>
-        <div class="am-promise-item"><div class="am-promise-num">5★</div><div class="am-promise-txt"><h5>Durchgängig begeistert</h5><p>Alle bisherigen Gäste bewerteten mit 5 Sternen</p></div></div>
-        <div class="am-promise-item"><div class="am-promise-num" style="font-size:1.8rem">✓</div><div class="am-promise-txt"><h5>Volle Transparenz</h5><p>Endreinigung &amp; WLAN inklusive – keine versteckten Zusatzkosten</p></div></div>
+      <div class="am-promise" data-reveal>
+        <div class="am-promise-item"><div class="am-promise-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div class="am-promise-txt"><h5>Unkompliziert erreichbar</h5><p>Während Ihres Aufenthalts direkt per WhatsApp – persönlich und schnell</p></div></div>
+        <div class="am-promise-item"><div class="am-promise-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="am-promise-txt"><h5>Durchgängig begeistert</h5><p>Alle bisherigen Gäste bewerteten mit 5 Sternen</p></div></div>
+        <div class="am-promise-item"><div class="am-promise-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="am-promise-txt"><h5>Volle Transparenz</h5><p>Endreinigung &amp; WLAN inklusive – keine versteckten Zusatzkosten</p></div></div>
       </div>
 
     </div>
