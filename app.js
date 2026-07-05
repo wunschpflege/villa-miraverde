@@ -921,7 +921,7 @@ function init3D(){
   // ── Materialien
   function M(c,r,m){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?.85:r,metalness:m||0});}
   function GL(c,o,r){return new THREE.MeshStandardMaterial({color:c,transparent:true,opacity:o,roughness:r,metalness:.05});}
-  var mW=M(0xD9CFBD,.92),mW2=M(0xC9BEA8,.95),mF=M(0xB39468,.8),mR=M(0xC5BAA2,.88),
+  var mW=M(0xE6E0D3,.9),mW2=M(0xD3C9B5,.94),mF=M(0xB39468,.8),mR=M(0xC5BAA2,.88),
       mG=GL(0x8FBAD6,.34,.05),mFr=M(0x2C3034,.5,.35),
       mGr=M(0x5C9C46,.95),mHedge=M(0x437E30,.9),mD=M(0x4E3E2A,.95),
       mP=GL(0x18A6CE,.8,.04),mCop=M(0xD9D0BE,.7),mPv=M(0xB6AB92,.8),
@@ -955,34 +955,58 @@ function init3D(){
   var LF=0,LWH=2.9,LCY=3.0,BF=3.1,BWH=2.75,BCY=5.95,RTOP=6.05; // Ebenen-Höhen (Meter)
   function wallN(y,h,grp,m){return ad(bx(L,h,WT,m||mW,0,y,Z0),grp);}   // Rückwand (Norden, bergseitig)
   function pillars(x0,x1,step,y,h,z,grp){for(var x=x0;x<=x1+.001;x+=step){ad(bx(.14,h,.14,mFr,x,y,z),grp);}}
+  function car(x,z,ry,col,by){                                 // einfaches Auto (Karosserie + Kabine + Räder)
+    by=by||0;
+    var b=bx(3.9,.55,1.75,M(col,.4,.4),x,by+.28,z);b.rotation.y=ry;ad(b,'env');
+    var c=bx(2.0,.55,1.55,GL(0x22303C,.55,.2),x,by+.72,z);c.rotation.y=ry;ad(c,'env');
+    var w=bx(4.0,.28,1.5,M(0x1C1C1E,.7),x,by+.14,z);w.rotation.y=ry;ad(w,'env');
+  }
 
-  // ═══ UMGEBUNG (immer sichtbar) ═══
-  ad(bx(90,.7,64,mD,0,-.95,0),'env');                         // Erdreich
-  ad(bx(90,.2,64,mGr,0,-.45,0),'env');                        // Rasen
-  ad(bx(40,.16,22,mPv,4,-.30,1),'env');                       // Terrassen-Pflaster (Ost + Süd)
-  // Stützmauer am Hang (Norden)
-  ad(bx(30,1.8,.5,mStone,0,.6,-10),'env');
-  // Pool an der Ostseite (~32 m²)
-  ad(bx(5.4,.35,8.2,mCop,13.2,-.10,1),'env');                 // heller Beckenrand
-  ad(bx(4.5,.55,7.3,mP,13.2,-.02,1),'env');                   // Wasser
-  // Sonnenliegen am Pool
-  [[10.6,-1.4],[10.6,.6],[10.6,2.6]].forEach(function(p){
-    ad(bx(.85,.22,2,mWh,p[0],.15,p[1]),'env');ad(bx(.85,.5,.14,mWh,p[0],.35,p[1]-.9),'env');
+  // ═══ GRUNDSTÜCK AM HANG (immer sichtbar) ═══
+  // Norden = bergseitig/höher (Zufahrt), Süden = talseitig/tiefer (Meerblick)
+  var mAsph=M(0x6A6E73,.9),mSea=M(0x5C93B4,.35,.12);
+  var PL=-.3;                                                 // Plateau-/Terrassenniveau
+  // Mittelmeer als weite, tief liegende Fläche (verläuft im Dunst zum Horizont)
+  ad(bx(700,.5,700,mSea,0,-8.5,200),'env');
+  // Haus-Plateau
+  ad(bx(64,.6,36,mD,2,PL-.35,-2),'env');                      // Erdsockel
+  ad(bx(60,.4,34,mGr,2,PL-.05,-1),'env');                     // Rasen-Plateau
+  ad(bx(40,.18,24,mPv,4,PL+.02,1),'env');                     // befestigte Terrasse (Haus & Pool)
+
+  // — Bergseite (Norden): fest aufgeschütteter Hang mit Stützmauern (schwebt nicht) —
+  ad(bx(60,3.4,7,mGr,0,-1.15,-13),'env');                     // Hangstufe 1 (Vollkörper, Rasen oben)
+  ad(bx(56,1.3,.4,mStone,0,PL+.35,-9.5),'env');               // Stützmauer 1
+  ad(bx(60,4.8,13,mGr,-2,-.7,-21),'env');                     // Hangstufe 2 (Vollkörper)
+  ad(bx(60,1.5,.4,mStone,0,PL+1.25,-16.5),'env');             // Stützmauer 2
+  ad(bx(30,.2,10,mAsph,-8,1.8,-21),'env');                    // Parkplatz auf oberer Stufe
+  car(-13,-21,.1,0xCBCFD4,1.7);car(-5,-21,.06,0x8A93A1,1.7);  // geparkte Autos
+  for(var rp=0;rp<5;rp++){ad(bx(4,.4,1.4,mAsph,7,PL+.25+rp*.36,-9.3-rp*1.35),'env');} // Zufahrtsrampe an der Hangflanke
+
+  // — Talseite (Süden): Stützmauer + tiefere Gartenterrasse (Meerblick) —
+  ad(bx(50,4.6,.6,mStone,3,PL-2.0,11.9),'env');               // Stützmauer talseitig
+  ad(bx(64,4,18,mGr,3,-6.4,22),'env');                        // untere Gartenterrasse (Vollkörper)
+
+  // Pool an der Ostseite (~32 m², talseitig auf Sockel erhöht)
+  ad(bx(5.7,1.8,8.5,mStone,13.2,PL-.55,1),'env');             // Pool-Sockel
+  ad(bx(5.4,.35,8.2,mCop,13.2,PL+.2,1),'env');                // Beckenrand
+  ad(bx(4.5,.5,7.3,mP,13.2,PL+.3,1),'env');                   // Wasser
+  [[10.5,-1.4],[10.5,.6],[10.5,2.6]].forEach(function(p){
+    ad(bx(.85,.22,2,mWh,p[0],PL+.5,p[1]),'env');ad(bx(.85,.5,.14,mWh,p[0],PL+.7,p[1]-.9),'env');
   });
-  // Parkbereich / Zufahrt (Westen)
-  ad(bx(11,.14,12,mPv,-17,-.30,-1),'env');
-  // Gartenhecken & Palmen
-  ad(bx(30,.7,.45,mHedge,4,.05,10.4),'env');
-  [[-22,-11],[-23,9],[19,-12],[18,11],[16,-9]].forEach(function(p){
-    ad(cyl(.26,3.2,mTrunk,p[0],1.4,p[1]),'env');
-    ad(sph(1.5,mGn,p[0],3.3,p[1]),'env');ad(sph(1.05,mGn,p[0]+.7,2.9,p[1]+.5),'env');
+
+  // Bepflanzung: Hecke, Palmen, Zypressen
+  ad(bx(30,.7,.45,mHedge,4,PL+.35,10.4),'env');
+  [[-22,-11,1.5],[-24,7,1.6],[19,-11,1.4],[18,12,1.5],[16,-8,1.3],[-16,13,1.6],[9,14,1.4]].forEach(function(p){
+    ad(cyl(.26,3.2,mTrunk,p[0],PL+1.6,p[1]),'env');
+    ad(sph(p[2],mGn,p[0],PL+3.4,p[1]),'env');ad(sph(p[2]*.7,mGn,p[0]+.7,PL+3.0,p[1]+.5),'env');
   });
-  // Außentreppe zur Dachterrasse (Nordseite, bergseitig)
-  for(var s=0;s<14;s++){ad(bx(2.8,.42,.85,mStep,-6.5,.2+s*.44,-4.0-s*.42),'env');}
-  // Glasbrüstung an der Süd-Terrassenkante + Weg + Deko
-  ad(bx(24,.9,.05,mG,4,.5,11.4),'env');ad(bx(24,.08,.12,mRail,4,.96,11.4),'env');
-  ad(bx(3,.05,11,mStep,-11,-.27,-1),'env');                   // Weg von der Zufahrt
-  [[-9.3,3.6],[9.3,3.6]].forEach(function(p){ad(cyl(.32,.7,mStep,p[0],.05,p[1]),'env');ad(sph(.65,mGn,p[0],.75,p[1]),'env');}); // Kübel am Haus
+  [[-14,11],[16,9],[-6,13]].forEach(function(p){var cy=cyl(.38,5,mGn,p[0],PL+2.5,p[1]);cy.scale.set(1,1,1);ad(cy,'env');ad(sph(.5,mGn,p[0],PL+5.1,p[1]),'env');}); // Zypressen
+
+  // Außentreppe zur Dachterrasse (Nordseite)
+  for(var s=0;s<14;s++){ad(bx(2.8,.42,.85,mStep,-6.5,PL+.5+s*.44,-4.0-s*.42),'env');}
+  // Glasbrüstung Süd-Terrasse + Kübel am Haus
+  ad(bx(24,.9,.05,mG,4,PL+.8,11.4),'env');ad(bx(24,.08,.12,mRail,4,PL+1.26,11.4),'env');
+  [[-9.3,3.6],[9.3,3.6]].forEach(function(p){ad(cyl(.32,.7,mStep,p[0],PL+.35,p[1]),'env');ad(sph(.65,mGn,p[0],PL+1.05,p[1]),'env');});
 
   // ═══ WOHNEBENE (offener Wohn-/Ess-/Küchenbereich) ═══
   ad(bx(L,.3,D,mFl,0,LF-.1,0),'eg');                          // Bodenplatte
@@ -1065,7 +1089,7 @@ function init3D(){
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function nowMs(){return (window.performance&&performance.now)?performance.now():Date.now();}
   function bump(){last=nowMs();}
-  var ft=[{r:42,lx:3,ly:4.4,ph:.74},{r:27,lx:0,ly:2.4,ph:.50},{r:27,lx:0,ly:5.4,ph:.48},{r:34,lx:5,ly:6.8,ph:.30}];
+  var ft=[{r:50,lx:1,ly:3.8,ph:.66},{r:27,lx:0,ly:2.4,ph:.50},{r:27,lx:0,ly:5.4,ph:.48},{r:36,lx:5,ly:7,ph:.30}];
   window.setFloor=function(f,btn){
     document.querySelectorAll('.vbtn').forEach(function(b){b.classList.remove('on');});if(btn)btn.classList.add('on');
     var t=ft[f];tRad=t.r;tLx=t.lx;tLy=t.ly;tPhi=t.ph;bump();
