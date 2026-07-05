@@ -979,11 +979,16 @@ function init3D(){
   });
   // Außentreppe zur Dachterrasse (Nordseite, bergseitig)
   for(var s=0;s<14;s++){ad(bx(2.8,.42,.85,mStep,-6.5,.2+s*.44,-4.0-s*.42),'env');}
+  // Glasbrüstung an der Süd-Terrassenkante + Weg + Deko
+  ad(bx(24,.9,.05,mG,4,.5,11.4),'env');ad(bx(24,.08,.12,mRail,4,.96,11.4),'env');
+  ad(bx(3,.05,11,mStep,-11,-.27,-1),'env');                   // Weg von der Zufahrt
+  [[-9.3,3.6],[9.3,3.6]].forEach(function(p){ad(cyl(.32,.7,mStep,p[0],.05,p[1]),'env');ad(sph(.65,mGn,p[0],.75,p[1]),'env');}); // Kübel am Haus
 
   // ═══ WOHNEBENE (offener Wohn-/Ess-/Küchenbereich) ═══
   ad(bx(L,.3,D,mFl,0,LF-.1,0),'eg');                          // Bodenplatte
   wallN(LF+LWH/2,LWH,'eg');                                    // Rückwand geschlossen
   ad(bx(WT,LWH,D,mW,X0,LF+LWH/2,0),'eg');                     // Westwand
+  ad(bx(.16,2.2,1.2,mWd,X0,LF+1.1,-1.8),'eg');               // Eingangstür (West, zur Zufahrt)
   // Südfassade: raumhohe Verglasung + Rahmen
   ad(bx(L-1,2.5,.1,mG,0,LF+1.35,Z1),'eg');pillars(-8,8,2.5,LF+1.35,2.5,Z1,'eg');
   // Ostfassade zum Pool: große Schiebefront (PE3, 4,42 m)
@@ -995,6 +1000,8 @@ function init3D(){
   // Möblierung: Küchenzeile + Insel (West)
   ad(bx(4.4,.9,.7,mKit,-6.4,LF+.45,-3.05),'eg');ad(bx(4.4,.08,.7,mStep,-6.4,LF+.94,-3.05),'eg');
   ad(bx(2.6,.9,1,mKit,-6,LF+.45,-.9),'eg');ad(bx(2.6,.08,1,mStep,-6,LF+.94,-.9),'eg'); // Kochinsel
+  ad(bx(.95,.04,.5,mSl,-6,LF+.99,-3.05),'eg');                                          // Kochfeld
+  [-6.9,-6,-5.1].forEach(function(x){ad(cyl(.16,.5,mWd,x,LF+.25,-.1),'eg');});           // Barhocker
   // ovaler Esstisch + Stühle
   var tbl=cyl(1.15,.12,mWd,-1.6,LF+.74,0);tbl.scale.set(1,1,1.5);ad(tbl,'eg');ad(cyl(.12,.74,mWd,-1.6,LF+.37,0),'eg');
   [[-3,-.9],[-1.6,-1.4],[-.2,-.9],[-3,.9],[-1.6,1.4],[-.2,.9]].forEach(function(p){ad(bx(.5,.9,.5,mWd,p[0],LF+.45,p[1]),'eg');});
@@ -1022,7 +1029,11 @@ function init3D(){
   win(1.6,1.2,-7,BF+1.5,Z1,'z','og');
   ad(bx(L,.2,D,mCeil,0,BCY,0),'ogc');                         // Decke OG (= Dachterrasse)
   function bett(x,z,w){var by=BF; w=w||1.6;
-    ad(bx(w,.4,2.0,mBd,x,by+.2,z),'og');ad(bx(w,.55,.2,mBH,x,by+.55,z-1.0),'og');ad(bx(w-.1,.14,1.8,mWh,x,by+.48,z+.05),'og');}
+    ad(bx(w,.45,2.05,mBd,x,by+.22,z),'og');                            // Bettgestell
+    ad(bx(w,.6,.18,mBH,x,by+.6,z-1.02),'og');                          // Kopfteil
+    ad(bx(w-.1,.16,1.7,mWh,x,by+.5,z+.12),'og');                       // Bettdecke
+    ad(bx(w*.42,.13,.4,mWh,x-w*.24,by+.55,z-.72),'og');ad(bx(w*.42,.13,.4,mWh,x+w*.24,by+.55,z-.72),'og'); // Kissen
+    ad(bx(.42,.42,.42,mWd,x+w*.62+.06,by+.21,z-.85),'og');}            // Nachttisch
   bett(-7.4,-1.6);bett(-4.5,-1.6);bett(-1.6,-1.6);bett(4,-1.6);bett(6.6,1.1,1.8); // Dorm 1-5 (5 = Master)
   // ein paar Bad-Objekte (Südband)
   [-7,-4,3.5,6.5].forEach(function(x){ad(bx(.5,.35,.35,mWh,x,BF+.18,2.7),'og');});
@@ -1037,10 +1048,13 @@ function init3D(){
   // Penthouse-Aufbau (wie im Ansichtsplan, seitlich versetzt)
   ad(bx(5.5,2.5,4.2,mW,-4.5,RTOP+1.3,-.3),'roof');
   ad(bx(4,2.1,.1,mG,-4.5,RTOP+1.2,1.85),'roof');             // Fensterfront Penthouse
-  // Lounge + Pergola auf dem Dach
-  [[-.5,-1.6],[3.5,-1.6],[-.5,1.6],[3.5,1.6]].forEach(function(p){ad(cyl(.1,2.4,mWd,p[0],RTOP+1.2,p[1]),'roof');});
-  ad(bx(4.6,.16,3.6,mWd,1.5,RTOP+2.4,0),'roof');            // Pergola-Dach
-  ad(bx(3.4,.6,1,mSofa,1.5,RTOP+.35,1.4),'roof');           // Dach-Lounge
+  // Pergola (Lamellen-Sonnenschutz) + Lounge auf dem Dach
+  [[-.5,-1.6],[3.5,-1.6],[-.5,1.6],[3.5,1.6]].forEach(function(p){ad(cyl(.09,2.4,mWd,p[0],RTOP+1.2,p[1]),'roof');});
+  ad(bx(4.6,.12,.12,mWd,1.5,RTOP+2.36,-1.65),'roof');ad(bx(4.6,.12,.12,mWd,1.5,RTOP+2.36,1.65),'roof'); // Längsträger
+  for(var pl=0;pl<10;pl++){ad(bx(.08,.13,3.5,mWd,-.65+pl*.52,RTOP+2.43,0),'roof');}                     // Lamellen
+  ad(bx(3.4,.45,1.5,mSofa,1.5,RTOP+.32,1.2),'roof');ad(bx(3.4,.4,.28,mSofa,1.5,RTOP+.6,1.9),'roof');    // Lounge + Rücken
+  // Pflanzkübel als Deko
+  [[-7,-2.6],[-7,2.6]].forEach(function(p){ad(cyl(.35,.6,mStep,p[0],RTOP+.3,p[1]),'roof');ad(sph(.7,mGn,p[0],RTOP+.95,p[1]),'roof');});
   // Solarpaneele (Osthälfte, geneigt)
   [[5.5,-1.6],[7.8,-1.6],[5.5,1.4],[7.8,1.4]].forEach(function(p){var pv=bx(2.1,.1,1.5,mSl,p[0],RTOP+.45,p[1]);pv.rotation.x=-.32;ad(pv,'roof');});
 
