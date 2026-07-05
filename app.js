@@ -127,13 +127,13 @@ var ADD = {
 for (var _al in ADD) { if (!T[_al]) T[_al] = {}; for (var _ak in ADD[_al]) T[_al][_ak] = ADD[_al][_ak]; }
 
 var ADD2 = {
-  de:{ueber_quote:'„Wir vermieten kein Ferienhaus – wir teilen ein Lebensgefühl."'},
-  en:{ueber_quote:'“We do not rent out a house – we share a way of life.”'},
-  es:{ueber_quote:'«No alquilamos una casa: compartimos una forma de vivir.»'},
-  fr:{ueber_quote:'« Nous ne louons pas une maison – nous partageons un art de vivre. »'},
-  nl:{ueber_quote:'„Wij verhuren geen vakantiehuis – wij delen een levensgevoel."'},
-  pl:{ueber_quote:'„Nie wynajmujemy domu – dzielimy się stylem życia."'},
-  ru:{ueber_quote:'«Мы сдаём не дом — мы делимся образом жизни.»'}
+  de:{ueber_quote:'„Wir vermieten kein Ferienhaus – wir teilen ein Lebensgefühl."',cal_pick:'Datum wählen',cal_hint:'Anreise & Abreise wählen',cal_clear:'Löschen'},
+  en:{ueber_quote:'“We do not rent out a house – we share a way of life.”',cal_pick:'Choose date',cal_hint:'Select arrival & departure',cal_clear:'Clear'},
+  es:{ueber_quote:'«No alquilamos una casa: compartimos una forma de vivir.»',cal_pick:'Elegir fecha',cal_hint:'Elija llegada y salida',cal_clear:'Borrar'},
+  fr:{ueber_quote:'« Nous ne louons pas une maison – nous partageons un art de vivre. »',cal_pick:'Choisir une date',cal_hint:'Choisissez arrivée et départ',cal_clear:'Effacer'},
+  nl:{ueber_quote:'„Wij verhuren geen vakantiehuis – wij delen een levensgevoel."',cal_pick:'Datum kiezen',cal_hint:'Kies aankomst & vertrek',cal_clear:'Wissen'},
+  pl:{ueber_quote:'„Nie wynajmujemy domu – dzielimy się stylem życia."',cal_pick:'Wybierz datę',cal_hint:'Wybierz przyjazd i wyjazd',cal_clear:'Wyczyść'},
+  ru:{ueber_quote:'«Мы сдаём не дом — мы делимся образом жизни.»',cal_pick:'Выбрать дату',cal_hint:'Выберите заезд и выезд',cal_clear:'Очистить'}
 };
 for (var _b2 in ADD2) { if (!T[_b2]) T[_b2] = {}; for (var _k2 in ADD2[_b2]) T[_b2][_k2] = ADD2[_b2][_k2]; }
 
@@ -710,40 +710,93 @@ function calNext(){if(calState.offset<18){calState.offset++;renderCalendar();}}
 // ═══════════════════════════════════════
 // BOOKING
 // ═══════════════════════════════════════
+// ── Eigener Datums-Kalender in der Hero-Leiste (teilt calState mit dem Buchungskalender) ──
+var qcalOffset = 0;
+function openQuickCal(e){
+  if(e){e.stopPropagation();}
+  var pop=document.getElementById('qcal-pop'); if(!pop)return;
+  var willOpen=!pop.classList.contains('open');
+  pop.classList.toggle('open', willOpen);
+  if(willOpen){
+    var base=calState.selStart||new Date();var today=new Date();
+    qcalOffset=Math.max(0,(base.getFullYear()-today.getFullYear())*12+(base.getMonth()-today.getMonth()));
+    renderQuickCal();
+  }
+}
+function qcalPrev(){ if(qcalOffset>0){qcalOffset--;renderQuickCal();} }
+function qcalNext(){ if(qcalOffset<18){qcalOffset++;renderQuickCal();} }
+function qcalClear(){ calState.selStart=null;calState.selEnd=null;renderQuickCal();updateQuickDisp();syncBookingCal(); }
+function updateQuickDisp(){
+  [['qi-disp',calState.selStart],['qo-disp',calState.selEnd]].forEach(function(p){
+    var el=document.getElementById(p[0]); if(!el)return;
+    if(p[1]){ el.removeAttribute('data-t'); el.textContent=fmtDate(p[1]); el.classList.add('filled'); }
+    else { el.setAttribute('data-t','cal_pick'); el.textContent=((T[currentLang]||T.de).cal_pick)||'Datum wählen'; el.classList.remove('filled'); }
+  });
+}
+function syncBookingCal(){
+  if(typeof updateCalSelection==='function' && document.getElementById('cal-from')) updateCalSelection();
+  if(typeof calcCalPrice==='function') calcCalPrice();
+  if(typeof renderCalendar==='function' && document.getElementById('cal-grids')) renderCalendar();
+}
+function renderQuickCal(){
+  var grid=document.getElementById('qcal-grid'),lbl=document.getElementById('qcal-label');
+  if(!grid)return;
+  var months=calMonths[currentLang]||calMonths.de, dows=calDow[currentLang]||calDow.de;
+  var today=new Date();today.setHours(0,0,0,0);
+  var base=new Date(today.getFullYear(),today.getMonth()+qcalOffset,1);
+  var year=base.getFullYear(),month=base.getMonth();
+  if(lbl)lbl.textContent=months[month]+' '+year;
+  grid.innerHTML='';
+  var dow=document.createElement('div');dow.className='cal-dow';
+  dows.forEach(function(d){var s=document.createElement('span');s.textContent=d;dow.appendChild(s);});
+  grid.appendChild(dow);
+  var days=document.createElement('div');days.className='cal-days';
+  var firstDow=(new Date(year,month,1).getDay()+6)%7;
+  for(var e=0;e<firstDow;e++){var em=document.createElement('div');em.className='cal-day empty';days.appendChild(em);}
+  var dim=new Date(year,month+1,0).getDate();
+  for(var day=1;day<=dim;day++){
+    var date=new Date(year,month,day);date.setHours(0,0,0,0);
+    var cell=document.createElement('div');cell.className='cal-day';cell.textContent=day;
+    if(date.getTime()===today.getTime())cell.classList.add('today');
+    if(date<today){cell.classList.add('past');}
+    else if(isBooked(date)){cell.classList.add('booked');cell.title='Belegt';}
+    else{
+      var s=calState.selStart,en=calState.selEnd;
+      if(s&&date.getTime()===s.getTime())cell.classList.add('selected-start');
+      if(en&&date.getTime()===en.getTime())cell.classList.add('selected-end');
+      if(s&&en&&date>s&&date<en)cell.classList.add('in-range');
+      (function(d){cell.addEventListener('click',function(){
+        if(!calState.selStart||(calState.selStart&&calState.selEnd)){calState.selStart=d;calState.selEnd=null;}
+        else{if(d<=calState.selStart){calState.selStart=d;calState.selEnd=null;}else{if(isRangeBlocked(calState.selStart,d)){alert('Dieser Zeitraum enthält bereits belegte Tage.');return;}calState.selEnd=d;}}
+        renderQuickCal();updateQuickDisp();syncBookingCal();
+        if(calState.selStart&&calState.selEnd){setTimeout(function(){var p=document.getElementById('qcal-pop');if(p)p.classList.remove('open');},280);}
+      });})(date);
+    }
+    days.appendChild(cell);
+  }
+  grid.appendChild(days);
+}
+// Popover bei Klick außerhalb schließen
+document.addEventListener('click',function(e){
+  var pop=document.getElementById('qcal-pop'); if(!pop||!pop.classList.contains('open'))return;
+  if(!e.target.closest('.avail-bar')) pop.classList.remove('open');
+});
+
 function quickCheck(){
+  var pop=document.getElementById('qcal-pop'); if(pop)pop.classList.remove('open');
   showTab('buchen');
   if(!window._calInit){renderCalendar();window._calInit=true;}
-
-  // ── Daten aus der Hero-Leiste übernehmen ──
-  var qi=document.getElementById('qi');
-  var qo=document.getElementById('qo');
-  var qg=document.getElementById('qg');
-
-  // Datum-String (YYYY-MM-DD) → lokales Date-Objekt (kein UTC-Versatz)
-  function parseLD(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
-
-  var from = qi&&qi.value ? parseLD(qi.value) : null;
-  var to   = qo&&qo.value ? parseLD(qo.value) : null;
-
-  if(from && !isBooked(from)){
-    calState.selStart = from;
-    // Kalender-Ansicht auf den Anreisemonat springen
+  // Auswahl kommt aus dem gemeinsamen Kalender-Zustand (Hero-Popover)
+  if(calState.selStart){
     var today=new Date();
-    var off=(from.getFullYear()-today.getFullYear())*12+(from.getMonth()-today.getMonth());
-    calState.offset = Math.max(0, off);
+    calState.offset=Math.max(0,(calState.selStart.getFullYear()-today.getFullYear())*12+(calState.selStart.getMonth()-today.getMonth()));
   }
-  if(to && from && to>from && !isRangeBlocked(from,to)){
-    calState.selEnd = to;
-  }
-
   // Gäste-Auswahl synchronisieren
-  var fg=document.getElementById('fg-guests');
+  var qg=document.getElementById('qg'), fg=document.getElementById('fg-guests');
   if(qg&&fg) fg.selectedIndex = qg.selectedIndex;
-
   renderCalendar();
   updateCalSelection();
   calcCalPrice();
-
   // Sanft zum Buchungsformular scrollen
   var bf=document.querySelector('.book-form');
   if(bf) setTimeout(function(){bf.scrollIntoView({behavior:'smooth',block:'start'});},160);

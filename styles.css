@@ -966,3 +966,19 @@ html{scrollbar-width:thin;scrollbar-color:var(--gold) #efe8dc}
 /* Marken-Signet im Footer */
 .ft-signet{width:54px;height:54px;border-radius:50%;border:1px solid rgba(184,146,74,.5);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.9rem;color:var(--gold);margin-bottom:1.1rem}
 @media (prefers-reduced-motion: reduce){#scroll-progress{display:none}.facts-bar.in .facts-item,.values-grid.in .value-cell{animation:none}}
+
+/* ═══ EIGENER DATUMS-KALENDER (Hero-Leiste) ═══ */
+.avf-date{width:100%;color:rgba(255,255,255,.42);font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:pointer;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.avf-date.filled{color:rgba(255,255,255,.92)}
+.qcal-pop{position:absolute;top:calc(100% + 10px);left:1rem;width:320px;max-width:calc(100vw - 2rem);background:var(--b0);border-radius:var(--radius);box-shadow:0 24px 60px -18px rgba(8,14,11,.5);border:1px solid var(--b3);z-index:60;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .28s cubic-bezier(.22,1,.36,1),transform .28s cubic-bezier(.22,1,.36,1),visibility .28s;overflow:hidden}
+.qcal-pop.open{opacity:1;visibility:visible;transform:translateY(0)}
+.qcal-head{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;background:linear-gradient(120deg,var(--teal),var(--teal2));color:#fff}
+.qcal-label{font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:.05em}
+.qcal-pop .cal-grid{padding:.85rem 1rem}
+.qcal-pop .cal-day{font-size:.8rem;min-width:32px;min-height:32px}
+.qcal-pop .cal-dow span{font-size:.6rem}
+.qcal-foot{display:flex;align-items:center;justify-content:space-between;padding:.65rem 1rem .85rem;border-top:1px solid var(--b2)}
+.qcal-foot #qcal-hint{font-size:.66rem;color:var(--ink3);letter-spacing:.03em}
+.qcal-clear{background:none;border:none;color:var(--teal);font-size:.74rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:.2rem .1rem}
+.qcal-clear:hover{text-decoration:underline}
+@media(max-width:640px){.qcal-pop{left:.6rem;right:.6rem;width:auto}}
