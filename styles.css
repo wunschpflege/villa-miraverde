@@ -4,6 +4,9 @@
   --teal:#2A6B6B;--teal2:#1F5252;--teal3:#E0EEEE;
   --gold:#B8924A;--gold2:#96773A;--gold3:#FBF3E4;
   --r:6px;
+  --radius:14px;--radius-sm:9px;
+  --shadow-soft:0 14px 40px -22px rgba(30,24,18,.22);
+  --shadow-lift:0 26px 60px -26px rgba(30,24,18,.4);
   --nav-h:64px;
   --tab-h:56px;
 }
@@ -464,21 +467,30 @@ img{display:block;max-width:100%}
 /* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
-footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)}
-.ft-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.2rem}
-.ft-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--ink);letter-spacing:.13em}
+footer{background:var(--b2);padding:3.6rem 2.5rem 1.8rem;border-top:1px solid var(--b3)}
+.ft-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.7fr 1fr 1.1fr;gap:2.5rem;padding-bottom:2.2rem;border-bottom:1px solid var(--b3)}
+.ft-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--ink);letter-spacing:.13em}
 .ft-logo span{color:var(--teal);font-style:italic}
-.ft-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
-.ft-links a{color:var(--ink3);font-size:.71rem;text-decoration:none;letter-spacing:.07em;transition:color .2s}
+.ft-tag{margin-top:.7rem;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink3)}
+.ft-h{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.1rem;font-weight:500}
+.ft-links{display:flex;flex-direction:column;gap:.65rem;list-style:none}
+.ft-links a{color:var(--ink3);font-size:.8rem;text-decoration:none;letter-spacing:.03em;cursor:pointer;transition:color .2s}
 .ft-links a:hover{color:var(--teal)}
-.ft-copy{color:var(--ink3);font-size:.68rem}
+.ft-bottom{max-width:1200px;margin:1.5rem auto 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.ft-legal{display:flex;gap:1.5rem}
+.ft-legal a{color:var(--ink3);font-size:.7rem;text-decoration:none;cursor:pointer;letter-spacing:.05em;transition:color .2s}
+.ft-legal a:hover{color:var(--teal)}
+.ft-copy{color:var(--ink3);font-size:.7rem}
 
 /* ═══════════════════════════════════════
    SECTION SEPARATOR
 ═══════════════════════════════════════ */
 .section-sep{display:flex;align-items:center;justify-content:center;padding:.6rem 2rem;gap:1rem}
 .section-sep::before,.section-sep::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--b3),transparent)}
-.section-sep-icon{color:var(--gold);font-size:1rem;opacity:.5;flex-shrink:0}
+.section-sep{padding:1.4rem 2rem;gap:1.2rem}
+.section-sep-icon{font-size:0;flex-shrink:0;line-height:1}
+.section-sep-icon::after{content:'◆';font-size:.52rem;color:var(--gold);opacity:.65;letter-spacing:.4em}
+.section-sep::before,.section-sep::after{background:linear-gradient(to right,transparent,var(--b4),transparent)}
 
 /* iOS Safe Area (iPhone X+, Notch) */
 .device-ios #mob-tabbar{padding-bottom:env(safe-area-inset-bottom)}
@@ -606,8 +618,8 @@ footer{background:var(--b2);padding:2.2rem 2.5rem;border-top:1px solid var(--b3)
   .review-form-grid{grid-template-columns:1fr}
   .review-form-body,.review-form-header{padding:1.2rem}
   footer{padding:1.6rem 1.1rem}
-  .ft-inner{flex-direction:column;align-items:flex-start;gap:.8rem}
-  .ft-links{flex-wrap:wrap;gap:.6rem}
+  .ft-grid{grid-template-columns:1fr;gap:1.8rem;text-align:left}
+  .ft-bottom{flex-direction:column;align-items:flex-start;gap:.6rem}
   .container{padding:0 1.1rem}
   .host-card{padding:1.4rem;gap:1.3rem}
 }
@@ -736,3 +748,12 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 .listing-filter .rf-btn.on{background:linear-gradient(120deg,var(--teal),var(--teal2));color:#fff;border-color:var(--teal);box-shadow:0 9px 22px -9px rgba(42,107,107,.55)}
 .listing-filter .rf-btn.on:hover{color:#fff;border-color:var(--teal);transform:translateY(-1px)}
 @media (prefers-reduced-motion: reduce){ .tile-reveal{opacity:1 !important;translate:none !important} }
+
+/* ═══════════════════════════════════════
+   EINHEITLICHE OPTIK (Radien, Schatten, Luft)
+═══════════════════════════════════════ */
+.pc,.tile-card,.book-form,.map-box,.listing-note,.section-card{border-radius:var(--radius)}
+.pc,.listing-note{box-shadow:var(--shadow-soft)}
+.price-calc{border-radius:var(--radius-sm)}
+.listing-grid{gap:2rem}
+.price-stack{gap:1rem}
