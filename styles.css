@@ -99,7 +99,10 @@ img{display:block;max-width:100%}
   background:transparent;border-top:none;border-left:none;border-right:none;
   font-family:'DM Sans',sans-serif;
 }
+.tab{position:relative}
+.tab::after{content:'';position:absolute;left:50%;right:50%;bottom:-2.5px;height:2.5px;background:var(--teal);border-radius:2px;transition:left .3s cubic-bezier(.22,1,.36,1),right .3s cubic-bezier(.22,1,.36,1)}
 .tab:hover{color:var(--teal);background:var(--teal3)}
+.tab:hover:not(.active)::after{left:22%;right:22%}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500}
 .tab .tab-icon{width:15px;height:15px;flex-shrink:0}
 
@@ -489,7 +492,7 @@ footer{background:var(--b2);padding:3.6rem 2.5rem 1.8rem;border-top:1px solid va
 .section-sep::before,.section-sep::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--b3),transparent)}
 .section-sep{padding:1.4rem 2rem;gap:1.2rem}
 .section-sep-icon{font-size:0;flex-shrink:0;line-height:1}
-.section-sep-icon::after{content:'◆';font-size:.52rem;color:var(--gold);opacity:.65;letter-spacing:.4em}
+.section-sep-icon::after{content:'V';font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;line-height:1;color:var(--gold);opacity:.72;letter-spacing:0}
 .section-sep::before,.section-sep::after{background:linear-gradient(to right,transparent,var(--b4),transparent)}
 
 /* iOS Safe Area (iPhone X+, Notch) */
@@ -930,3 +933,36 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.22,1,.36,1)}
 .faq-item.open .faq-a{max-height:280px}
 .faq-a p{padding:0 1.3rem 1.15rem;color:var(--ink3);font-size:.9rem;line-height:1.75;margin:0}
+
+/* ═══ FEINSCHLIFF & ELEGANZ ═══ */
+/* Scroll-Fortschrittslinie */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold3));z-index:100000;pointer-events:none;will-change:transform}
+/* Edle Scrollbar */
+html{scrollbar-width:thin;scrollbar-color:var(--gold) #efe8dc}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:#efe8dc}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold2),var(--gold));border-radius:9px;border:3px solid #efe8dc}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+/* Feinere Hover-Interaktionen */
+.btn-solid,.btn-ghost,.btn-book,.avbar-btn,.wl-btn{transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,background .25s ease,color .25s ease,border-color .25s ease}
+.btn-solid:hover,.btn-book:hover,.avbar-btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(42,107,107,.55)}
+.btn-ghost:hover{transform:translateY(-2px)}
+.am-feat-card,.value-cell,.vfeat,.loc-card{transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease}
+.am-feat-card:hover,.loc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+.vfeat:hover{transform:translateX(3px)}
+/* Sanfte Staffelung revealter Reihen */
+.facts-bar.in .facts-item,.values-grid.in .value-cell{animation:fadeUpSoft .7s cubic-bezier(.22,1,.36,1) both}
+.facts-bar.in .facts-item:nth-child(2){animation-delay:.08s}
+.facts-bar.in .facts-item:nth-child(3){animation-delay:.16s}
+.facts-bar.in .facts-item:nth-child(4){animation-delay:.24s}
+.facts-bar.in .facts-item:nth-child(5){animation-delay:.32s}
+.values-grid.in .value-cell:nth-child(2){animation-delay:.1s}
+.values-grid.in .value-cell:nth-child(3){animation-delay:.2s}
+@keyframes fadeUpSoft{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+/* Redaktioneller Look: Drop-Cap */
+.story-lead::first-letter{float:left;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:3.6em;line-height:.78;padding:.06em .14em 0 0;color:var(--gold)}
+/* Pull-Quote */
+.pull-quote{position:relative;margin:1.8rem 0;padding:.4rem 0 .4rem 1.6rem;border-left:2px solid var(--gold);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.55rem;line-height:1.4;font-weight:300;color:var(--ink)}
+/* Marken-Signet im Footer */
+.ft-signet{width:54px;height:54px;border-radius:50%;border:1px solid rgba(184,146,74,.5);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.9rem;color:var(--gold);margin-bottom:1.1rem}
+@media (prefers-reduced-motion: reduce){#scroll-progress{display:none}.facts-bar.in .facts-item,.values-grid.in .value-cell{animation:none}}

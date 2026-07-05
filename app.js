@@ -41,6 +41,8 @@ function showTab(id) {
   if (id === 'empfehlungen') { setTimeout(function(){ rebuildGridForLang(currentLang || 'de'); }, 50); }
   // Übersetzung auf neue Seite anwenden
   if (currentLang && currentLang !== 'de') { setTimeout(function(){ setLang(currentLang); }, 50); }
+  // Scroll-Fortschritt aktualisieren (neue Seitenhöhe)
+  if (window.__updProgress) setTimeout(function(){ requestAnimationFrame(window.__updProgress); }, 60);
 }
 
 function toggleMobTabbar() {
@@ -123,6 +125,17 @@ var ADD = {
   ru:{map_consent_p:'Для защиты ваших данных карта Google загружается только после вашего согласия. При этом данные передаются в Google.',map_consent_btn:'Загрузить карту',wl_eyebrow:'Аренда с 2027 года',wl_h:'Будьте среди первых',wl_p:'Вилла откроется в 2027 году. Оставьте заявку без обязательств – мы сообщим, как только откроется бронирование.',wl_btn:'Уведомить меня',wl_note:'Никакого спама. Отписаться можно в любой момент.',wl_thanks:'Спасибо! Мы свяжемся с вами, как только начнём.',faq_eyebrow:'Полезно знать',faq_h:'Частые вопросы',faq_q1:'Когда можно заселиться и выехать?',faq_a1:'Заезд с 16:00, выезд до 10:00 – индивидуальное время по запросу.',faq_q2:'Есть ли минимальный срок проживания?',faq_a2:'От 4 ночей в низкий сезон и от 7 ночей в высокий сезон.',faq_q3:'Нужен ли залог?',faq_a3:'Да, залог вносится до заезда и полностью возвращается после выезда без повреждений.',faq_q4:'Входят ли финальная уборка и Wi-Fi?',faq_a4:'Да, финальная уборка и оптоволоконный Wi-Fi включены в цену, без скрытых расходов.',faq_q5:'Как отменить бронирование?',faq_a5:'Бесплатная отмена за 30 дней до заезда; далее действуют честные и прозрачные условия, о которых мы сообщаем заранее.'}
 };
 for (var _al in ADD) { if (!T[_al]) T[_al] = {}; for (var _ak in ADD[_al]) T[_al][_ak] = ADD[_al][_ak]; }
+
+var ADD2 = {
+  de:{ueber_quote:'„Wir vermieten kein Ferienhaus – wir teilen ein Lebensgefühl."'},
+  en:{ueber_quote:'“We do not rent out a house – we share a way of life.”'},
+  es:{ueber_quote:'«No alquilamos una casa: compartimos una forma de vivir.»'},
+  fr:{ueber_quote:'« Nous ne louons pas une maison – nous partageons un art de vivre. »'},
+  nl:{ueber_quote:'„Wij verhuren geen vakantiehuis – wij delen een levensgevoel."'},
+  pl:{ueber_quote:'„Nie wynajmujemy domu – dzielimy się stylem życia."'},
+  ru:{ueber_quote:'«Мы сдаём не дом — мы делимся образом жизни.»'}
+};
+for (var _b2 in ADD2) { if (!T[_b2]) T[_b2] = {}; for (var _k2 in ADD2[_b2]) T[_b2][_k2] = ADD2[_b2][_k2]; }
 
 function setLang(lang) {
   currentLang = lang;
@@ -778,6 +791,23 @@ async function submitWaitlist(){
   var form=document.getElementById('wl-form');
   if(form) form.innerHTML='<p class="wl-thanks">'+(tx.wl_thanks||'Vielen Dank!')+'</p>';
 }
+
+// Scroll-Fortschrittslinie (dezenter Gold-Marker)
+(function(){
+  var bar=document.getElementById('scroll-progress'); if(!bar) return;
+  var raf=false;
+  function upd(){
+    raf=false;
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop||0)/max:0;
+    bar.style.transform='scaleX('+Math.min(1,Math.max(0,p))+')';
+  }
+  function onScroll(){ if(!raf){ raf=true; requestAnimationFrame(upd); } }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  window.__updProgress=upd; upd();
+})();
 
 // ═══════════════════════════════════════
 // GUESTBOOK
