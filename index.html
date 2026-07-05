@@ -212,8 +212,8 @@
     <!-- Availability bar -->
     <div class="avail-bar">
       <div class="avail-inner">
-        <div class="avf" onclick="document.getElementById('qi').showPicker?document.getElementById('qi').showPicker():document.getElementById('qi').focus()"><label for="qi" data-t="cal_arrival">Anreise</label><input type="date" id="qi"></div>
-        <div class="avf" onclick="document.getElementById('qo').showPicker?document.getElementById('qo').showPicker():document.getElementById('qo').focus()"><label for="qo" data-t="cal_dep">Abreise</label><input type="date" id="qo"></div>
+        <div class="avf" onclick="openQuickCal(event)"><label data-t="cal_arrival">Anreise</label><div class="avf-date" id="qi-disp" data-t="cal_pick">Datum wählen</div></div>
+        <div class="avf" onclick="openQuickCal(event)"><label data-t="cal_dep">Abreise</label><div class="avf-date" id="qo-disp" data-t="cal_pick">Datum wählen</div></div>
         <div class="avf"><label data-t="lbl_guests">Gäste</label><select id="qg">
           <option value="1">1</option>
           <option value="2" selected>2</option>
@@ -225,6 +225,19 @@
           <option value="8">8</option>
         </select></div>
         <button class="avbar-btn" onclick="quickCheck()" data-t="avbar_btn">Verfügbarkeit prüfen →</button>
+      </div>
+      <!-- Eigener, gebrandeter Datums-Kalender (ersetzt den Browser-Kalender) -->
+      <div id="qcal-pop" class="qcal-pop" onclick="event.stopPropagation()">
+        <div class="qcal-head">
+          <button class="cal-nav" onclick="qcalPrev()" aria-label="zurück">‹</button>
+          <div class="qcal-label" id="qcal-label"></div>
+          <button class="cal-nav" onclick="qcalNext()" aria-label="weiter">›</button>
+        </div>
+        <div class="cal-grid" id="qcal-grid"></div>
+        <div class="qcal-foot">
+          <span id="qcal-hint" data-t="cal_hint">Anreise &amp; Abreise wählen</span>
+          <button class="qcal-clear" onclick="qcalClear()" data-t="cal_clear">Löschen</button>
+        </div>
       </div>
     </div>
 
