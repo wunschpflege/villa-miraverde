@@ -883,3 +883,10 @@ body.loaded .hero-eyebrow,body.loaded .hero-title-block,body.loaded .hero-rule,b
   .am-feat-main{grid-column:1 / -1}
   .am-grid{grid-template-columns:1fr !important;gap:0 !important}
 }
+
+/* ═══════ "Soli"-Signatur ═══════ */
+.soli{font-family:'Great Vibes',cursive;font-style:normal;font-weight:400;color:var(--gold);line-height:1;white-space:nowrap}
+.nav-logo-top .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.1em}
+.ft-logo .soli{font-size:1.55em;vertical-align:-.12em;margin-left:.12em}
+.pre-mark .soli{font-size:1.5em;vertical-align:-.1em;margin-left:.15em}
+.hero-h1 .soli{font-size:.36em;vertical-align:.28em;margin-left:.12em;-webkit-text-fill-color:var(--gold)}
