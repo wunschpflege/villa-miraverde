@@ -264,16 +264,35 @@
     <div class="section-sep"><span class="section-sep-icon">🫒</span></div>
 
     <footer>
-      <div class="ft-inner" data-reveal>
-        <div class="ft-logo">Villa <span>Las Hermanas</span></div>
-        <ul class="ft-links">
-          <li><a href="#" onclick="showTab('buchen');return false">Buchen</a></li>
-          <li><a href="#" onclick="showTab('restaurants');return false">Restaurants</a></li>
-          <li><a href="#" onclick="showTab('lage');return false">Lage &amp; Kontakt</a></li>
-          <li><a href="#" onclick="showLegal('impressum')">Impressum</a></li>
-          <li><a href="#" onclick="showLegal('datenschutz')">Datenschutz</a></li>
-        </ul>
+      <div class="ft-grid" data-reveal>
+        <div class="ft-brand">
+          <div class="ft-logo">Villa <span>Las Hermanas</span></div>
+          <p class="ft-tag" data-t="hero_location">Benissa · Costa Blanca · Spanien</p>
+        </div>
+        <div class="ft-col">
+          <h4 class="ft-h" data-t="ft_discover">Entdecken</h4>
+          <ul class="ft-links">
+            <li><a onclick="showTab('ausstattung');return false" data-t="tab_amenities">Ausstattung</a></li>
+            <li><a onclick="showTab('buchen');return false" data-t="tab_book">Buchen</a></li>
+            <li><a onclick="showTab('empfehlungen');return false" data-t="tab_empfehlungen">Empfehlungen</a></li>
+            <li><a onclick="showTab('lage');return false" data-t="tab_location">Lage &amp; Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4 class="ft-h" data-t="ft_contact">Kontakt</h4>
+          <ul class="ft-links">
+            <li><a href="mailto:info@villa-las-hermanas.com">info@villa-las-hermanas.com</a></li>
+            <li><a href="tel:+34600000000">+34 600 000 000</a></li>
+            <li><a href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ft-bottom">
         <div class="ft-copy" data-t="footer_copy">© 2026 Villa Las Hermanas · Familie Wunsch · Benissa, Costa Blanca</div>
+        <div class="ft-legal">
+          <a onclick="showLegal('impressum')" data-t="footer_impressum">Impressum</a>
+          <a onclick="showLegal('datenschutz')" data-t="footer_datenschutz">Datenschutz</a>
+        </div>
       </div>
     </footer>
   </div><!-- /page-start -->
