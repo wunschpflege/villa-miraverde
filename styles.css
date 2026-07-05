@@ -643,8 +643,10 @@ footer{background:var(--b2);padding:3.6rem 2.5rem 1.8rem;border-top:1px solid va
 #preloader .pre-panel-top{top:0}
 #preloader .pre-panel-bot{bottom:0}
 #preloader .pre-mark{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,5vw,3.2rem);letter-spacing:.14em;color:#fff;opacity:0;animation:preIn 1.4s ease .2s forwards;transition:opacity .55s ease}
-#preloader .pre-mark em{font-style:italic;color:var(--gold)}
+#preloader .pre-mark em{font-style:italic;color:var(--gold);background:linear-gradient(100deg,var(--gold) 40%,#fff4d6 50%,var(--gold) 60%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% 100%;background-position:120% 0;animation:preShimmer 1.4s ease 1.1s 1 both}
+#preloader .pre-mark .soli{background:linear-gradient(100deg,var(--gold) 40%,#fff4d6 50%,var(--gold) 60%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% 100%;background-position:120% 0;animation:preShimmer 1.4s ease 1.1s 1 both}
 @keyframes preIn{from{opacity:0;transform:translateY(-50%) translateY(16px)}to{opacity:1;transform:translateY(-50%)}}
+@keyframes preShimmer{from{background-position:120% 0}to{background-position:-45% 0}}
 body:not(.loaded) #preloader{pointer-events:all}
 body.loaded #preloader .pre-panel-top{transform:translateY(-100%);opacity:0}
 body.loaded #preloader .pre-panel-bot{transform:translateY(100%);opacity:0}

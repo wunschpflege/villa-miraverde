@@ -1280,8 +1280,8 @@ window.addEventListener('DOMContentLoaded', function(){
       if(pre) setTimeout(function(){ pre.style.display = 'none'; }, 2900);
     }
     if(reduce){ if(pre) pre.style.display='none'; document.body.classList.add('loaded'); return; }
-    if(document.readyState === 'complete') setTimeout(reveal, 1900);
-    else window.addEventListener('load', function(){ setTimeout(reveal, 1900); });
+    if(document.readyState === 'complete') setTimeout(reveal, 2700);
+    else window.addEventListener('load', function(){ setTimeout(reveal, 2700); });
     setTimeout(function(){ if(!document.body.classList.contains('loaded')) reveal(); }, 4400);
   })();
 

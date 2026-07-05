@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1E1812">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='13'%20fill='%231E1812'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Georgia,serif'%20font-size='40'%20fill='%23B8924A'%20text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='13'%20fill='%231E1812'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Georgia,serif'%20font-size='40'%20fill='%23B8924A'%20text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -212,10 +214,14 @@
         <div class="avf" onclick="document.getElementById('qi').showPicker?document.getElementById('qi').showPicker():document.getElementById('qi').focus()"><label for="qi" data-t="cal_arrival">Anreise</label><input type="date" id="qi"></div>
         <div class="avf" onclick="document.getElementById('qo').showPicker?document.getElementById('qo').showPicker():document.getElementById('qo').focus()"><label for="qo" data-t="cal_dep">Abreise</label><input type="date" id="qo"></div>
         <div class="avf"><label data-t="lbl_guests">Gäste</label><select id="qg">
-          <option value="2" data-t="opt_2p">2 Personen</option>
-          <option value="4" data-t="opt_4p">4 Personen</option>
-          <option value="6" data-t="opt_6p">6 Personen</option>
-          <option value="8" data-t="opt_8p">8 Personen</option>
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
         </select></div>
         <button class="avbar-btn" onclick="quickCheck()" data-t="avbar_btn">Verfügbarkeit prüfen →</button>
       </div>
@@ -473,10 +479,14 @@
           <div class="fg"><label>Telefon</label><input type="tel" id="b-phone" placeholder="+49 …"></div>
           <div class="frow">
             <div class="fg"><label data-t="lbl_guests">Gäste</label><select id="fg-guests">
-              <option value="2" data-t="opt_2p">2 Personen</option>
-              <option value="4" data-t="opt_4p">4 Personen</option>
-              <option value="6" data-t="opt_6p">6 Personen</option>
-              <option value="8" selected data-t="opt_8p">8 Personen</option>
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
             </select></div>
             <div class="fg"><label>Sprache</label><select><option>Deutsch</option><option>Español</option><option>English</option><option>Français</option><option>Nederlands</option><option>Polski</option><option>Русский</option></select></div>
           </div>
