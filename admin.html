@@ -432,7 +432,7 @@ function stBars(elId, rows, labelMap){
 async function loadStats(){
   if(!token) return;
   try{
-    var res=await fetch('/api/admin/stats',{headers:{Authorization:'Bearer '+token}});
+    var res=await fetch('/api/admin/stats?_='+Date.now(),{headers:{Authorization:'Bearer '+token},cache:'no-store'});
     if(res.status===401){ return forceLogout(); }
     renderStats(await res.json());
   }catch(e){}
