@@ -43,6 +43,8 @@ function showTab(id) {
   if (currentLang && currentLang !== 'de') { setTimeout(function(){ setLang(currentLang); }, 50); }
   // Scroll-Fortschritt aktualisieren (neue Seitenhöhe)
   if (window.__updProgress) setTimeout(function(){ requestAnimationFrame(window.__updProgress); }, 60);
+  // Statistik: Tab-Aufruf zählen
+  if (window.__track) window.__track(id);
 }
 
 function toggleMobTabbar() {
@@ -860,6 +862,21 @@ async function submitWaitlist(){
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',onScroll);
   window.__updProgress=upd; upd();
+})();
+
+// Eigene, cookiefreie Statistik – zählt Tab-Aufrufe, Sprache & Herkunft (keine IP, keine Cookies)
+(function(){
+  function refHost(){ try{ if(!document.referrer) return ''; var h=new URL(document.referrer).hostname; if(!h||h===location.hostname) return ''; return h.replace(/^www\./,'').slice(0,120);}catch(e){return '';} }
+  var firstRef=null;
+  try{ firstRef=sessionStorage.getItem('vref'); if(firstRef===null){ firstRef=refHost(); sessionStorage.setItem('vref',firstRef);} }catch(e){ firstRef=refHost(); }
+  window.__track=function(tab){
+    try{
+      var body=JSON.stringify({tab:tab||'start',lang:(window.currentLang||'de'),ref:firstRef||''});
+      if(navigator.sendBeacon){ navigator.sendBeacon('/api/track', new Blob([body],{type:'application/json'})); }
+      else { fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}); }
+    }catch(e){}
+  };
+  window.__track('start'); // erster Seitenaufruf
 })();
 
 // ═══════════════════════════════════════
