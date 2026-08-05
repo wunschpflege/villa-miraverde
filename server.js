@@ -24,9 +24,10 @@ const pool = new Pool({
 // Middleware
 app.use(express.json());
  
-// ── KEIN CACHING für HTML-Dateien ──
+// ── KEIN CACHING für HTML/JS/CSS (immer aktuelle Version ausliefern) ──
 app.use((req, res, next) => {
-  if (req.path.endsWith('.html') || req.path === '/' || req.path === '/admin') {
+  var p = req.path;
+  if (p.endsWith('.html') || p.endsWith('.js') || p.endsWith('.css') || p === '/' || p === '/admin') {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
@@ -322,7 +323,7 @@ app.get('/api/admin/waitlist', authMiddleware, async (req, res) => {
 });
 
 // ── EIGENE STATISTIK (cookiefrei, keine IP/Personendaten) ──
-app.post('/api/track', async (req, res) => {
+app.post('/api/visit', async (req, res) => {
   try {
     var b = req.body || {};
     var tab = String(b.tab || '').slice(0, 40);

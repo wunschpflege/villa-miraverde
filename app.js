@@ -872,8 +872,8 @@ async function submitWaitlist(){
   window.__track=function(tab){
     try{
       var body=JSON.stringify({tab:tab||'start',lang:(window.currentLang||'de'),ref:firstRef||''});
-      if(navigator.sendBeacon){ navigator.sendBeacon('/api/track', new Blob([body],{type:'application/json'})); }
-      else { fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}); }
+      if(navigator.sendBeacon){ navigator.sendBeacon('/api/visit', new Blob([body],{type:'application/json'})); }
+      else { fetch('/api/visit',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}); }
     }catch(e){}
   };
   window.__track('start'); // erster Seitenaufruf
