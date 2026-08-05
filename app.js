@@ -1268,7 +1268,7 @@ function showLegal(type){
       + h({de:'Angaben gemäß § 5 TMG (Deutschland) / Art. 10 LSSICE (Spanien)',en:'Information according to § 5 TMG (Germany) / Art. 10 LSSICE (Spain)',es:'Información según § 5 TMG (Alemania) / Art. 10 LSSICE (España)',fr:'Mentions légales selon § 5 TMG (Allemagne) / Art. 10 LSSICE (Espagne)',nl:'Gegevens conform § 5 TMG (Duitsland) / Art. 10 LSSICE (Spanje)',pl:'Dane zgodnie z § 5 TMG (Niemcy) / Art. 10 LSSICE (Hiszpania)',ru:'Сведения согласно § 5 TMG (Германия) / Art. 10 LSSICE (Испания)'}[lang]||'Angaben gemäß § 5 TMG')
       + p('\u003cstrong\u003eSophie Wunsch &amp; Lisa Wunsch\u003c/strong\u003e\u003cbr\u003eCarrer de la Dragonera, 7\u003cbr\u003eFanadix, Benissa\u003cbr\u003e03720 Alicante, Spanien')
       + h({de:'Kontakt',en:'Contact',es:'Contacto',fr:'Contact',nl:'Contact',pl:'Kontakt',ru:'Контакт'}[lang]||'Kontakt')
-      + p('Tel.: +49 231 888888\u003cbr\u003eE-Mail: \u003ca href="mailto:info@villa-las-hermanas.com" style="color:var(--teal)">info@villa-las-hermanas.com\u003c/a\u003e')
+      + p('Tel.: +49 231 888888\u003cbr\u003eE-Mail: \u003ca href="mailto:info@villa-las-hermanas-soli.com" style="color:var(--teal)">info@villa-las-hermanas-soli.com\u003c/a\u003e')
       + h({de:'Verantwortlich für den Inhalt',en:'Responsible for content',es:'Responsable del contenido',fr:'Responsable du contenu',nl:'Verantwoordelijk voor inhoud',pl:'Odpowiedzialny za treść',ru:'Ответственный за контент'}[lang]||'Verantwortlich')
       + p('Sophie Wunsch &amp; Lisa Wunsch, Carrer de la Dragonera 7, Fanadix, Benissa, 03720 Alicante')
       + h('EU-Streitschlichtung / EU Dispute Resolution')
@@ -1280,7 +1280,7 @@ function showLegal(type){
     var tx_priv = {
       de: s
         + h('1. Verantwortliche (Art. 4 Nr. 7 DSGVO)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spanien\u003cbr\u003eE-Mail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com')+'\u003cbr\u003eTel.: +49 231 888888')
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spanien\u003cbr\u003eE-Mail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com')+'\u003cbr\u003eTel.: +49 231 888888')
         + h('2. Welche Daten wir erheben')
         + p('Beim Ausfüllen unserer Formulare erheben wir: Name, E-Mail, Telefon, Reisezeitraum, Gästeanzahl und Nachricht. Diese Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.')
         + h('3. Rechtsgrundlage')
@@ -1292,14 +1292,14 @@ function showLegal(type){
         + h('6. Cookies')
         + p('Diese Website verwendet keine Tracking-Cookies und kein Analytics.')
         + h('7. Ihre Rechte')
-        + p('Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Widerspruch (Art. 21 DSGVO).\u003cbr\u003eKontakt: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Widerspruch (Art. 21 DSGVO).\u003cbr\u003eKontakt: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('8. Beschwerderecht')
         + p('BfDI: '+a('https://www.bfdi.bund.de','www.bfdi.bund.de')+' · AEPD: '+a('https://www.aepd.es','www.aepd.es'))
         + h('Stand') + p('Mai 2026') + e,
 
       en: s
         + h('1. Controller (Art. 4 No. 7 GDPR)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spain\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spain\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Data We Collect')
         + p('When using our forms we collect: name, email, phone, travel dates, guest count and message. This data is used exclusively to process your enquiry.')
         + h('3. Legal Basis')
@@ -1311,69 +1311,69 @@ function showLegal(type){
         + h('6. Cookies')
         + p('This website uses no tracking cookies and no analytics.')
         + h('7. Your Rights')
-        + p('Access (Art. 15), rectification (Art. 16), erasure (Art. 17), objection (Art. 21 GDPR).\u003cbr\u003eContact: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Access (Art. 15), rectification (Art. 16), erasure (Art. 17), objection (Art. 21 GDPR).\u003cbr\u003eContact: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('8. Complaints')
         + p('BfDI: '+a('https://www.bfdi.bund.de','www.bfdi.bund.de')+' · AEPD: '+a('https://www.aepd.es','www.aepd.es'))
         + h('Last updated') + p('May 2026') + e,
 
       es: s
         + h('1. Responsable (Art. 4 núm. 7 RGPD)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, España\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, España\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Datos que recogemos')
         + p('Al usar nuestros formularios recogemos: nombre, email, teléfono, fechas, huéspedes y mensaje. Solo para tramitar su consulta.')
         + h('3. Base legal') + p('Art. 6(1)(b) RGPD y Art. 6(1)(a) RGPD.')
         + h('4. Terceros') + p('Sus datos no se comparten ni venden a terceros.')
         + h('5. Hosting') + p('Railway Corp., servidores EU Ámsterdam.')
         + h('6. Cookies') + p('Sin cookies de seguimiento ni analítica.')
-        + h('7. Sus derechos') + p('Acceso, rectificación, supresión, oposición (RGPD).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + h('7. Sus derechos') + p('Acceso, rectificación, supresión, oposición (RGPD).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('Actualizado') + p('Mayo 2026') + e,
 
       fr: s
         + h('1. Responsable (Art. 4 Nr. 7 RGPD)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Espagne\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Espagne\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Données collectées')
         + p('Via nos formulaires: nom, email, téléphone, dates, voyageurs et message. Uniquement pour traiter votre demande.')
         + h('3. Base légale') + p('Art. 6(1)(b) RGPD et Art. 6(1)(a) RGPD.')
         + h('4. Tiers') + p('Vos données ne sont pas partagées ni vendues.')
         + h('5. Hébergement') + p('Railway Corp., serveurs EU Amsterdam.')
         + h('6. Cookies') + p('Pas de cookies de suivi ni d\'analytics.')
-        + h('7. Vos droits') + p('Accès, rectification, effacement, opposition (RGPD).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + h('7. Vos droits') + p('Accès, rectification, effacement, opposition (RGPD).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('Mis à jour') + p('Mai 2026') + e,
 
       nl: s
         + h('1. Verwerkingsverantwoordelijke (Art. 4 Nr. 7 AVG)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spanje\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Spanje\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Gegevens die we verzamelen')
         + p('Via formulieren: naam, email, telefoon, reisdata, gasten en bericht. Alleen voor verwerking van uw aanvraag.')
         + h('3. Rechtsgrond') + p('Art. 6(1)(b) AVG en Art. 6(1)(a) AVG.')
         + h('4. Derden') + p('Uw gegevens worden niet gedeeld of verkocht.')
         + h('5. Hosting') + p('Railway Corp., EU-servers Amsterdam.')
         + h('6. Cookies') + p('Geen tracking cookies of analytics.')
-        + h('7. Uw rechten') + p('Inzage, rectificatie, verwijdering, bezwaar (AVG).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + h('7. Uw rechten') + p('Inzage, rectificatie, verwijdering, bezwaar (AVG).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('Bijgewerkt') + p('Mei 2026') + e,
 
       pl: s
         + h('1. Administrator (Art. 4 Nr. 7 RODO)')
-        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Hiszpania\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Sophie Wunsch &amp; Lisa Wunsch\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Hiszpania\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Zbierane dane')
         + p('Przez formularze: imię, email, telefon, daty, goście i wiadomość. Wyłącznie do obsługi zapytania.')
         + h('3. Podstawa prawna') + p('Art. 6 ust. 1 lit. b i a RODO.')
         + h('4. Strony trzecie') + p('Dane nie są udostępniane ani sprzedawane.')
         + h('5. Hosting') + p('Railway Corp., serwery EU Amsterdam.')
         + h('6. Cookies') + p('Brak ciasteczek śledzących i analityki.')
-        + h('7. Twoje prawa') + p('Dostęp, sprostowanie, usunięcie, sprzeciw (RODO).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + h('7. Twoje prawa') + p('Dostęp, sprostowanie, usunięcie, sprzeciw (RODO).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('Aktualizacja') + p('Maj 2026') + e,
 
       ru: s
         + h('1. Контролёр (ст. 4 п. 7 GDPR)')
-        + p('Софи Вунш &amp; Лиза Вунш\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Испания\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + p('Софи Вунш &amp; Лиза Вунш\u003cbr\u003eCarrer de la Dragonera, 7, Fanadix, Benissa, 03720 Alicante, Испания\u003cbr\u003eEmail: '+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('2. Собираемые данные')
         + p('Через формы: имя, email, телефон, даты, гости и сообщение. Только для обработки запроса.')
         + h('3. Правовая основа') + p('Ст. 6(1)(b) и 6(1)(a) GDPR.')
         + h('4. Третьи стороны') + p('Данные не передаются и не продаются.')
         + h('5. Хостинг') + p('Railway Corp., серверы ЕС Амстердам.')
         + h('6. Cookies') + p('Без отслеживающих cookies и аналитики.')
-        + h('7. Ваши права') + p('Доступ, исправление, удаление, возражение (GDPR).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas.com','info@villa-las-hermanas.com'))
+        + h('7. Ваши права') + p('Доступ, исправление, удаление, возражение (GDPR).\u003cbr\u003e'+a('mailto:info@villa-las-hermanas-soli.com','info@villa-las-hermanas-soli.com'))
         + h('Обновлено') + p('Май 2026') + e
     };
     document.getElementById('mtext').innerHTML = tx_priv[lang] || tx_priv.de;
