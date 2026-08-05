@@ -161,6 +161,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
       <div class="nav-item" onclick="showPage('bookings')"><span class="nav-item-icon">📅</span>Buchungsanfragen<span class="nav-badge" id="badge-bookings" style="display:none">0</span></div>
       <div class="nav-item" onclick="showPage('calendar')"><span class="nav-item-icon">🗓️</span>Kalender sperren</div>
       <div class="nav-item" onclick="showPage('reviews')"><span class="nav-item-icon">⭐</span>Gästebuch<span class="nav-badge" id="badge-reviews" style="display:none">0</span></div>
+      <div class="nav-item" onclick="showPage('statistik')"><span class="nav-item-icon">📈</span>Statistik</div>
       <div class="nav-item" onclick="window.open('/')"><span class="nav-item-icon">🌐</span>Zur Website</div>
     </nav>
     <div class="sidebar-footer">
@@ -260,6 +261,32 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
           <div class="section-card-header" style="background:var(--green2)"><h3 style="color:var(--green)">✅ Veröffentlicht</h3></div>
           <div id="reviews-approved-list"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- STATISTIK -->
+    <div class="page" id="page-statistik">
+      <div class="page-header">
+        <h2>Statistik 📈</h2>
+        <p>Anonyme Besucherstatistik – ohne Cookies, ohne Google, DSGVO-freundlich.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card highlight"><div class="stat-num" id="st-total">–</div><div class="stat-label">Seitenaufrufe gesamt</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-7">–</div><div class="stat-label">Letzte 7 Tage</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-30">–</div><div class="stat-label">Letzte 30 Tage</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-conv">–</div><div class="stat-label">Warteliste / Anfragen</div></div>
+      </div>
+      <div class="section-card" style="margin-top:1.5rem">
+        <div class="section-card-header"><h3>Aufrufe der letzten 14 Tage</h3></div>
+        <div class="section-card-body"><div id="st-days" style="display:flex;align-items:flex-end;gap:6px;height:150px;padding:12px 6px"></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+        <div class="section-card"><div class="section-card-header"><h3>Beliebteste Bereiche</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-tabs"></div></div></div>
+        <div class="section-card"><div class="section-card-header"><h3>Sprachen der Besucher</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-langs"></div></div></div>
+      </div>
+      <div class="section-card" style="margin-top:1.5rem">
+        <div class="section-card-header"><h3>Woher die Besucher kommen</h3></div>
+        <div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-refs"></div></div>
       </div>
     </div>
 
@@ -384,14 +411,60 @@ function updateBadges(){
   br.style.display = pendingR>0?'inline':'none'; br.textContent=pendingR;
 }
 
+// ── STATISTIK ──
+var ST_TABS = {start:'Startseite',ausstattung:'Ausstattung',buchen:'Buchen',empfehlungen:'Empfehlungen','ueber-uns':'Über uns',lage:'Lage & Kontakt',gaestebuch:'Gästebuch'};
+var ST_LANGS = {de:'Deutsch',en:'English',es:'Español',fr:'Français',nl:'Nederlands',pl:'Polski',ru:'Русский'};
+function stEsc(s){return String(s).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+function stBars(elId, rows, labelMap){
+  var el=document.getElementById(elId); if(!el) return;
+  rows = rows||[];
+  var max=rows.reduce(function(m,r){return Math.max(m,r.c);},1);
+  el.innerHTML = rows.length ? rows.map(function(r){
+    var key=r.tab||r.lang||r.ref||'?';
+    var label=(labelMap&&labelMap[key])||key;
+    var pct=Math.round(r.c/max*100);
+    return '<div style="display:flex;align-items:center;gap:10px;margin:9px 0;font-size:.85rem">'
+      +'<div style="width:130px;flex-shrink:0;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+stEsc(label)+'">'+stEsc(label)+'</div>'
+      +'<div style="flex:1;background:#edeae4;border-radius:6px;height:14px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:linear-gradient(90deg,#2a6b6b,#3a8a8a)"></div></div>'
+      +'<div style="width:46px;text-align:right;color:#777">'+r.c+'</div></div>';
+  }).join('') : '<p style="color:#999;padding:.5rem 0">Noch keine Daten.</p>';
+}
+async function loadStats(){
+  if(!token) return;
+  try{
+    var res=await fetch('/api/admin/stats',{headers:{Authorization:'Bearer '+token}});
+    if(res.status===401){ return forceLogout(); }
+    renderStats(await res.json());
+  }catch(e){}
+}
+function renderStats(d){
+  d=d||{};
+  document.getElementById('st-total').textContent=d.total||0;
+  document.getElementById('st-7').textContent=d.last7||0;
+  document.getElementById('st-30').textContent=d.last30||0;
+  document.getElementById('st-conv').textContent=(d.waitlist||0)+' / '+(d.bookings||0);
+  var days=d.byDay||[]; var maxD=days.reduce(function(m,r){return Math.max(m,r.c);},1);
+  document.getElementById('st-days').innerHTML = days.length ? days.map(function(r){
+    var h=Math.max(4,Math.round(r.c/maxD*118));
+    var dd=r.day.slice(8,10)+'.'+r.day.slice(5,7)+'.';
+    return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:flex-end" title="'+r.c+' Aufrufe">'
+      +'<div style="width:100%;max-width:28px;height:'+h+'px;background:linear-gradient(180deg,#3a8a8a,#2a6b6b);border-radius:4px 4px 0 0"></div>'
+      +'<div style="font-size:.58rem;color:#999;white-space:nowrap">'+dd+'</div></div>';
+  }).join('') : '<p style="color:#999">Noch keine Daten – die Statistik füllt sich, sobald Besucher kommen.</p>';
+  stBars('st-tabs', d.byTab, ST_TABS);
+  stBars('st-langs', d.byLang, ST_LANGS);
+  stBars('st-refs', d.byRef, null);
+}
+
 // ── PAGES ──
 function showPage(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   var items = document.querySelectorAll('.nav-item');
-  var map = {dashboard:0,bookings:1,calendar:2,reviews:3};
+  var map = {dashboard:0,bookings:1,calendar:2,reviews:3,statistik:4};
   if(map[page]!==undefined) items[map[page]].classList.add('active');
+  if(page==='statistik') loadStats();
 }
 
 // ── DASHBOARD ──
