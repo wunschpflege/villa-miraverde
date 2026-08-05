@@ -284,9 +284,31 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
         <div class="section-card"><div class="section-card-header"><h3>Beliebteste Bereiche</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-tabs"></div></div></div>
         <div class="section-card"><div class="section-card-header"><h3>Sprachen der Besucher</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-langs"></div></div></div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+        <div class="section-card"><div class="section-card-header"><h3>Woher die Besucher kommen</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-refs"></div></div></div>
+        <div class="section-card"><div class="section-card-header"><h3>Geräte</h3></div><div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-devices"></div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+        <div class="section-card">
+          <div class="section-card-header"><h3>Aktivität nach Wochentag</h3></div>
+          <div class="section-card-body"><div id="st-dow" style="display:flex;align-items:flex-end;gap:8px;height:150px;padding:12px 6px"></div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header"><h3>Aktivität nach Uhrzeit <span style="font-weight:400;color:#999;font-size:.8rem">(spanische Zeit)</span></h3></div>
+          <div class="section-card-body"><div id="st-hour" style="display:flex;align-items:flex-end;gap:3px;height:150px;padding:12px 6px"></div></div>
+        </div>
+      </div>
       <div class="section-card" style="margin-top:1.5rem">
-        <div class="section-card-header"><h3>Woher die Besucher kommen</h3></div>
-        <div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-refs"></div></div>
+        <div class="section-card-header"><h3>Beliebteste Reisezeiträume <span style="font-weight:400;color:#999;font-size:.8rem">(Anreise-Monat aus Buchungsanfragen)</span></h3></div>
+        <div class="section-card-body" style="padding:1rem 1.2rem"><div id="st-travel"></div></div>
+      </div>
+      <div class="section-card" style="margin-top:1.5rem">
+        <div class="section-card-header"><h3>Wochenbericht per E-Mail</h3></div>
+        <div class="section-card-body" style="padding:1rem 1.2rem">
+          <p style="color:#555;margin:0 0 .8rem">Jeden Montag bekommst du automatisch eine Zusammenfassung der Woche per E-Mail. Hier kannst du den Versand einmal testen:</p>
+          <button class="btn btn-teal" id="wr-test-btn" onclick="testWeeklyReport()">Testbericht jetzt senden</button>
+          <span id="wr-test-msg" style="margin-left:12px;color:#2a6b6b;font-size:.9rem"></span>
+        </div>
       </div>
     </div>
 
@@ -414,20 +436,50 @@ function updateBadges(){
 // ── STATISTIK ──
 var ST_TABS = {start:'Startseite',ausstattung:'Ausstattung',buchen:'Buchen',empfehlungen:'Empfehlungen','ueber-uns':'Über uns',lage:'Lage & Kontakt',gaestebuch:'Gästebuch'};
 var ST_LANGS = {de:'Deutsch',en:'English',es:'Español',fr:'Français',nl:'Nederlands',pl:'Polski',ru:'Русский'};
+var ST_DEV = {mobile:'📱 Handy',desktop:'💻 Computer',tablet:'📲 Tablet','?':'Unbekannt'};
+var ST_WD = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+var ST_WD_SHORT = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+var ST_MONTHS = ['Jan','Feb','März','Apr','Mai','Juni','Juli','Aug','Sep','Okt','Nov','Dez'];
 function stEsc(s){return String(s).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
-function stBars(elId, rows, labelMap){
+// Horizontale Balken; recentMap (optional) zeigt den 7-Tage-Wert als "7 T: N"
+function stBars(elId, rows, labelMap, recentMap){
   var el=document.getElementById(elId); if(!el) return;
   rows = rows||[];
   var max=rows.reduce(function(m,r){return Math.max(m,r.c);},1);
   el.innerHTML = rows.length ? rows.map(function(r){
-    var key=r.tab||r.lang||r.ref||'?';
+    var key=r.tab||r.lang||r.ref||r.device||'?';
     var label=(labelMap&&labelMap[key])||key;
     var pct=Math.round(r.c/max*100);
+    var recent = recentMap && recentMap[key] ? '<span style="color:#3a8a8a;font-size:.72rem;margin-left:6px">· 7 T: '+recentMap[key]+'</span>' : '';
     return '<div style="display:flex;align-items:center;gap:10px;margin:9px 0;font-size:.85rem">'
-      +'<div style="width:130px;flex-shrink:0;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+stEsc(label)+'">'+stEsc(label)+'</div>'
+      +'<div style="width:150px;flex-shrink:0;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+stEsc(label)+'">'+stEsc(label)+recent+'</div>'
       +'<div style="flex:1;background:#edeae4;border-radius:6px;height:14px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:linear-gradient(90deg,#2a6b6b,#3a8a8a)"></div></div>'
       +'<div style="width:46px;text-align:right;color:#777">'+r.c+'</div></div>';
   }).join('') : '<p style="color:#999;padding:.5rem 0">Noch keine Daten.</p>';
+}
+// Vertikales Säulen-Diagramm (für Wochentag & Uhrzeit)
+function stCols(elId, data, labels, suffix){
+  var el=document.getElementById(elId); if(!el) return;
+  var max=data.reduce(function(m,v){return Math.max(m,v);},1);
+  var hasData=data.some(function(v){return v>0;});
+  el.innerHTML = hasData ? data.map(function(v,i){
+    var h=Math.max(3,Math.round(v/max*110));
+    return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:flex-end;min-width:0" title="'+labels[i]+(suffix||'')+': '+v+' Aufrufe">'
+      +'<div style="width:100%;max-width:26px;height:'+h+'px;background:linear-gradient(180deg,#3a8a8a,#2a6b6b);border-radius:4px 4px 0 0"></div>'
+      +'<div style="font-size:.6rem;color:#999;white-space:nowrap">'+labels[i]+'</div></div>';
+  }).join('') : '<p style="color:#999;padding:.5rem 0">Noch keine Daten.</p>';
+}
+async function testWeeklyReport(){
+  var btn=document.getElementById('wr-test-btn'), msg=document.getElementById('wr-test-msg');
+  if(!token) return;
+  btn.disabled=true; msg.style.color='#2a6b6b'; msg.textContent='Sende …';
+  try{
+    var res=await fetch('/api/admin/weekly-report/test',{method:'POST',headers:{Authorization:'Bearer '+token}});
+    var d=await res.json();
+    if(d.ok){ msg.textContent='✓ Testbericht wurde versendet.'; }
+    else { msg.style.color='#b23'; msg.textContent='E-Mail-Versand ist nicht konfiguriert (SMTP/Empfänger fehlt).'; }
+  }catch(e){ msg.style.color='#b23'; msg.textContent='Fehler beim Senden.'; }
+  btn.disabled=false;
 }
 async function loadStats(){
   if(!token) return;
@@ -452,8 +504,23 @@ function renderStats(d){
       +'<div style="font-size:.58rem;color:#999;white-space:nowrap">'+dd+'</div></div>';
   }).join('') : '<p style="color:#999">Noch keine Daten – die Statistik füllt sich, sobald Besucher kommen.</p>';
   stBars('st-tabs', d.byTab, ST_TABS);
-  stBars('st-langs', d.byLang, ST_LANGS);
-  stBars('st-refs', d.byRef, null);
+  stBars('st-langs', d.byLang, ST_LANGS, d.langRecent);
+  stBars('st-refs', d.byRef, null, d.refRecent);
+  stBars('st-devices', d.byDevice, ST_DEV);
+  // Reisezeiträume (Anreise-Monat aus Buchungsanfragen)
+  var tm=(d.travelMonths||[]).map(function(r){
+    var p=r.m.split('-'); var lbl=ST_MONTHS[parseInt(p[1],10)-1]+' '+p[0];
+    return {ref:lbl, c:r.c};
+  });
+  stBars('st-travel', tm, null);
+  // Wochentag (Mo..So Reihenfolge)
+  var dow=[0,0,0,0,0,0,0]; (d.byDow||[]).forEach(function(r){ if(r.dow>=0&&r.dow<=6) dow[r.dow]=r.c; });
+  var wdOrder=[1,2,3,4,5,6,0]; // Mo..So
+  stCols('st-dow', wdOrder.map(function(i){return dow[i];}), wdOrder.map(function(i){return ST_WD_SHORT[i];}));
+  // Uhrzeit (0..23)
+  var hrs=[]; for(var h=0;h<24;h++) hrs.push(0);
+  (d.byHour||[]).forEach(function(r){ if(r.hr>=0&&r.hr<=23) hrs[r.hr]=r.c; });
+  stCols('st-hour', hrs, hrs.map(function(_,i){return (i%3===0)?(i+'h'):'';}), ' Uhr');
 }
 
 // ── PAGES ──
