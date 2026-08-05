@@ -94,6 +94,12 @@ async function setupDB() {
         week_start DATE PRIMARY KEY,
         sent_at TIMESTAMP DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS settings (
+        key VARCHAR(60) PRIMARY KEY,
+        value TEXT,
+        updated_at TIMESTAMP DEFAULT NOW()
+      );
     `);
     // Gerätetyp-Spalte ergänzen (anonym: mobile/desktop/tablet)
     await pool.query("ALTER TABLE pageviews ADD COLUMN IF NOT EXISTS device VARCHAR(10)");
@@ -476,6 +482,55 @@ app.get('/api/admin/stats', authMiddleware, async (req, res) => {
     langRecent: toMap(byLang7, 'lang'), refRecent: toMap(byRef7, 'ref'),
     travelMonths
   });
+});
+
+// ── PREISE ──
+// Standardpreise (Fallback, falls in den Einstellungen noch nichts gespeichert ist)
+const DEFAULT_PRICES = {
+  low:  { nightly: 380, weekly: 2450, minNights: 4 },
+  mid:  { nightly: 620, weekly: 3990, minNights: 5 },
+  high: { nightly: 980, weekly: 6500, minNights: 7 },
+  cleaning: 250, cleaningIncluded: true
+};
+function sanitizeSeason(s, def) {
+  s = s || {};
+  var n = function (v, d) { v = Math.round(Number(v)); return (isFinite(v) && v >= 0 && v <= 100000) ? v : d; };
+  return { nightly: n(s.nightly, def.nightly), weekly: n(s.weekly, def.weekly), minNights: Math.min(30, Math.max(1, n(s.minNights, def.minNights))) };
+}
+function sanitizePrices(p) {
+  p = p || {};
+  return {
+    low: sanitizeSeason(p.low, DEFAULT_PRICES.low),
+    mid: sanitizeSeason(p.mid, DEFAULT_PRICES.mid),
+    high: sanitizeSeason(p.high, DEFAULT_PRICES.high),
+    cleaning: Math.min(100000, Math.max(0, Math.round(Number(p.cleaning)) || 0)),
+    cleaningIncluded: !!p.cleaningIncluded
+  };
+}
+async function getPrices() {
+  try {
+    var r = await pool.query("SELECT value FROM settings WHERE key='prices'");
+    if (r.rows.length) return sanitizePrices(JSON.parse(r.rows[0].value));
+  } catch (e) { /* Fallback unten */ }
+  return DEFAULT_PRICES;
+}
+
+// Öffentlich: aktuelle Preise (für die Website)
+app.get('/api/prices', async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json(await getPrices());
+});
+
+// Admin: Preise speichern
+app.post('/api/admin/prices', authMiddleware, async (req, res) => {
+  try {
+    var clean = sanitizePrices(req.body);
+    await pool.query(
+      "INSERT INTO settings (key, value, updated_at) VALUES ('prices', $1, NOW()) ON CONFLICT (key) DO UPDATE SET value=$1, updated_at=NOW()",
+      [JSON.stringify(clean)]
+    );
+    res.json({ ok: true, prices: clean });
+  } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
 });
 
 // ── BLOCKED DATES ──

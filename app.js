@@ -151,6 +151,9 @@ function setLang(lang) {
     else if (t[k]) el.textContent = t[k];
   });
 
+  // Preiskarten & Rechner in der aktuellen Sprache formatieren
+  if (typeof applyPrices === 'function') applyPrices();
+
   // 2. Sprach-Switcher
   // data-ph Platzhalter
   document.querySelectorAll('[data-ph]').forEach(function(el) {
@@ -640,7 +643,41 @@ function isBooked(date){var d=date.getTime();for(var i=0;i<bookedRanges.length;i
 function isRangeBlocked(s,e){var d=new Date(s);while(d<=e){if(isBooked(d))return true;d.setDate(d.getDate()+1);}return false;}
 function fmtDate(d){if(!d)return'–';var m=calMonths[currentLang]||calMonths['de'];return d.getDate()+'. '+m[d.getMonth()]+' '+d.getFullYear();}
 function fmtISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function getRate(date){var m=date.getMonth();if(m===6||m===7)return 980;if(m===4||m===5||m===8||m===9)return 620;return 380;}
+// Preise werden aus dem Admin geladen (/api/prices). Standardwerte als Fallback:
+window.PRICES = window.PRICES || {
+  low:  {nightly:380, weekly:2450, minNights:4},
+  mid:  {nightly:620, weekly:3990, minNights:5},
+  high: {nightly:980, weekly:6500, minNights:7},
+  cleaning:250, cleaningIncluded:true
+};
+function seasonOf(m){ if(m===6||m===7) return 'high'; if(m===4||m===5||m===8||m===9) return 'mid'; return 'low'; }
+function getRate(date){ var s=(window.PRICES||{})[seasonOf(date.getMonth())]||{}; return s.nightly||0; }
+
+// Beschriftungen für die Preiskarten je Sprache (Zahlen kommen dynamisch dazu)
+var PRICE_LBL = {
+  de:{per:'/ Nacht', incl:'inklusive', detail:function(w,n){return 'Wöchentlich ab € '+w+' · min. '+n+' Nächte';}},
+  en:{per:'/ night', incl:'included', detail:function(w,n){return 'Weekly from € '+w+' · min. '+n+' nights';}},
+  es:{per:'/ noche', incl:'incluida', detail:function(w,n){return 'Semanal desde € '+w+' · mín. '+n+' noches';}},
+  fr:{per:'/ nuit', incl:'inclus', detail:function(w,n){return 'À partir de '+w+' € / semaine · min. '+n+' nuits';}},
+  nl:{per:'/ nacht', incl:'inbegrepen', detail:function(w,n){return 'Wekelijks vanaf € '+w+' · min. '+n+' nachten';}},
+  pl:{per:'/ noc', incl:'w cenie', detail:function(w,n){return 'Tygodniowo od € '+w+' · min. '+n+' noce';}},
+  ru:{per:'/ ночь', incl:'включена', detail:function(w,n){return 'Еженедельно от € '+w+' · мин. '+n+' ночи';}}
+};
+function applyPrices(){
+  var p=window.PRICES||{}; var lang=window.currentLang||'de'; var lbl=PRICE_LBL[lang]||PRICE_LBL.de;
+  var loc={de:'de-DE',en:'en-GB',es:'es-ES',fr:'fr-FR',nl:'nl-NL',pl:'pl-PL',ru:'ru-RU'}[lang]||'de-DE';
+  function nf(n){ try{ return Number(n).toLocaleString(loc); }catch(e){ return n; } }
+  ['low','mid','high'].forEach(function(s){
+    var card=document.querySelector('.pc[data-season="'+s+'"]'); if(!card||!p[s]) return;
+    var pr=card.querySelector('.pc-price'); if(pr) pr.innerHTML='€ '+nf(p[s].nightly)+' <span>'+lbl.per+'</span>';
+    var det=card.querySelector('.pc-detail'); if(det) det.textContent=lbl.detail(nf(p[s].weekly), p[s].minNights);
+  });
+  var cv=document.getElementById('price-clean-val');
+  if(cv) cv.textContent = p.cleaningIncluded ? lbl.incl : '€ '+nf(p.cleaning||0);
+  if(typeof calcCalPrice==='function') calcCalPrice();
+}
+// Aktuelle Preise vom Server holen (überschreibt die Standardwerte)
+(function(){ try{ fetch('/api/prices',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){ if(d&&d.low&&d.mid&&d.high){ window.PRICES=d; if(typeof applyPrices==='function') applyPrices(); } }).catch(function(){}); }catch(e){} })();
 
 function renderCalendar(){
   months_de = calMonths[currentLang] || calMonths['de'];
@@ -699,7 +736,9 @@ function calcCalPrice(){
   var nights=Math.round((calState.selEnd-calState.selStart)/86400000),total=0;
   var d=new Date(calState.selStart);
   for(var i=0;i<nights;i++){total+=getRate(d);d.setDate(d.getDate()+1);}
-  var grand=total+250;
+  var pcfg=window.PRICES||{};
+  var clean=pcfg.cleaningIncluded?0:(pcfg.cleaning||0);
+  var grand=total+clean;
   var pn=document.getElementById('pn'),pr=document.getElementById('pr'),pt=document.getElementById('pt');
   if(pn)pn.textContent=nights+' Nächte';
   if(pr)pr.textContent='€ '+total.toLocaleString('de-DE');
