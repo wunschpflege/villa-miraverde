@@ -871,9 +871,8 @@ async function submitWaitlist(){
   try{ firstRef=sessionStorage.getItem('vref'); if(firstRef===null){ firstRef=refHost(); sessionStorage.setItem('vref',firstRef);} }catch(e){ firstRef=refHost(); }
   window.__track=function(tab){
     try{
-      var body=JSON.stringify({tab:tab||'start',lang:(window.currentLang||'de'),ref:firstRef||''});
-      if(navigator.sendBeacon){ navigator.sendBeacon('/api/visit', new Blob([body],{type:'application/json'})); }
-      else { fetch('/api/visit',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}); }
+      var qs='tab='+encodeURIComponent(tab||'start')+'&lang='+encodeURIComponent(window.currentLang||'de')+'&ref='+encodeURIComponent(firstRef||'');
+      fetch('/api/visit?'+qs,{method:'GET',keepalive:true,cache:'no-store'});
     }catch(e){}
   };
   window.__track('start'); // erster Seitenaufruf
