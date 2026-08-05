@@ -323,6 +323,19 @@ app.get('/api/admin/waitlist', authMiddleware, async (req, res) => {
 });
 
 // ── EIGENE STATISTIK (cookiefrei, keine IP/Personendaten) ──
+// Diagnose: im Browser aufrufbar. ?ping=1 legt einen Test-Eintrag an und zeigt den Gesamtstand.
+app.get('/api/visit', async (req, res) => {
+  try {
+    if (req.query.ping) {
+      await pool.query("INSERT INTO pageviews (tab, lang, ref) VALUES ('ping','de','diagnose')");
+    }
+    var total = (await pool.query('SELECT COUNT(*)::int c FROM pageviews')).rows[0].c;
+    res.json({ ok: true, deployed: true, total: total });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
 app.post('/api/visit', async (req, res) => {
   try {
     var b = req.body || {};
