@@ -349,19 +349,21 @@ app.post('/api/visit', async (req, res) => {
 });
 
 app.get('/api/admin/stats', authMiddleware, async (req, res) => {
-  try {
-    async function q(sql) { return (await pool.query(sql)).rows; }
-    var total = (await q("SELECT COUNT(*)::int c FROM pageviews"))[0].c;
-    var last7 = (await q("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days'"))[0].c;
-    var last30 = (await q("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '30 days'"))[0].c;
-    var byTab = await q("SELECT COALESCE(NULLIF(tab,''),'?') tab, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
-    var byLang = await q("SELECT COALESCE(NULLIF(lang,''),'?') lang, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
-    var byRef = await q("SELECT COALESCE(NULLIF(ref,''),'Direkt') ref, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 10");
-    var byDay = await q("SELECT to_char(created_at::date,'YYYY-MM-DD') day, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' GROUP BY 1 ORDER BY 1");
-    var waitlist = (await q("SELECT COUNT(*)::int c FROM waitlist"))[0].c;
-    var bookings = (await q("SELECT COUNT(*)::int c FROM bookings"))[0].c;
-    res.json({ total, last7, last30, byTab, byLang, byRef, byDay, waitlist, bookings });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  // Jede Teil-Abfrage einzeln absichern: scheitert eine, brechen nicht alle
+  // Zahlen weg – die restlichen Werte werden trotzdem geliefert.
+  async function num(sql, def) { try { return (await pool.query(sql)).rows[0].c; } catch (e) { return def === undefined ? 0 : def; } }
+  async function rows(sql) { try { return (await pool.query(sql)).rows; } catch (e) { return []; } }
+  var total = await num("SELECT COUNT(*)::int c FROM pageviews");
+  var last7 = await num("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days'");
+  var last30 = await num("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '30 days'");
+  var byTab = await rows("SELECT COALESCE(NULLIF(tab,''),'?') tab, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
+  var byLang = await rows("SELECT COALESCE(NULLIF(lang,''),'?') lang, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
+  var byRef = await rows("SELECT COALESCE(NULLIF(ref,''),'Direkt') ref, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 10");
+  var byDay = await rows("SELECT to_char(created_at::date,'YYYY-MM-DD') day, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' GROUP BY 1 ORDER BY 1");
+  var waitlist = await num("SELECT COUNT(*)::int c FROM waitlist");
+  var bookings = await num("SELECT COUNT(*)::int c FROM bookings");
+  res.json({ total, last7, last30, byTab, byLang, byRef, byDay, waitlist, bookings });
 });
 
 // ── BLOCKED DATES ──
