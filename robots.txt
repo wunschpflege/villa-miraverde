@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://villa-miraverde-production.up.railway.app/sitemap.xml
+Sitemap: https://villa-las-hermanas-soli.com/sitemap.xml
