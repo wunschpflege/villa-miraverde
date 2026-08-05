@@ -90,6 +90,8 @@ async function setupDB() {
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    // Diagnose-/Test-Eintraege aus der Statistik entfernen (aus der Fehlersuche).
+    await pool.query("DELETE FROM pageviews WHERE tab='ping' OR ref='diagnose'");
     console.log('✅ Database tables ready');
   } catch(err) {
     console.error('DB setup error:', err.message);
@@ -323,13 +325,15 @@ app.get('/api/admin/waitlist', authMiddleware, async (req, res) => {
 });
 
 // ── EIGENE STATISTIK (cookiefrei, keine IP/Personendaten) ──
-// Zählung per GET (robust, kein Body-Parsing nötig). ?ping=1 = Diagnose-Eintrag.
+// Zählung per GET (robust, kein Body-Parsing nötig).
+// ?ping=1 = reiner Lese-Statuscheck (schreibt KEINE Zeile, verschmutzt die Statistik nicht).
 app.get('/api/visit', async (req, res) => {
   try {
-    var tab = req.query.ping ? 'ping' : String(req.query.tab || '').slice(0, 40);
+    var isPing = !!req.query.ping;
+    var tab = String(req.query.tab || '').slice(0, 40);
     var lang = String(req.query.lang || '').slice(0, 10);
     var ref = String(req.query.ref || '').slice(0, 120);
-    if (tab) await pool.query('INSERT INTO pageviews (tab, lang, ref) VALUES ($1,$2,$3)', [tab, lang, ref]);
+    if (tab && !isPing) await pool.query('INSERT INTO pageviews (tab, lang, ref) VALUES ($1,$2,$3)', [tab, lang, ref]);
     var total = (await pool.query('SELECT COUNT(*)::int c FROM pageviews')).rows[0].c;
     res.json({ ok: true, total: total });
   } catch (e) {
@@ -360,7 +364,7 @@ app.get('/api/admin/stats', authMiddleware, async (req, res) => {
   var byTab = await rows("SELECT COALESCE(NULLIF(tab,''),'?') tab, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
   var byLang = await rows("SELECT COALESCE(NULLIF(lang,''),'?') lang, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 12");
   var byRef = await rows("SELECT COALESCE(NULLIF(ref,''),'Direkt') ref, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC LIMIT 10");
-  var byDay = await rows("SELECT to_char(created_at::date,'YYYY-MM-DD') day, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' GROUP BY 1 ORDER BY 1");
+  var byDay = await rows("SELECT to_char(created_at::date,'YYYY-MM-DD') AS d, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' GROUP BY 1 ORDER BY 1");
   var waitlist = await num("SELECT COUNT(*)::int c FROM waitlist");
   var bookings = await num("SELECT COUNT(*)::int c FROM bookings");
   res.json({ total, last7, last30, byTab, byLang, byRef, byDay, waitlist, bookings });
