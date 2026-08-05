@@ -89,7 +89,14 @@ async function setupDB() {
         ref VARCHAR(120),
         created_at TIMESTAMP DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS weekly_report_log (
+        week_start DATE PRIMARY KEY,
+        sent_at TIMESTAMP DEFAULT NOW()
+      );
     `);
+    // Gerätetyp-Spalte ergänzen (anonym: mobile/desktop/tablet)
+    await pool.query("ALTER TABLE pageviews ADD COLUMN IF NOT EXISTS device VARCHAR(10)");
     // Diagnose-/Test-Eintraege aus der Statistik entfernen (aus der Fehlersuche).
     await pool.query("DELETE FROM pageviews WHERE tab='ping' OR ref='diagnose'");
     console.log('✅ Database tables ready');
@@ -189,6 +196,89 @@ async function sendBookingNotification(b) {
     console.error('E-Mail-Versand fehlgeschlagen:', err.message);
   }
 }
+
+// ── WÖCHENTLICHE ZUSAMMENFASSUNG PER E-MAIL (jeden Montag) ──
+const WR_TABS = { start: 'Startseite', ausstattung: 'Ausstattung', buchen: 'Buchen', empfehlungen: 'Empfehlungen', 'ueber-uns': 'Über uns', lage: 'Lage & Kontakt', gaestebuch: 'Gästebuch' };
+const WR_DEV = { mobile: 'Handy', desktop: 'Computer', tablet: 'Tablet', '?': 'Unbekannt' };
+
+async function buildWeeklyReport() {
+  async function num(sql) { try { return (await pool.query(sql)).rows[0].c; } catch (e) { return 0; } }
+  async function rows(sql) { try { return (await pool.query(sql)).rows; } catch (e) { return []; } }
+  var v7 = await num("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days'");
+  var vPrev = await num("SELECT COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' AND created_at <= NOW() - INTERVAL '7 days'");
+  var wl7 = await num("SELECT COUNT(*)::int c FROM waitlist WHERE created_at > NOW() - INTERVAL '7 days'");
+  var bk7 = await num("SELECT COUNT(*)::int c FROM bookings WHERE created_at > NOW() - INTERVAL '7 days'");
+  var topTabs = await rows("SELECT COALESCE(NULLIF(tab,''),'?') tab, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1 ORDER BY c DESC LIMIT 5");
+  var topRefs = await rows("SELECT COALESCE(NULLIF(ref,''),'Direkt') ref, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1 ORDER BY c DESC LIMIT 5");
+  var dev = await rows("SELECT COALESCE(NULLIF(device,''),'?') device, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1 ORDER BY c DESC");
+  return { v7, vPrev, wl7, bk7, topTabs, topRefs, dev };
+}
+
+async function sendWeeklyReport() {
+  const transport = getMailTransport();
+  const to = process.env.BOOKING_NOTIFY_TO;
+  if (!transport || !to) return false;
+  const r = await buildWeeklyReport();
+  const diff = r.v7 - r.vPrev;
+  const trend = r.vPrev === 0 ? (r.v7 > 0 ? '▲ neu' : '–') : (diff > 0 ? '▲ +' + diff : diff < 0 ? '▼ ' + diff : '± 0') + ' ggü. Vorwoche';
+  const li = (arr, keyName, map) => (arr && arr.length)
+    ? '<ul style="margin:.3rem 0 .8rem;padding-left:1.1rem;color:#333">' + arr.map(x => '<li>' + ((map && map[x[keyName]]) || x[keyName]) + ' – <b>' + x.c + '</b></li>').join('') + '</ul>'
+    : '<p style="color:#888;margin:.3rem 0 .8rem">Keine Daten.</p>';
+  try {
+    await transport.sendMail({
+      from: process.env.BOOKING_NOTIFY_FROM || process.env.SMTP_USER,
+      to,
+      subject: `📊 Wochenrückblick Villa Las Hermanas – ${r.v7} Aufrufe`,
+      html: `
+        <div style="font-family:sans-serif;max-width:600px">
+          <h2 style="color:#2a6b6b">📊 Dein Wochenrückblick</h2>
+          <p>Hier die Zahlen der letzten 7 Tage für <b>Villa Las Hermanas</b>:</p>
+          <table cellpadding="8" style="border-collapse:collapse;font-size:15px">
+            <tr><td>👀 <b>Seitenaufrufe</b></td><td><b>${r.v7}</b> <span style="color:#888">(${trend})</span></td></tr>
+            <tr><td>📝 <b>Neue Warteliste-Einträge</b></td><td><b>${r.wl7}</b></td></tr>
+            <tr><td>🏠 <b>Neue Buchungsanfragen</b></td><td><b>${r.bk7}</b></td></tr>
+          </table>
+          <h3 style="color:#2a6b6b;margin-top:1.2rem">Beliebteste Bereiche</h3>
+          ${li(r.topTabs, 'tab', WR_TABS)}
+          <h3 style="color:#2a6b6b">Woher die Besucher kamen</h3>
+          ${li(r.topRefs, 'ref', null)}
+          <h3 style="color:#2a6b6b">Geräte</h3>
+          ${li(r.dev, 'device', WR_DEV)}
+          <p style="color:#888;font-size:12px;margin-top:1.4rem">Alle Details jederzeit im Admin-Bereich unter „Statistik". Anonyme Auswertung – ohne Cookies, ohne persönliche Daten.</p>
+        </div>`,
+    });
+    return true;
+  } catch (err) {
+    console.error('Wochenbericht-Versand fehlgeschlagen:', err.message);
+    return false;
+  }
+}
+
+// Zeitplaner: montags ab 8 Uhr (spanische Ortszeit) einmal pro Woche senden.
+function madridInfo() {
+  var parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid', year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short', hour: '2-digit', hour12: false }).formatToParts(new Date());
+  var o = {}; parts.forEach(function (p) { o[p.type] = p.value; });
+  return { date: o.year + '-' + o.month + '-' + o.day, weekday: o.weekday, hour: parseInt(o.hour, 10) || 0 };
+}
+async function maybeSendWeekly() {
+  try {
+    if (!process.env.SMTP_HOST || !process.env.BOOKING_NOTIFY_TO) return;
+    var info = madridInfo();
+    if (info.weekday !== 'Mon' || info.hour < 8) return; // nur montags ab 8 Uhr
+    var ins = await pool.query("INSERT INTO weekly_report_log (week_start) VALUES ($1) ON CONFLICT (week_start) DO NOTHING RETURNING week_start", [info.date]);
+    if (ins.rowCount === 0) return; // diese Woche bereits gesendet
+    var ok = await sendWeeklyReport();
+    console.log(ok ? '📊 Wochenbericht gesendet für Woche ' + info.date : '⚠️  Wochenbericht konnte nicht gesendet werden');
+  } catch (e) { console.error('Wochenbericht-Scheduler:', e.message); }
+}
+setInterval(maybeSendWeekly, 30 * 60 * 1000); // alle 30 Minuten prüfen
+setTimeout(maybeSendWeekly, 20000);           // kurz nach Start einmal prüfen
+
+// Manuelles Auslösen (Test) aus dem Admin heraus
+app.post('/api/admin/weekly-report/test', authMiddleware, async (req, res) => {
+  var ok = await sendWeeklyReport();
+  res.json({ ok });
+});
 
 // ── AUTH ROUTES ──
 // ── LOGIN mit einfachem Rate-Limiting (Brute-Force-Schutz, ohne Zusatzpaket) ──
@@ -333,7 +423,9 @@ app.get('/api/visit', async (req, res) => {
     var tab = String(req.query.tab || '').slice(0, 40);
     var lang = String(req.query.lang || '').slice(0, 10);
     var ref = String(req.query.ref || '').slice(0, 120);
-    if (tab && !isPing) await pool.query('INSERT INTO pageviews (tab, lang, ref) VALUES ($1,$2,$3)', [tab, lang, ref]);
+    var device = String(req.query.dev || '').slice(0, 10);
+    if (device && ['mobile', 'desktop', 'tablet'].indexOf(device) === -1) device = '';
+    if (tab && !isPing) await pool.query('INSERT INTO pageviews (tab, lang, ref, device) VALUES ($1,$2,$3,$4)', [tab, lang, ref, device]);
     var total = (await pool.query('SELECT COUNT(*)::int c FROM pageviews')).rows[0].c;
     res.json({ ok: true, total: total });
   } catch (e) {
@@ -367,7 +459,23 @@ app.get('/api/admin/stats', authMiddleware, async (req, res) => {
   var byDay = await rows("SELECT to_char(created_at::date,'YYYY-MM-DD') AS d, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '14 days' GROUP BY 1 ORDER BY 1");
   var waitlist = await num("SELECT COUNT(*)::int c FROM waitlist");
   var bookings = await num("SELECT COUNT(*)::int c FROM bookings");
-  res.json({ total, last7, last30, byTab, byLang, byRef, byDay, waitlist, bookings });
+  // Geräte-Übersicht (anonym)
+  var byDevice = await rows("SELECT COALESCE(NULLIF(device,''),'?') device, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY c DESC");
+  // Aktivität nach Wochentag (0=So..6=Sa) und Uhrzeit (0..23), in spanischer Ortszeit
+  var byDow = await rows("SELECT EXTRACT(DOW FROM created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Madrid')::int dow, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY 1");
+  var byHour = await rows("SELECT EXTRACT(HOUR FROM created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Madrid')::int hr, COUNT(*)::int c FROM pageviews GROUP BY 1 ORDER BY 1");
+  // 7-Tage-Verlauf für Sprache & Herkunft (als Objekt {schluessel: anzahl})
+  var byLang7 = await rows("SELECT COALESCE(NULLIF(lang,''),'?') lang, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1");
+  var byRef7 = await rows("SELECT COALESCE(NULLIF(ref,''),'Direkt') ref, COUNT(*)::int c FROM pageviews WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1");
+  function toMap(arr, key) { var o = {}; (arr || []).forEach(function (r) { o[r[key]] = r.c; }); return o; }
+  // Beliebteste Reisezeiträume aus den Buchungsanfragen (Anreise-Monat)
+  var travelMonths = await rows("SELECT to_char(date_trunc('month', checkin),'YYYY-MM') AS m, COUNT(*)::int c FROM bookings WHERE checkin IS NOT NULL GROUP BY 1 ORDER BY 1");
+  res.json({
+    total, last7, last30, byTab, byLang, byRef, byDay, waitlist, bookings,
+    byDevice, byDow, byHour,
+    langRecent: toMap(byLang7, 'lang'), refRecent: toMap(byRef7, 'ref'),
+    travelMonths
+  });
 });
 
 // ── BLOCKED DATES ──

@@ -864,14 +864,24 @@ async function submitWaitlist(){
   window.__updProgress=upd; upd();
 })();
 
-// Eigene, cookiefreie Statistik – zählt Tab-Aufrufe, Sprache & Herkunft (keine IP, keine Cookies)
+// Eigene, cookiefreie Statistik – zählt Tab-Aufrufe, Sprache, Herkunft & Gerätetyp (keine IP, keine Cookies)
 (function(){
   function refHost(){ try{ if(!document.referrer) return ''; var h=new URL(document.referrer).hostname; if(!h||h===location.hostname) return ''; return h.replace(/^www\./,'').slice(0,120);}catch(e){return '';} }
+  function devType(){ try{
+    var ua=navigator.userAgent||'';
+    if(/iPad/i.test(ua)||(/Android/i.test(ua)&&!/Mobile/i.test(ua))) return 'tablet';
+    if(/Mobi|Android|iPhone|iPod|Windows Phone/i.test(ua)) return 'mobile';
+    var w=window.innerWidth||screen.width||0;
+    if(w&&w<=768) return 'mobile';
+    if(w&&w<=1024) return 'tablet';
+    return 'desktop';
+  }catch(e){ return ''; } }
   var firstRef=null;
   try{ firstRef=sessionStorage.getItem('vref'); if(firstRef===null){ firstRef=refHost(); sessionStorage.setItem('vref',firstRef);} }catch(e){ firstRef=refHost(); }
+  var dev=devType();
   window.__track=function(tab){
     try{
-      var qs='tab='+encodeURIComponent(tab||'start')+'&lang='+encodeURIComponent(window.currentLang||'de')+'&ref='+encodeURIComponent(firstRef||'');
+      var qs='tab='+encodeURIComponent(tab||'start')+'&lang='+encodeURIComponent(window.currentLang||'de')+'&ref='+encodeURIComponent(firstRef||'')+'&dev='+encodeURIComponent(dev||'');
       fetch('/api/visit?'+qs,{method:'GET',keepalive:true,cache:'no-store'});
     }catch(e){}
   };
