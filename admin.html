@@ -83,6 +83,9 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
 .btn-ghost{background:transparent;color:var(--ink3);border:1px solid var(--b3)}.btn-ghost:hover{border-color:var(--ink3);color:var(--ink)}
 .btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{opacity:.85}
 .btn-group{display:flex;gap:.4rem}
+.pf-lbl{display:block;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:#888;margin:.9rem 0 .35rem}
+.pf-in{width:100%;padding:.6rem .8rem;border:1px solid var(--b3,#ddd);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:1rem;color:#222;background:#fff;box-sizing:border-box}
+.pf-in:focus{outline:none;border-color:var(--teal,#2a6b6b);box-shadow:0 0 0 3px rgba(42,107,107,.12)}
 
 /* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.6rem}
@@ -162,6 +165,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
       <div class="nav-item" onclick="showPage('calendar')"><span class="nav-item-icon">🗓️</span>Kalender sperren</div>
       <div class="nav-item" onclick="showPage('reviews')"><span class="nav-item-icon">⭐</span>Gästebuch<span class="nav-badge" id="badge-reviews" style="display:none">0</span></div>
       <div class="nav-item" onclick="showPage('statistik')"><span class="nav-item-icon">📈</span>Statistik</div>
+      <div class="nav-item" onclick="showPage('preise')"><span class="nav-item-icon">💶</span>Preise</div>
       <div class="nav-item" onclick="window.open('/')"><span class="nav-item-icon">🌐</span>Zur Website</div>
     </nav>
     <div class="sidebar-footer">
@@ -310,6 +314,73 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
           <span id="wr-test-msg" style="margin-left:12px;color:#2a6b6b;font-size:.9rem"></span>
         </div>
       </div>
+    </div>
+
+    <div class="page" id="page-preise">
+      <div class="page-header">
+        <h2>Preise 💶</h2>
+        <p>Passe deine Miet- und Reinigungspreise an. Änderungen erscheinen sofort auf der Website (Saisonkarten, Preisrechner) in allen Sprachen.</p>
+      </div>
+      <form id="price-form" onsubmit="return savePrices(event)">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem">
+          <div class="section-card">
+            <div class="section-card-header"><h3>Nebensaison</h3></div>
+            <div class="section-card-body" style="padding:1.1rem 1.3rem">
+              <p style="color:#999;font-size:.8rem;margin:0 0 1rem">November – April</p>
+              <label class="pf-lbl">Preis pro Nacht (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-low-nightly">
+              <label class="pf-lbl">Wochenpreis „ab" (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-low-weekly">
+              <label class="pf-lbl">Mindestnächte</label>
+              <input class="pf-in" type="number" min="1" max="30" id="p-low-min">
+            </div>
+          </div>
+          <div class="section-card">
+            <div class="section-card-header"><h3>Zwischensaison</h3></div>
+            <div class="section-card-body" style="padding:1.1rem 1.3rem">
+              <p style="color:#999;font-size:.8rem;margin:0 0 1rem">Mai, Juni, September, Oktober</p>
+              <label class="pf-lbl">Preis pro Nacht (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-mid-nightly">
+              <label class="pf-lbl">Wochenpreis „ab" (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-mid-weekly">
+              <label class="pf-lbl">Mindestnächte</label>
+              <input class="pf-in" type="number" min="1" max="30" id="p-mid-min">
+            </div>
+          </div>
+          <div class="section-card">
+            <div class="section-card-header"><h3>Hochsaison</h3></div>
+            <div class="section-card-body" style="padding:1.1rem 1.3rem">
+              <p style="color:#999;font-size:.8rem;margin:0 0 1rem">Juli – August</p>
+              <label class="pf-lbl">Preis pro Nacht (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-high-nightly">
+              <label class="pf-lbl">Wochenpreis „ab" (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-high-weekly">
+              <label class="pf-lbl">Mindestnächte</label>
+              <input class="pf-in" type="number" min="1" max="30" id="p-high-min">
+            </div>
+          </div>
+        </div>
+        <div class="section-card" style="margin-top:1.5rem">
+          <div class="section-card-header"><h3>Endreinigung</h3></div>
+          <div class="section-card-body" style="padding:1.1rem 1.3rem;display:flex;flex-wrap:wrap;gap:2rem;align-items:flex-end">
+            <div>
+              <label class="pf-lbl">Reinigungsgebühr (€)</label>
+              <input class="pf-in" type="number" min="0" id="p-cleaning" style="max-width:160px">
+            </div>
+            <label style="display:flex;align-items:center;gap:.6rem;color:#333;font-size:.9rem;cursor:pointer;margin-bottom:.6rem">
+              <input type="checkbox" id="p-cleaning-incl" style="width:18px;height:18px;cursor:pointer">
+              Endreinigung ist im Preis inklusive
+            </label>
+          </div>
+          <div class="section-card-body" style="padding:0 1.3rem 1.1rem;color:#999;font-size:.8rem">
+            Ist der Haken gesetzt, wird die Reinigung nicht extra berechnet und auf der Website als „inklusive" angezeigt.
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;display:flex;align-items:center;gap:1rem">
+          <button class="btn btn-teal" type="submit" id="p-save-btn">Preise speichern</button>
+          <span id="p-save-msg" style="color:#2a6b6b;font-size:.9rem"></span>
+        </div>
+      </form>
     </div>
 
   </div>
@@ -481,6 +552,41 @@ async function testWeeklyReport(){
   }catch(e){ msg.style.color='#b23'; msg.textContent='Fehler beim Senden.'; }
   btn.disabled=false;
 }
+// ── PREISE ──
+async function loadPrices(){
+  try{
+    var res=await fetch('/api/prices',{cache:'no-store'});
+    var p=await res.json();
+    var set=function(id,v){var el=document.getElementById(id);if(el)el.value=v;};
+    set('p-low-nightly',p.low.nightly); set('p-low-weekly',p.low.weekly); set('p-low-min',p.low.minNights);
+    set('p-mid-nightly',p.mid.nightly); set('p-mid-weekly',p.mid.weekly); set('p-mid-min',p.mid.minNights);
+    set('p-high-nightly',p.high.nightly); set('p-high-weekly',p.high.weekly); set('p-high-min',p.high.minNights);
+    set('p-cleaning',p.cleaning);
+    document.getElementById('p-cleaning-incl').checked=!!p.cleaningIncluded;
+  }catch(e){}
+}
+async function savePrices(ev){
+  ev.preventDefault();
+  var btn=document.getElementById('p-save-btn'), msg=document.getElementById('p-save-msg');
+  var num=function(id){return parseInt(document.getElementById(id).value,10)||0;};
+  var body={
+    low:{nightly:num('p-low-nightly'),weekly:num('p-low-weekly'),minNights:num('p-low-min')},
+    mid:{nightly:num('p-mid-nightly'),weekly:num('p-mid-weekly'),minNights:num('p-mid-min')},
+    high:{nightly:num('p-high-nightly'),weekly:num('p-high-weekly'),minNights:num('p-high-min')},
+    cleaning:num('p-cleaning'),
+    cleaningIncluded:document.getElementById('p-cleaning-incl').checked
+  };
+  btn.disabled=true; msg.style.color='#2a6b6b'; msg.textContent='Speichere …';
+  try{
+    var res=await fetch('/api/admin/prices',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(body)});
+    if(res.status===401){ return forceLogout(); }
+    var d=await res.json();
+    if(d.ok){ msg.textContent='✓ Gespeichert – die Website zeigt jetzt die neuen Preise.'; loadPrices(); }
+    else { msg.style.color='#b23'; msg.textContent='Fehler beim Speichern.'; }
+  }catch(e){ msg.style.color='#b23'; msg.textContent='Fehler beim Speichern.'; }
+  btn.disabled=false;
+  return false;
+}
 async function loadStats(){
   if(!token) return;
   try{
@@ -529,9 +635,10 @@ function showPage(page){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   var items = document.querySelectorAll('.nav-item');
-  var map = {dashboard:0,bookings:1,calendar:2,reviews:3,statistik:4};
+  var map = {dashboard:0,bookings:1,calendar:2,reviews:3,statistik:4,preise:5};
   if(map[page]!==undefined) items[map[page]].classList.add('active');
   if(page==='statistik') loadStats();
+  if(page==='preise') loadPrices();
 }
 
 // ── DASHBOARD ──

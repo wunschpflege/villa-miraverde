@@ -69,7 +69,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css?v=6">
+<link rel="stylesheet" href="/styles.css?v=7">
 </head>
 <body>
 
@@ -470,9 +470,9 @@
           <p class="section-p">Buchen Sie direkt bei uns – ohne Gebühren, ohne Zwischenhändler, mit persönlichem Service von Sophie &amp; Lisa.</p>
 
           <div class="price-stack">
-            <div class="pc"><div class="pc-season" data-t="season_low">Nebensaison · Oktober – April</div><div class="pc-price">€ 380 <span data-t="per_night">/ Nacht</span></div><div class="pc-detail" data-t="season_low_detail">Wöchentlich ab € 2.450 · min. 4 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
-            <div class="pc hot"><div class="pc-badge" data-t="season_badge">Beliebt</div><div class="pc-season" data-t="season_mid">Zwischensaison · Mai, Jun, Sep, Okt</div><div class="pc-price">€ 620 <span data-t="per_night">/ Nacht</span></div><div class="pc-detail" data-t="season_mid_detail">Wöchentlich ab € 3.990 · min. 5 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
-            <div class="pc"><div class="pc-season" data-t="season_high">Hochsaison · Juli – August</div><div class="pc-price">€ 980 <span data-t="per_night">/ Nacht</span></div><div class="pc-detail" data-t="season_high_detail">Wöchentlich ab € 6.500 · min. 7 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+            <div class="pc" data-season="low"><div class="pc-season" data-t="season_low">Nebensaison · Oktober – April</div><div class="pc-price">€ 380 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 2.450 · min. 4 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+            <div class="pc hot" data-season="mid"><div class="pc-badge" data-t="season_badge">Beliebt</div><div class="pc-season" data-t="season_mid">Zwischensaison · Mai, Jun, Sep, Okt</div><div class="pc-price">€ 620 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 3.990 · min. 5 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
+            <div class="pc" data-season="high"><div class="pc-season" data-t="season_high">Hochsaison · Juli – August</div><div class="pc-price">€ 980 <span>/ Nacht</span></div><div class="pc-detail">Wöchentlich ab € 6.500 · min. 7 Nächte</div><div class="pc-inc" data-t="season_incl">✓ Endreinigung inklusive · ✓ WLAN inklusive</div></div>
           </div>
 
           <div class="cal-legend">
@@ -525,7 +525,7 @@
           <div class="price-calc">
             <div class="pc-row"><span data-t="price_period">Zeitraum</span><span id="pn">– –</span></div>
             <div class="pc-row"><span data-t="price_rent">Mietpreis</span><span id="pr">– –</span></div>
-            <div class="pc-row"><span data-t="price_clean">Endreinigung</span><span>€ 250</span></div>
+            <div class="pc-row"><span data-t="price_clean">Endreinigung</span><span id="price-clean-val">€ 250</span></div>
             <div class="pc-row tot"><span data-t="price_total">Gesamtpreis</span><span id="pt">– –</span></div>
           </div>
           <button class="btn-book" onclick="sendBooking()" data-t="btn_book">Verbindliche Anfrage senden →</button>
@@ -827,6 +827,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/app.js?v=6"></script>
+<script src="/app.js?v=7"></script>
 </body>
 </html>
