@@ -645,10 +645,10 @@ function fmtDate(d){if(!d)return'–';var m=calMonths[currentLang]||calMonths['d
 function fmtISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 // Preise werden aus dem Admin geladen (/api/prices). Standardwerte als Fallback:
 window.PRICES = window.PRICES || {
-  low:  {nightly:380, weekly:2450, minNights:4},
-  mid:  {nightly:620, weekly:3990, minNights:5},
-  high: {nightly:980, weekly:6500, minNights:7},
-  cleaning:250, cleaningIncluded:true
+  low:  {nightly:240, weekly:1550, minNights:4},
+  mid:  {nightly:390, weekly:2600, minNights:5},
+  high: {nightly:690, weekly:4500, minNights:7},
+  cleaning:150, cleaningIncluded:true
 };
 function seasonOf(m){ if(m===6||m===7) return 'high'; if(m===4||m===5||m===8||m===9) return 'mid'; return 'low'; }
 function getRate(date){ var s=(window.PRICES||{})[seasonOf(date.getMonth())]||{}; return s.nightly||0; }
