@@ -103,6 +103,11 @@ async function setupDB() {
     `);
     // Gerätetyp-Spalte ergänzen (anonym: mobile/desktop/tablet)
     await pool.query("ALTER TABLE pageviews ADD COLUMN IF NOT EXISTS device VARCHAR(10)");
+    // Empfohlene Startpreise einmalig hinterlegen (spätere eigene Änderungen bleiben erhalten)
+    await pool.query(
+      "INSERT INTO settings (key, value) VALUES ('prices', $1) ON CONFLICT (key) DO NOTHING",
+      [JSON.stringify(DEFAULT_PRICES)]
+    );
     // Diagnose-/Test-Eintraege aus der Statistik entfernen (aus der Fehlersuche).
     await pool.query("DELETE FROM pageviews WHERE tab='ping' OR ref='diagnose'");
     console.log('✅ Database tables ready');
@@ -487,10 +492,10 @@ app.get('/api/admin/stats', authMiddleware, async (req, res) => {
 // ── PREISE ──
 // Standardpreise (Fallback, falls in den Einstellungen noch nichts gespeichert ist)
 const DEFAULT_PRICES = {
-  low:  { nightly: 380, weekly: 2450, minNights: 4 },
-  mid:  { nightly: 620, weekly: 3990, minNights: 5 },
-  high: { nightly: 980, weekly: 6500, minNights: 7 },
-  cleaning: 250, cleaningIncluded: true
+  low:  { nightly: 240, weekly: 1550, minNights: 4 },
+  mid:  { nightly: 390, weekly: 2600, minNights: 5 },
+  high: { nightly: 690, weekly: 4500, minNights: 7 },
+  cleaning: 150, cleaningIncluded: true
 };
 function sanitizeSeason(s, def) {
   s = s || {};
