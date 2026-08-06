@@ -321,6 +321,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
       <div class="page-header">
         <h2>Preise 💶</h2>
         <p>Passe deine Miet- und Reinigungspreise an. Änderungen erscheinen sofort auf der Website (Saisonkarten, Preisrechner) in allen Sprachen.</p>
+        <p style="color:#8a7f70;font-size:.85rem;margin-top:.4rem">💡 Nacht- und Wochenpreis sind verknüpft: Woche = 7 × Nacht. Änderst du einen Wert, passt sich der andere automatisch an.</p>
       </div>
       <form id="price-form" onsubmit="return savePrices(event)">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem">
@@ -329,9 +330,9 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
             <div class="section-card-body" style="padding:1.1rem 1.3rem">
               <p style="color:#999;font-size:.8rem;margin:0 0 1rem">November – April</p>
               <label class="pf-lbl">Preis pro Nacht (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-low-nightly">
+              <input class="pf-in" type="number" min="0" id="p-low-nightly" oninput="linkPrice('low','nightly')">
               <label class="pf-lbl">Wochenpreis „ab" (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-low-weekly">
+              <input class="pf-in" type="number" min="0" id="p-low-weekly" oninput="linkPrice('low','weekly')">
               <label class="pf-lbl">Mindestnächte</label>
               <input class="pf-in" type="number" min="1" max="30" id="p-low-min">
             </div>
@@ -341,9 +342,9 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
             <div class="section-card-body" style="padding:1.1rem 1.3rem">
               <p style="color:#999;font-size:.8rem;margin:0 0 1rem">Mai, Juni, September, Oktober</p>
               <label class="pf-lbl">Preis pro Nacht (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-mid-nightly">
+              <input class="pf-in" type="number" min="0" id="p-mid-nightly" oninput="linkPrice('mid','nightly')">
               <label class="pf-lbl">Wochenpreis „ab" (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-mid-weekly">
+              <input class="pf-in" type="number" min="0" id="p-mid-weekly" oninput="linkPrice('mid','weekly')">
               <label class="pf-lbl">Mindestnächte</label>
               <input class="pf-in" type="number" min="1" max="30" id="p-mid-min">
             </div>
@@ -353,9 +354,9 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
             <div class="section-card-body" style="padding:1.1rem 1.3rem">
               <p style="color:#999;font-size:.8rem;margin:0 0 1rem">Juli – August</p>
               <label class="pf-lbl">Preis pro Nacht (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-high-nightly">
+              <input class="pf-in" type="number" min="0" id="p-high-nightly" oninput="linkPrice('high','nightly')">
               <label class="pf-lbl">Wochenpreis „ab" (€)</label>
-              <input class="pf-in" type="number" min="0" id="p-high-weekly">
+              <input class="pf-in" type="number" min="0" id="p-high-weekly" oninput="linkPrice('high','weekly')">
               <label class="pf-lbl">Mindestnächte</label>
               <input class="pf-in" type="number" min="1" max="30" id="p-high-min">
             </div>
@@ -554,6 +555,14 @@ async function testWeeklyReport(){
   btn.disabled=false;
 }
 // ── PREISE ──
+// Nacht- und Wochenpreis verknüpfen: Woche = 7 × Nacht (und umgekehrt Nacht = Woche ÷ 7)
+function linkPrice(season, source){
+  var n=document.getElementById('p-'+season+'-nightly');
+  var w=document.getElementById('p-'+season+'-weekly');
+  if(!n||!w) return;
+  if(source==='nightly'){ var nv=parseInt(n.value,10); if(nv>0) w.value=nv*7; }
+  else { var wv=parseInt(w.value,10); if(wv>0) n.value=Math.round(wv/7); }
+}
 async function loadPrices(){
   try{
     var res=await fetch('/api/prices',{cache:'no-store'});
