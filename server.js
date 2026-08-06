@@ -303,6 +303,38 @@ const loginAttempts = new Map(); // ip -> { count, first }
 const MAX_ATTEMPTS = 8;
 const WINDOW_MS = 15 * 60 * 1000; // 15 Minuten
 
+// Benachrichtigung per E-Mail bei Login bzw. mehreren Fehlversuchen (fail-soft, blockiert den Login nie)
+async function sendLoginAlert(kind, ip, ua) {
+  const transport = getMailTransport();
+  const to = process.env.BOOKING_NOTIFY_TO;
+  if (!transport || !to) return;
+  const esc = (v) => String(v == null ? '' : v).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+  let when;
+  try { when = new Intl.DateTimeFormat('de-DE', { timeZone: 'Europe/Madrid', dateStyle: 'medium', timeStyle: 'short' }).format(new Date()); } catch (e) { when = new Date().toISOString(); }
+  const success = kind === 'success';
+  const subject = success ? '🔓 Admin-Login bei Villa Las Hermanas' : '⚠️ Fehlgeschlagene Admin-Login-Versuche';
+  const intro = success
+    ? 'Es hat sich gerade jemand erfolgreich im Admin-Bereich angemeldet.'
+    : 'Es gab mehrere fehlgeschlagene Anmeldeversuche im Admin-Bereich – der Zugang wurde für 15 Minuten gesperrt. Falls du das nicht warst, ändere zur Sicherheit dein Passwort in Railway.';
+  try {
+    await transport.sendMail({
+      from: process.env.BOOKING_NOTIFY_FROM || process.env.SMTP_USER,
+      to,
+      subject,
+      html: `<div style="font-family:sans-serif;max-width:560px">
+        <h2 style="color:${success ? '#2a6b6b' : '#C0392B'}">${subject}</h2>
+        <p>${intro}</p>
+        <table cellpadding="6" style="border-collapse:collapse;font-size:14px">
+          <tr><td><b>Zeitpunkt</b></td><td>${esc(when)} (Spanien)</td></tr>
+          <tr><td><b>IP-Adresse</b></td><td>${esc(ip)}</td></tr>
+          <tr><td><b>Gerät / Browser</b></td><td>${esc(ua)}</td></tr>
+        </table>
+        <p style="color:#888;font-size:12px">War das dein eigener Login, kannst du diese E-Mail einfach ignorieren.</p>
+      </div>`,
+    });
+  } catch (err) { console.error('Login-Benachrichtigung fehlgeschlagen:', err.message); }
+}
+
 app.post('/api/login', async (req, res) => {
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip || 'unknown';
   const now = Date.now();
@@ -317,14 +349,17 @@ app.post('/api/login', async (req, res) => {
   if (!ADMIN_PASSWORD) {
     return res.status(503).json({ error: 'Admin-Login ist nicht konfiguriert.' });
   }
+  var ua = String(req.headers['user-agent'] || '').slice(0, 200);
   if (password === ADMIN_PASSWORD) {
     loginAttempts.delete(ip);
     const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '12h' });
     res.json({ token });
+    sendLoginAlert('success', ip, ua); // im Hintergrund, ohne den Login zu verzögern
   } else {
     const rec = loginAttempts.get(ip) || { count: 0, first: now };
     rec.count += 1;
     loginAttempts.set(ip, rec);
+    if (rec.count === MAX_ATTEMPTS) sendLoginAlert('failed', ip, ua); // einmalig beim Erreichen der Sperre
     res.status(401).json({ error: 'Falsches Passwort' });
   }
 });
@@ -562,7 +597,7 @@ app.delete('/api/admin/blocked-dates/:id', authMiddleware, async (req, res) => {
 });
  
 // ── SERVE PAGES ──
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/admin', (req, res) => { res.set('X-Robots-Tag', 'noindex, nofollow, noarchive'); res.sendFile(path.join(__dirname, 'admin.html')); });
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
  
 // Start
