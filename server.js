@@ -108,6 +108,12 @@ async function setupDB() {
       "INSERT INTO settings (key, value) VALUES ('prices', $1) ON CONFLICT (key) DO NOTHING",
       [JSON.stringify(DEFAULT_PRICES)]
     );
+    // Einmalige Umstellung: Endreinigung separat ausweisen statt "inklusive"
+    var mig = await pool.query("SELECT 1 FROM settings WHERE key='mig_cleaning_charged'");
+    if (mig.rows.length === 0) {
+      await pool.query("UPDATE settings SET value = (value::jsonb || '{\"cleaningIncluded\":false,\"cleaning\":150}'::jsonb)::text WHERE key='prices'");
+      await pool.query("INSERT INTO settings (key, value) VALUES ('mig_cleaning_charged','1') ON CONFLICT (key) DO NOTHING");
+    }
     // Diagnose-/Test-Eintraege aus der Statistik entfernen (aus der Fehlersuche).
     await pool.query("DELETE FROM pageviews WHERE tab='ping' OR ref='diagnose'");
     console.log('✅ Database tables ready');
@@ -495,7 +501,7 @@ const DEFAULT_PRICES = {
   low:  { nightly: 240, weekly: 1550, minNights: 4 },
   mid:  { nightly: 390, weekly: 2600, minNights: 5 },
   high: { nightly: 690, weekly: 4500, minNights: 7 },
-  cleaning: 150, cleaningIncluded: true
+  cleaning: 150, cleaningIncluded: false
 };
 function sanitizeSeason(s, def) {
   s = s || {};

@@ -139,6 +139,18 @@ var ADD2 = {
 };
 for (var _b2 in ADD2) { if (!T[_b2]) T[_b2] = {}; for (var _k2 in ADD2[_b2]) T[_b2][_k2] = ADD2[_b2][_k2]; }
 
+// Override + neue Hinweise (in TX gemergt -> hat beim Sprachwechsel Vorrang)
+var OV = {
+  de:{season_incl:'✓ Glasfaser-WLAN inklusive', faq_a4:'Das Glasfaser-WLAN ist im Preis enthalten. Die Endreinigung weisen wir transparent separat aus.', img_note:'Hinweis: Die gezeigten Bilder sind derzeit KI-generierte Visualisierungen – echte Fotos folgen in Kürze.', model_note:'Hinweis: Das 3D-Modell dient nur der Veranschaulichung und entspricht noch nicht exakt dem fertigen Haus.'},
+  en:{season_incl:'✓ Fibre Wi-Fi included', faq_a4:'Fibre Wi-Fi is included in the price. The final cleaning is shown transparently as a separate item.', img_note:'Note: The images shown are currently AI-generated visualisations – real photos will follow soon.', model_note:'Note: The 3D model is for illustration only and does not yet exactly match the finished house.'},
+  es:{season_incl:'✓ WiFi de fibra incluido', faq_a4:'El wifi de fibra está incluido en el precio. La limpieza final se indica de forma transparente por separado.', img_note:'Nota: Las imágenes mostradas son actualmente visualizaciones generadas por IA; las fotos reales llegarán pronto.', model_note:'Nota: El modelo 3D es solo orientativo y aún no corresponde exactamente a la casa terminada.'},
+  fr:{season_incl:'✓ Wi-Fi fibre inclus', faq_a4:'Le Wi-Fi fibre est inclus dans le prix. Le ménage final est indiqué séparément, en toute transparence.', img_note:'Note : les images présentées sont actuellement des visualisations générées par IA – de vraies photos suivront bientôt.', model_note:'Note : le modèle 3D est purement indicatif et ne correspond pas encore exactement à la maison finie.'},
+  nl:{season_incl:'✓ Glasvezel-wifi inbegrepen', faq_a4:'Glasvezel-wifi is bij de prijs inbegrepen. De eindschoonmaak tonen we transparant apart.', img_note:'Let op: de getoonde beelden zijn momenteel AI-gegenereerde visualisaties – echte foto\'s volgen binnenkort.', model_note:'Let op: het 3D-model dient alleen ter illustratie en komt nog niet exact overeen met het voltooide huis.'},
+  pl:{season_incl:'✓ Światłowodowe Wi-Fi w cenie', faq_a4:'Światłowodowe Wi-Fi jest wliczone w cenę. Sprzątanie końcowe wykazujemy przejrzyście osobno.', img_note:'Uwaga: prezentowane obrazy są obecnie wizualizacjami generowanymi przez SI – prawdziwe zdjęcia pojawią się wkrótce.', model_note:'Uwaga: model 3D ma charakter wyłącznie poglądowy i nie odpowiada jeszcze dokładnie gotowemu domowi.'},
+  ru:{season_incl:'✓ Оптоволоконный Wi-Fi включён', faq_a4:'Оптоволоконный Wi-Fi включён в цену. Финальная уборка указывается отдельно и прозрачно.', img_note:'Примечание: показанные изображения сейчас являются визуализациями, созданными ИИ, — настоящие фото появятся скоро.', model_note:'Примечание: 3D-модель носит исключительно иллюстративный характер и пока не полностью соответствует готовому дому.'}
+};
+for (var _ov in OV) { if (!TX[_ov]) TX[_ov] = {}; for (var _ok in OV[_ov]) TX[_ov][_ok] = OV[_ov][_ok]; }
+
 function setLang(lang) {
   currentLang = lang;
   var t = T[lang] || T.de;
@@ -648,7 +660,7 @@ window.PRICES = window.PRICES || {
   low:  {nightly:240, weekly:1550, minNights:4},
   mid:  {nightly:390, weekly:2600, minNights:5},
   high: {nightly:690, weekly:4500, minNights:7},
-  cleaning:150, cleaningIncluded:true
+  cleaning:150, cleaningIncluded:false
 };
 function seasonOf(m){ if(m===6||m===7) return 'high'; if(m===4||m===5||m===8||m===9) return 'mid'; return 'low'; }
 function getRate(date){ var s=(window.PRICES||{})[seasonOf(date.getMonth())]||{}; return s.nightly||0; }
