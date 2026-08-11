@@ -22,7 +22,7 @@ const pool = new Pool({
 });
  
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '12mb' })); // größeres Limit für Foto-Uploads (base64)
  
 // ── KEIN CACHING für HTML/JS/CSS (immer aktuelle Version ausliefern) ──
 app.use((req, res, next) => {
@@ -98,6 +98,13 @@ async function setupDB() {
       CREATE TABLE IF NOT EXISTS settings (
         key VARCHAR(60) PRIMARY KEY,
         value TEXT,
+        updated_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS photos (
+        slot VARCHAR(60) PRIMARY KEY,
+        mimetype VARCHAR(40),
+        data TEXT,
         updated_at TIMESTAMP DEFAULT NOW()
       );
     `);
@@ -577,6 +584,52 @@ app.post('/api/admin/prices', authMiddleware, async (req, res) => {
     );
     res.json({ ok: true, prices: clean });
   } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
+});
+
+// ── FOTOS (in der Datenbank gespeichert, damit sie Deploys/Neustarts überstehen) ──
+// Öffentlich: welche Slots ein eigenes Foto haben (mit Zeitstempel für Cache-Busting)
+app.get('/api/photos', async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  try {
+    var r = await pool.query("SELECT slot, EXTRACT(EPOCH FROM updated_at)::bigint ts FROM photos");
+    var map = {}; r.rows.forEach(function (x) { map[x.slot] = x.ts; });
+    res.json(map);
+  } catch (e) { res.json({}); }
+});
+
+// Öffentlich: ein Foto ausliefern
+app.get('/api/photo/:slot', async (req, res) => {
+  try {
+    var r = await pool.query("SELECT mimetype, data FROM photos WHERE slot=$1", [String(req.params.slot).slice(0, 60)]);
+    if (!r.rows.length) return res.status(404).end();
+    var buf = Buffer.from(r.rows[0].data, 'base64');
+    res.set('Content-Type', r.rows[0].mimetype || 'image/jpeg');
+    res.set('Cache-Control', 'public, max-age=86400');
+    res.end(buf);
+  } catch (e) { res.status(404).end(); }
+});
+
+// Admin: Foto speichern (base64 im JSON-Body)
+app.post('/api/admin/photos', authMiddleware, async (req, res) => {
+  try {
+    var slot = String(req.body.slot || '').slice(0, 60);
+    var mimetype = String(req.body.mimetype || 'image/jpeg').slice(0, 40);
+    var data = String(req.body.data || '');
+    if (!slot || !data) return res.status(400).json({ ok: false, error: 'slot/data fehlt' });
+    if (!/^image\//.test(mimetype)) return res.status(400).json({ ok: false, error: 'kein Bild' });
+    if (data.length > 12 * 1024 * 1024) return res.status(413).json({ ok: false, error: 'Foto zu groß' });
+    await pool.query(
+      "INSERT INTO photos (slot,mimetype,data,updated_at) VALUES ($1,$2,$3,NOW()) ON CONFLICT (slot) DO UPDATE SET mimetype=$2, data=$3, updated_at=NOW()",
+      [slot, mimetype, data]
+    );
+    res.json({ ok: true });
+  } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
+});
+
+// Admin: Foto zurücksetzen (Standardbild wieder verwenden)
+app.delete('/api/admin/photos/:slot', authMiddleware, async (req, res) => {
+  try { await pool.query("DELETE FROM photos WHERE slot=$1", [String(req.params.slot).slice(0, 60)]); res.json({ ok: true }); }
+  catch (e) { res.status(500).json({ ok: false, error: e.message }); }
 });
 
 // ── BLOCKED DATES ──

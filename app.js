@@ -381,7 +381,9 @@ var einkData = [
   {cat:'super',name:'Masymas Teulada',img:'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&q=75',dist:'7 km · 8 Min.',stars:'★ 4.2',reviews:'340',cuisine:'Supermarkt · Vollsortiment · Teulada',tags:['Lokale Produkte','Großer Parkplatz'],desc:'Gut sortierter spanischer Supermarkt direkt in Teulada – stark bei lokalen Produkten der Costa Blanca und guter Weinauswahl. Der nächste Vollsortimenter zur Villa.',phone:'+34 965 74 00 00',addr:'Av. de la Generalitat · Teulada',hours:'Mo–Sa 9:00–21:00 · So geschlossen',maps:'https://www.google.com/maps/search/?api=1&query=Masymas+Teulada',special:'✦ Tipp: Gute Auswahl an lokalen Weinen und regionalen Produkten'},
 ];
 
-function buildCard(d, filterAttr) {
+// Eigenes Foto (aus dem Admin) verwenden, falls vorhanden – sonst Standardbild
+function photoUrl(slot, def){ var m=window.PHOTOS; return (slot && m && m[slot]) ? ('/api/photo/'+slot+'?v='+m[slot]) : def; }
+function buildCard(d, filterAttr, slot) {
   var tagsHtml = (d.tags||[]).map(function(t){return '<span class="tile-tag" data-orig="'+t+'">'+t+'</span>';}).join('');
   var priceHtml = '';
   if(d.price){var p=d.price;priceHtml='<div class="tile-price">';for(var i=0;i<3;i++)priceHtml+='<span'+(i>=p.length?' class="off"':'')+'>€</span>';priceHtml+='</div>';}
@@ -395,7 +397,7 @@ function buildCard(d, filterAttr) {
   card.className = 'tile-card tile-reveal';
   card.setAttribute(filterAttr, d.cat);
   card.innerHTML =
-    '<div class="tile-img-wrap"><img class="tile-img" src="'+d.img+'" alt="'+d.name+'" loading="lazy">'+badgeHtml+distHtml+'</div>'
+    '<div class="tile-img-wrap"><img class="tile-img" src="'+photoUrl(slot,d.img)+'"'+(slot?' data-photoslot="'+slot+'"':'')+' alt="'+d.name+'" loading="lazy">'+badgeHtml+distHtml+'</div>'
     +'<div class="tile-body">'
     +'<div class="tile-name">'+d.name+'</div>'
     +'<div class="tile-cuisine">'+d.cuisine+'</div>'
@@ -413,10 +415,10 @@ function buildCard(d, filterAttr) {
 
 function buildGrids() {
   var eg = document.getElementById('empf-grid');
-  restData.forEach(function(d){ var c=buildCard(d,'data-empf'); c.setAttribute('data-empf','restaurants'); eg.appendChild(c); });
-  aktData.forEach(function(d){ var c=buildCard(d,'data-empf'); c.setAttribute('data-empf','aktivitaeten'); eg.appendChild(c); });
-  sehData.forEach(function(d){ var c=buildCard(d,'data-empf'); c.setAttribute('data-empf','straende'); eg.appendChild(c); });
-  einkData.forEach(function(d){ var c=buildCard(d,'data-empf'); c.setAttribute('data-empf','einkaufen'); eg.appendChild(c); });
+  restData.forEach(function(d,i){ var c=buildCard(d,'data-empf','rest_'+i); c.setAttribute('data-empf','restaurants'); eg.appendChild(c); });
+  aktData.forEach(function(d,i){ var c=buildCard(d,'data-empf','akt_'+i); c.setAttribute('data-empf','aktivitaeten'); eg.appendChild(c); });
+  sehData.forEach(function(d,i){ var c=buildCard(d,'data-empf','seh_'+i); c.setAttribute('data-empf','straende'); eg.appendChild(c); });
+  einkData.forEach(function(d,i){ var c=buildCard(d,'data-empf','eink_'+i); c.setAttribute('data-empf','einkaufen'); eg.appendChild(c); });
 }
 
 // MEHRSPRACHIGE KACHEL-DATEN
@@ -690,6 +692,21 @@ function applyPrices(){
 }
 // Aktuelle Preise vom Server holen (überschreibt die Standardwerte)
 (function(){ try{ fetch('/api/prices',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){ if(d&&d.low&&d.mid&&d.high){ window.PRICES=d; if(typeof applyPrices==='function') applyPrices(); } }).catch(function(){}); }catch(e){} })();
+
+// Eigene Fotos aus dem Admin anwenden (Hintergründe + Empfehlungs-Kacheln)
+window.PHOTOS = window.PHOTOS || {};
+function applyPhotos(){
+  var m=window.PHOTOS||{};
+  document.querySelectorAll('[data-bgslot]').forEach(function(el){
+    var s=el.getAttribute('data-bgslot');
+    if(m[s]) el.style.backgroundImage="url('/api/photo/"+s+"?v="+m[s]+"')";
+  });
+  document.querySelectorAll('img[data-photoslot]').forEach(function(img){
+    var s=img.getAttribute('data-photoslot');
+    if(m[s]) img.src='/api/photo/'+s+'?v='+m[s];
+  });
+}
+(function(){ try{ fetch('/api/photos',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){ if(d&&typeof d==='object'){ window.PHOTOS=d; if(typeof applyPhotos==='function') applyPhotos(); } }).catch(function(){}); }catch(e){} })();
 
 function renderCalendar(){
   months_de = calMonths[currentLang] || calMonths['de'];
