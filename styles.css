@@ -11,8 +11,10 @@
   --tab-h:56px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{overflow-x:hidden}
-body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:hidden}
+/* overflow-x:clip schneidet horizontal ab, OHNE (anders als hidden) ein zweites
+   vertikales Scroll-Feld zu erzeugen -> verhindert den Doppel-Scrollbalken. */
+html{overflow-x:clip}
+body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:clip}
 h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
 img{display:block;max-width:100%}
 
