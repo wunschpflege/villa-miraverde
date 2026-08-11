@@ -382,7 +382,14 @@ var einkData = [
 ];
 
 // Eigenes Foto (aus dem Admin) verwenden, falls vorhanden – sonst Standardbild
-function photoUrl(slot, def){ var m=window.PHOTOS; return (slot && m && m[slot]) ? ('/api/photo/'+slot+'?v='+m[slot]) : def; }
+function photoUrl(slot, def){ var m=window.PHOTOS; return (slot && m && m[slot]) ? ('/api/photo/'+slot+'?v='+m[slot].ts) : def; }
+// Inline-Stil für den Bildausschnitt einer Kachel (object-position + Zoom)
+function photoFrameStyle(slot){
+  var f=(window.PHOTOS||{})[slot]; if(!f) return '';
+  var s='object-position:'+(f.x==null?50:f.x)+'% '+(f.y==null?50:f.y)+'%;';
+  if(f.zoom && f.zoom!==100){ s+='transform:scale('+(f.zoom/100)+');transform-origin:'+(f.x==null?50:f.x)+'% '+(f.y==null?50:f.y)+'%;'; }
+  return s;
+}
 function buildCard(d, filterAttr, slot) {
   var tagsHtml = (d.tags||[]).map(function(t){return '<span class="tile-tag" data-orig="'+t+'">'+t+'</span>';}).join('');
   var priceHtml = '';
@@ -397,7 +404,7 @@ function buildCard(d, filterAttr, slot) {
   card.className = 'tile-card tile-reveal';
   card.setAttribute(filterAttr, d.cat);
   card.innerHTML =
-    '<div class="tile-img-wrap"><img class="tile-img" src="'+photoUrl(slot,d.img)+'"'+(slot?' data-photoslot="'+slot+'"':'')+' alt="'+d.name+'" loading="lazy">'+badgeHtml+distHtml+'</div>'
+    '<div class="tile-img-wrap"><img class="tile-img" src="'+photoUrl(slot,d.img)+'"'+(slot?' data-photoslot="'+slot+'"':'')+(slot&&photoFrameStyle(slot)?' style="'+photoFrameStyle(slot)+'"':'')+' alt="'+d.name+'" loading="lazy">'+badgeHtml+distHtml+'</div>'
     +'<div class="tile-body">'
     +'<div class="tile-name">'+d.name+'</div>'
     +'<div class="tile-cuisine">'+d.cuisine+'</div>'
@@ -697,13 +704,21 @@ function applyPrices(){
 window.PHOTOS = window.PHOTOS || {};
 function applyPhotos(){
   var m=window.PHOTOS||{};
+  function fx(f){ return (f.x==null?50:f.x); } function fy(f){ return (f.y==null?50:f.y); }
   document.querySelectorAll('[data-bgslot]').forEach(function(el){
-    var s=el.getAttribute('data-bgslot');
-    if(m[s]) el.style.backgroundImage="url('/api/photo/"+s+"?v="+m[s]+"')";
+    var s=el.getAttribute('data-bgslot'); var f=m[s]; if(!f) return;
+    el.style.backgroundImage="url('/api/photo/"+s+"?v="+f.ts+"')";
+    el.style.backgroundPosition=fx(f)+'% '+fy(f)+'%';
+    el.style.backgroundSize='cover';
+    if(f.zoom && f.zoom!==100){ el.style.animation='none'; el.style.transformOrigin=fx(f)+'% '+fy(f)+'%'; el.style.transform='scale('+(f.zoom/100)+')'; }
+    else { el.style.transform=''; }
   });
   document.querySelectorAll('img[data-photoslot]').forEach(function(img){
-    var s=img.getAttribute('data-photoslot');
-    if(m[s]) img.src='/api/photo/'+s+'?v='+m[s];
+    var s=img.getAttribute('data-photoslot'); var f=m[s]; if(!f) return;
+    img.src='/api/photo/'+s+'?v='+f.ts;
+    img.style.objectPosition=fx(f)+'% '+fy(f)+'%';
+    if(f.zoom && f.zoom!==100){ img.style.transformOrigin=fx(f)+'% '+fy(f)+'%'; img.style.transform='scale('+(f.zoom/100)+')'; }
+    else { img.style.transform=''; }
   });
 }
 (function(){ try{ fetch('/api/photos',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){ if(d&&typeof d==='object'){ window.PHOTOS=d; if(typeof applyPhotos==='function') applyPhotos(); } }).catch(function(){}); }catch(e){} })();
