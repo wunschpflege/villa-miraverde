@@ -90,7 +90,17 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
 .photo-group-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--ink);margin:1.8rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid var(--b2)}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
 .photo-card{background:#fff;border:1px solid var(--b3);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
-.photo-thumb{width:100%;height:120px;background:#f0ece4;background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;color:#b3a892;font-size:.72rem;text-align:center;padding:.4rem}
+.photo-thumb{position:relative;overflow:hidden;width:100%;height:120px;background:#f0ece4;display:flex;align-items:center;justify-content:center;color:#b3a892;font-size:.72rem;text-align:center;padding:.4rem}
+.pt-inner{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+#crop-modal{display:none;position:fixed;inset:0;z-index:100003;background:rgba(15,12,8,.72);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:1.5rem}
+#crop-modal.open{display:flex}
+.crop-box{background:var(--b0);border-radius:12px;max-width:560px;width:100%;padding:1.8rem;position:relative;max-height:92vh;overflow-y:auto}
+.crop-box h3{font-size:1.6rem;font-family:'Cormorant Garamond',serif;font-weight:400}
+.crop-preview{width:100%;aspect-ratio:16/9;background:#e9e3d8;border-radius:8px;overflow:hidden;position:relative}
+.crop-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.crop-ctrl{margin-top:1rem;display:flex;flex-direction:column}
+.crop-ctrl label{font-size:.78rem;color:#444;margin-top:.8rem;font-weight:500}
+.crop-ctrl input[type=range]{width:100%;accent-color:var(--teal);margin-top:.25rem}
 .photo-meta{padding:.65rem .75rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
 .photo-label{font-size:.8rem;color:#333;font-weight:500;line-height:1.3}
 .photo-cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:#a89a83}
@@ -403,6 +413,28 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
       </div>
       <input type="file" id="photo-file" accept="image/*" style="display:none">
       <div id="fotos-container"><p style="color:#999">Lädt …</p></div>
+
+      <div id="crop-modal" onclick="closeCrop(event)">
+        <div class="crop-box" onclick="event.stopPropagation()">
+          <button class="modal-close" onclick="closeCrop()" aria-label="Schließen">×</button>
+          <h3>Bildausschnitt anpassen</h3>
+          <p style="color:#8a7f70;font-size:.82rem;margin:.3rem 0 1rem">Verschiebe das Bild und zoome, bis der gewünschte Ausschnitt zu sehen ist. Das Originalfoto bleibt erhalten.</p>
+          <div class="crop-preview"><img id="crop-img" alt=""></div>
+          <div class="crop-ctrl">
+            <label>Horizontal <span style="color:#999;font-weight:400">(links ↔ rechts)</span></label>
+            <input type="range" id="crop-x" min="0" max="100" value="50" oninput="updateCropPreview()">
+            <label>Vertikal <span style="color:#999;font-weight:400">(oben ↕ unten)</span></label>
+            <input type="range" id="crop-y" min="0" max="100" value="50" oninput="updateCropPreview()">
+            <label>Zoom <span id="crop-zoom-val" style="color:#2a6b6b;font-weight:600">100 %</span></label>
+            <input type="range" id="crop-zoom" min="100" max="300" value="100" oninput="updateCropPreview()">
+          </div>
+          <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1.2rem;flex-wrap:wrap">
+            <button class="btn btn-ghost" onclick="resetCrop()">Zentrieren</button>
+            <button class="btn btn-ghost" onclick="closeCrop()">Abbrechen</button>
+            <button class="btn btn-teal" id="crop-save" onclick="saveCrop()">Speichern</button>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -597,17 +629,25 @@ async function loadPhotos(){
   catch(e){ photoMap={}; }
   renderPhotos();
 }
+function photoFrameCss(f){
+  if(!f) return '';
+  var x=(f.x==null?50:f.x), y=(f.y==null?50:f.y);
+  var s='background-position:'+x+'% '+y+'%;';
+  if(f.zoom && f.zoom!==100) s+='transform:scale('+(f.zoom/100)+');transform-origin:'+x+'% '+y+'%;';
+  return s;
+}
 function photoCardHtml(slot,label,cat){
   var has=photoMap[slot];
   var thumb = has
-    ? '<div class="photo-thumb" style="background-image:url(\'/api/photo/'+slot+'?v='+has+'\')"></div>'
-    : '<div class="photo-thumb">Noch kein eigenes Foto<br>(Standardbild aktiv)</div>';
+    ? '<div class="photo-thumb"><div class="pt-inner" style="background-image:url(\'/api/photo/'+slot+'?v='+has.ts+'\');'+photoFrameCss(has)+'"></div></div>'
+    : '<div class="photo-thumb photo-thumb-empty">Noch kein eigenes Foto<br>(Standardbild aktiv)</div>';
   return '<div class="photo-card" id="pc-'+slot+'">'+thumb+'<div class="photo-meta">'
     + (cat?'<div class="photo-cat">'+photoEsc(cat)+'</div>':'')
     + '<div class="photo-label">'+photoEsc(label)+'</div>'
     + (has?'<span class="photo-badge">✓ eigenes Foto</span>':'')
     + '<div class="photo-actions">'
     + '<button class="btn btn-teal" onclick="triggerUpload(\''+slot+'\')">'+(has?'Ersetzen':'Hochladen')+'</button>'
+    + (has?'<button class="btn btn-gold" onclick="openCrop(\''+slot+'\')">✂ Ausschnitt</button>':'')
     + (has?'<button class="btn btn-ghost" onclick="resetPhoto(\''+slot+'\')">Zurücksetzen</button>':'')
     + '</div></div></div>';
 }
@@ -662,6 +702,48 @@ async function resetPhoto(slot){
     if(res.status===401){ return forceLogout(); }
     await loadPhotos(); showToast('Zurückgesetzt – Standardbild aktiv');
   }catch(e){ showToast('Fehler beim Zurücksetzen','error'); }
+}
+// ── Bildausschnitt-Editor ──
+var cropSlot=null, cropX=50, cropY=50, cropZoom=100;
+function openCrop(slot){
+  var f=photoMap[slot]; if(!f) return;
+  cropSlot=slot;
+  cropX=f.x==null?50:f.x; cropY=f.y==null?50:f.y; cropZoom=f.zoom==null?100:f.zoom;
+  document.getElementById('crop-x').value=cropX;
+  document.getElementById('crop-y').value=cropY;
+  document.getElementById('crop-zoom').value=cropZoom;
+  document.getElementById('crop-img').src='/api/photo/'+slot+'?v='+(f.ts||'');
+  updateCropPreview();
+  document.getElementById('crop-modal').classList.add('open');
+}
+function updateCropPreview(){
+  cropX=+document.getElementById('crop-x').value;
+  cropY=+document.getElementById('crop-y').value;
+  cropZoom=+document.getElementById('crop-zoom').value;
+  var img=document.getElementById('crop-img');
+  img.style.objectPosition=cropX+'% '+cropY+'%';
+  img.style.transform='scale('+(cropZoom/100)+')';
+  img.style.transformOrigin=cropX+'% '+cropY+'%';
+  document.getElementById('crop-zoom-val').textContent=cropZoom+' %';
+}
+function resetCrop(){
+  document.getElementById('crop-x').value=50;
+  document.getElementById('crop-y').value=50;
+  document.getElementById('crop-zoom').value=100;
+  updateCropPreview();
+}
+function closeCrop(e){ var m=document.getElementById('crop-modal'); if(m&&(!e||e.target===m||!e.target)) m.classList.remove('open'); }
+async function saveCrop(){
+  if(!cropSlot) return;
+  var btn=document.getElementById('crop-save'); if(btn) btn.disabled=true;
+  try{
+    var res=await fetch('/api/admin/photo-frame',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({slot:cropSlot,x:cropX,y:cropY,zoom:cropZoom})});
+    if(res.status===401){ return forceLogout(); }
+    var d=await res.json();
+    if(d.ok){ closeCrop(); await loadPhotos(); showToast('✅ Ausschnitt gespeichert','success'); }
+    else { showToast('Fehler: '+(d.error||'Speichern fehlgeschlagen'),'error'); }
+  }catch(e){ showToast('Fehler beim Speichern','error'); }
+  if(btn) btn.disabled=false;
 }
 
 // ── PREISE ──
