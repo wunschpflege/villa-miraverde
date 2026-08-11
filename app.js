@@ -387,6 +387,7 @@ function photoUrl(slot, def){ var m=window.PHOTOS; return (slot && m && m[slot])
 function photoFrameStyle(slot){
   var f=(window.PHOTOS||{})[slot]; if(!f) return '';
   var s='object-position:'+(f.x==null?50:f.x)+'% '+(f.y==null?50:f.y)+'%;';
+  if(f.fit==='contain') s+='object-fit:contain;';
   if(f.zoom && f.zoom!==100){ s+='transform:scale('+(f.zoom/100)+');transform-origin:'+(f.x==null?50:f.x)+'% '+(f.y==null?50:f.y)+'%;'; }
   return s;
 }
@@ -709,7 +710,8 @@ function applyPhotos(){
     var s=el.getAttribute('data-bgslot'); var f=m[s]; if(!f) return;
     el.style.backgroundImage="url('/api/photo/"+s+"?v="+f.ts+"')";
     el.style.backgroundPosition=fx(f)+'% '+fy(f)+'%';
-    el.style.backgroundSize='cover';
+    el.style.backgroundSize=(f.fit==='contain'?'contain':'cover');
+    el.style.backgroundRepeat='no-repeat';
     if(f.zoom && f.zoom!==100){ el.style.animation='none'; el.style.transformOrigin=fx(f)+'% '+fy(f)+'%'; el.style.transform='scale('+(f.zoom/100)+')'; }
     else { el.style.transform=''; }
   });
@@ -717,6 +719,7 @@ function applyPhotos(){
     var s=img.getAttribute('data-photoslot'); var f=m[s]; if(!f) return;
     img.src='/api/photo/'+s+'?v='+f.ts;
     img.style.objectPosition=fx(f)+'% '+fy(f)+'%';
+    img.style.objectFit=(f.fit==='contain'?'contain':'cover');
     if(f.zoom && f.zoom!==100){ img.style.transformOrigin=fx(f)+'% '+fy(f)+'%'; img.style.transform='scale('+(f.zoom/100)+')'; }
     else { img.style.transform=''; }
   });

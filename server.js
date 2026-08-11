@@ -114,6 +114,7 @@ async function setupDB() {
     await pool.query("ALTER TABLE photos ADD COLUMN IF NOT EXISTS pos_x INT DEFAULT 50");
     await pool.query("ALTER TABLE photos ADD COLUMN IF NOT EXISTS pos_y INT DEFAULT 50");
     await pool.query("ALTER TABLE photos ADD COLUMN IF NOT EXISTS zoom INT DEFAULT 100");
+    await pool.query("ALTER TABLE photos ADD COLUMN IF NOT EXISTS fit VARCHAR(10) DEFAULT 'cover'");
     // Empfohlene Startpreise einmalig hinterlegen (spätere eigene Änderungen bleiben erhalten)
     await pool.query(
       "INSERT INTO settings (key, value) VALUES ('prices', $1) ON CONFLICT (key) DO NOTHING",
@@ -595,9 +596,9 @@ app.post('/api/admin/prices', authMiddleware, async (req, res) => {
 app.get('/api/photos', async (req, res) => {
   res.set('Cache-Control', 'no-store');
   try {
-    var r = await pool.query("SELECT slot, EXTRACT(EPOCH FROM updated_at)::bigint ts, pos_x, pos_y, zoom FROM photos");
+    var r = await pool.query("SELECT slot, EXTRACT(EPOCH FROM updated_at)::bigint ts, pos_x, pos_y, zoom, fit FROM photos");
     var map = {}; r.rows.forEach(function (x) {
-      map[x.slot] = { ts: x.ts, x: x.pos_x == null ? 50 : x.pos_x, y: x.pos_y == null ? 50 : x.pos_y, zoom: x.zoom == null ? 100 : x.zoom };
+      map[x.slot] = { ts: x.ts, x: x.pos_x == null ? 50 : x.pos_x, y: x.pos_y == null ? 50 : x.pos_y, zoom: x.zoom == null ? 100 : x.zoom, fit: x.fit === 'contain' ? 'contain' : 'cover' };
     });
     res.json(map);
   } catch (e) { res.json({}); }
@@ -609,10 +610,11 @@ app.post('/api/admin/photo-frame', authMiddleware, async (req, res) => {
     var slot = String(req.body.slot || '').slice(0, 60);
     var cl = function (v, mn, mx, d) { v = Math.round(Number(v)); return isFinite(v) ? Math.min(mx, Math.max(mn, v)) : d; };
     var x = cl(req.body.x, 0, 100, 50), y = cl(req.body.y, 0, 100, 50), zoom = cl(req.body.zoom, 100, 300, 100);
+    var fit = req.body.fit === 'contain' ? 'contain' : 'cover';
     if (!slot) return res.status(400).json({ ok: false, error: 'slot fehlt' });
-    var r = await pool.query("UPDATE photos SET pos_x=$2, pos_y=$3, zoom=$4 WHERE slot=$1", [slot, x, y, zoom]);
+    var r = await pool.query("UPDATE photos SET pos_x=$2, pos_y=$3, zoom=$4, fit=$5 WHERE slot=$1", [slot, x, y, zoom, fit]);
     if (r.rowCount === 0) return res.status(404).json({ ok: false, error: 'Kein eigenes Foto für diesen Bereich' });
-    res.json({ ok: true, x: x, y: y, zoom: zoom });
+    res.json({ ok: true, x: x, y: y, zoom: zoom, fit: fit });
   } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
 });
 
