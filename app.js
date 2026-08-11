@@ -888,8 +888,8 @@ function closeModal(e){if(!e||e.target===document.getElementById('modal')||!e.ta
 function closeInfoModal(e){var m=document.getElementById('info-modal');if(m&&(!e||e.target===m||!e.target))m.classList.remove('open');}
 // Einmal pro Sitzung nach dem Laden anzeigen (Beispielbilder / Bauphase)
 function maybeShowInfoModal(){
-  try{ if(sessionStorage.getItem('infoShown')) return; sessionStorage.setItem('infoShown','1'); }catch(err){}
-  var m=document.getElementById('info-modal'); if(m) setTimeout(function(){ m.classList.add('open'); }, 500);
+  if(window.__infoShown) return; window.__infoShown=true; // nur einmal pro Seitenaufruf öffnen
+  var m=document.getElementById('info-modal'); if(m) setTimeout(function(){ m.classList.add('open'); }, 2200);
 }
 
 // DSGVO: Google-Karte erst nach Zustimmung laden
@@ -1514,8 +1514,8 @@ window.addEventListener('DOMContentLoaded', function(){
     function reveal(){
       document.documentElement.classList.remove('preloading'); // Scrollbalken wieder freigeben
       document.body.classList.add('loaded');
-      if(pre) setTimeout(function(){ pre.style.display = 'none'; if(typeof maybeShowInfoModal==='function') maybeShowInfoModal(); }, 2900);
-      else if(typeof maybeShowInfoModal==='function') maybeShowInfoModal();
+      if(pre) setTimeout(function(){ pre.style.display = 'none'; }, 2900);
+      if(typeof maybeShowInfoModal==='function') maybeShowInfoModal(); // Hinweis-Pop-up (öffnet nach kurzer Verzögerung)
     }
     if(reduce){ document.documentElement.classList.remove('preloading'); if(pre) pre.style.display='none'; document.body.classList.add('loaded'); if(typeof maybeShowInfoModal==='function') maybeShowInfoModal(); return; }
     if(document.readyState === 'complete') setTimeout(reveal, 2700);
