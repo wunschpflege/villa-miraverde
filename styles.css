@@ -14,6 +14,7 @@
 /* overflow-x:clip schneidet horizontal ab, OHNE (anders als hidden) ein zweites
    vertikales Scroll-Feld zu erzeugen -> verhindert den Doppel-Scrollbalken. */
 html{overflow-x:clip}
+html.preloading{overflow:hidden} /* Startbildschirm läuft -> kein Scrollbalken sichtbar */
 body{font-family:'DM Sans',sans-serif;background:var(--b0);color:var(--ink);overflow-x:clip}
 h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
 img{display:block;max-width:100%}
@@ -463,6 +464,8 @@ img{display:block;max-width:100%}
 ═══════════════════════════════════════ */
 #modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.65);align-items:center;justify-content:center;padding:2rem}
 #modal.open{display:flex}
+#info-modal{display:none;position:fixed;inset:0;z-index:100002;background:rgba(15,12,8,.72);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:2rem}
+#info-modal.open{display:flex}
 .modal-box{background:var(--b0);border-radius:10px;max-width:560px;width:100%;padding:2.6rem;text-align:center;position:relative;animation:risein .28s ease;max-height:82vh;overflow-y:auto}
 .modal-box h3{font-size:1.8rem;color:var(--ink);margin-bottom:.45rem}
 .modal-box p{color:var(--ink3);font-size:.87rem;line-height:1.7;margin-bottom:1.4rem}
