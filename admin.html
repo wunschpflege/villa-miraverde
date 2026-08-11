@@ -420,6 +420,10 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
           <h3>Bildausschnitt anpassen</h3>
           <p style="color:#8a7f70;font-size:.82rem;margin:.3rem 0 1rem">Verschiebe das Bild und zoome, bis der gewünschte Ausschnitt zu sehen ist. Das Originalfoto bleibt erhalten.</p>
           <div class="crop-preview"><img id="crop-img" alt=""></div>
+          <label style="display:flex;align-items:center;gap:.55rem;margin-top:.9rem;font-size:.85rem;color:#333;cursor:pointer">
+            <input type="checkbox" id="crop-contain" onchange="updateCropPreview()" style="width:17px;height:17px;cursor:pointer">
+            Ganzes Bild anzeigen (nicht zuschneiden) – z. B. für Logos
+          </label>
           <div class="crop-ctrl">
             <label>Horizontal <span style="color:#999;font-weight:400">(links ↔ rechts)</span></label>
             <input type="range" id="crop-x" min="0" max="100" value="50" oninput="updateCropPreview()">
@@ -632,7 +636,7 @@ async function loadPhotos(){
 function photoFrameCss(f){
   if(!f) return '';
   var x=(f.x==null?50:f.x), y=(f.y==null?50:f.y);
-  var s='background-position:'+x+'% '+y+'%;';
+  var s='background-position:'+x+'% '+y+'%;background-size:'+(f.fit==='contain'?'contain':'cover')+';';
   if(f.zoom && f.zoom!==100) s+='transform:scale('+(f.zoom/100)+');transform-origin:'+x+'% '+y+'%;';
   return s;
 }
@@ -712,6 +716,7 @@ function openCrop(slot){
   document.getElementById('crop-x').value=cropX;
   document.getElementById('crop-y').value=cropY;
   document.getElementById('crop-zoom').value=cropZoom;
+  document.getElementById('crop-contain').checked=(f.fit==='contain');
   document.getElementById('crop-img').src='/api/photo/'+slot+'?v='+(f.ts||'');
   updateCropPreview();
   document.getElementById('crop-modal').classList.add('open');
@@ -720,7 +725,9 @@ function updateCropPreview(){
   cropX=+document.getElementById('crop-x').value;
   cropY=+document.getElementById('crop-y').value;
   cropZoom=+document.getElementById('crop-zoom').value;
+  var contain=document.getElementById('crop-contain').checked;
   var img=document.getElementById('crop-img');
+  img.style.objectFit=contain?'contain':'cover';
   img.style.objectPosition=cropX+'% '+cropY+'%';
   img.style.transform='scale('+(cropZoom/100)+')';
   img.style.transformOrigin=cropX+'% '+cropY+'%';
@@ -730,6 +737,7 @@ function resetCrop(){
   document.getElementById('crop-x').value=50;
   document.getElementById('crop-y').value=50;
   document.getElementById('crop-zoom').value=100;
+  document.getElementById('crop-contain').checked=false;
   updateCropPreview();
 }
 function closeCrop(e){ var m=document.getElementById('crop-modal'); if(m&&(!e||e.target===m||!e.target)) m.classList.remove('open'); }
@@ -737,7 +745,8 @@ async function saveCrop(){
   if(!cropSlot) return;
   var btn=document.getElementById('crop-save'); if(btn) btn.disabled=true;
   try{
-    var res=await fetch('/api/admin/photo-frame',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({slot:cropSlot,x:cropX,y:cropY,zoom:cropZoom})});
+    var fit=document.getElementById('crop-contain').checked?'contain':'cover';
+    var res=await fetch('/api/admin/photo-frame',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({slot:cropSlot,x:cropX,y:cropY,zoom:cropZoom,fit:fit})});
     if(res.status===401){ return forceLogout(); }
     var d=await res.json();
     if(d.ok){ closeCrop(); await loadPhotos(); showToast('✅ Ausschnitt gespeichert','success'); }
