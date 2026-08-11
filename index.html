@@ -70,7 +70,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css?v=14">
+<link rel="stylesheet" href="/styles.css?v=15">
 </head>
 <body>
 
@@ -830,19 +830,30 @@
 </div>
 
 <div id="info-modal" onclick="closeInfoModal(event)">
-  <div class="modal-box">
+  <div class="modal-box info-box">
     <button class="modal-close" onclick="closeInfoModal()" aria-label="Schließen">×</button>
     <div class="modal-ic">📸</div>
     <h3 data-t="info_title">Hinweis zu den Fotos</h3>
-    <p data-t="info_body">Die hier gezeigten Bilder sind aktuell noch Beispielbilder – unsere Villa befindet sich derzeit in der Bauphase. Eigene, echte Fotos folgen schnellstmöglich. Sie haben jetzt schon Fragen? Melden Sie sich jederzeit gern bei uns – wir freuen uns auf Sie. Herzlich, Sophie &amp; Lisa</p>
+    <p data-t="info_body">Die hier gezeigten Bilder sind aktuell noch Beispielbilder – unsere Villa befindet sich derzeit in der Bauphase. Eigene, echte Fotos folgen schnellstmöglich. Sie haben jetzt schon Fragen? Melden Sie sich jederzeit gern bei uns – wir freuen uns auf Sie.</p>
+    <div class="info-sign">Sophie &amp; Lisa</div>
     <div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
       <button class="btn-solid" onclick="closeInfoModal()" data-t="info_ok">Verstanden</button>
       <button onclick="closeInfoModal();showTab('lage')" data-t="info_contact" style="background:transparent;border:1px solid var(--teal);color:var(--teal);padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.02em;cursor:pointer">Kontakt aufnehmen</button>
+    </div>
+    <div class="info-langs">
+      <span class="il-globe" aria-hidden="true">🌐</span>
+      <button class="info-lang" onclick="setLang('de')">🇩🇪 DE</button>
+      <button class="info-lang" onclick="setLang('en')">🇬🇧 EN</button>
+      <button class="info-lang" onclick="setLang('es')">🇪🇸 ES</button>
+      <button class="info-lang" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="info-lang" onclick="setLang('nl')">🇳🇱 NL</button>
+      <button class="info-lang" onclick="setLang('pl')">🇵🇱 PL</button>
+      <button class="info-lang" onclick="setLang('ru')">🇷🇺 RU</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/app.js?v=14"></script>
+<script src="/app.js?v=15"></script>
 </body>
 </html>
