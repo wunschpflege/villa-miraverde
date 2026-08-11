@@ -1019,9 +1019,12 @@ function closeLb(){document.getElementById('lb').classList.remove('open');}
   var scrollHint = document.querySelector('.hero-scroll-hint');
   var heroWrap   = document.querySelector('.hero-wrap');
   if(!scrollHint || !heroWrap) return;
+  var wH = heroWrap.offsetHeight;
+  window.addEventListener('resize', function(){ wH = heroWrap.offsetHeight; }, {passive:true});
+  var shRaf = false;
   window.addEventListener('scroll', function(){
-    var s = window.scrollY, wH = heroWrap.offsetHeight;
-    if(s > 1) scrollHint.style.opacity = Math.max(0, 1 - s/(wH*0.15));
+    if(shRaf) return; shRaf = true;
+    requestAnimationFrame(function(){ shRaf = false; var s = window.scrollY; if(s > 1) scrollHint.style.opacity = Math.max(0, 1 - s/(wH*0.15)); });
   }, {passive:true});
 })();
 
@@ -1118,8 +1121,9 @@ function init3D(){
   var cv=document.getElementById('c3d');
   if(!cv||!window.THREE)return;
   var rend=new THREE.WebGLRenderer({canvas:cv,antialias:true});
-  rend.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  rend.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
   rend.shadowMap.enabled=true;rend.shadowMap.type=THREE.PCFSoftShadowMap;
+  rend.shadowMap.autoUpdate=false;rend.shadowMap.needsUpdate=true; // Szene statisch -> Schatten nur bei Bedarf neu berechnen (spart viel pro Frame)
   if('outputEncoding' in rend)rend.outputEncoding=THREE.sRGBEncoding;
   if('ACESFilmicToneMapping' in THREE){rend.toneMapping=THREE.ACESFilmicToneMapping;rend.toneMappingExposure=.82;}
   var sc=new THREE.Scene();
@@ -1315,6 +1319,7 @@ function init3D(){
     var show={0:['env','eg','egc','og','ogc','roof'],1:['env','eg'],2:['env','eg','egc','og'],3:['env','eg','egc','og','ogc','roof']}[f];
     Object.keys(g).forEach(function(k){g[k].forEach(function(m){m.visible=false;});});
     show.forEach(function(k){g[k].forEach(function(m){m.visible=true;});});
+    rend.shadowMap.needsUpdate=true; // Etagen-Sichtbarkeit geändert -> Schatten einmal aktualisieren
   };
   setFloor(0,document.querySelector('.vbtn.on'));
   cv.addEventListener('mousedown',function(e){isDrag=true;mx=e.clientX;my=e.clientY;bump();});
@@ -1324,7 +1329,14 @@ function init3D(){
   cv.addEventListener('touchstart',function(e){if(e.touches.length===1){td=true;tx=e.touches[0].clientX;ty=e.touches[0].clientY;bump();}});
   window.addEventListener('touchend',function(){td=false;});
   cv.addEventListener('touchmove',function(e){if(!td||e.touches.length!==1)return;tTheta-=(e.touches[0].clientX-tx)*.009;tPhi=Math.max(.14,Math.min(1.45,tPhi+(e.touches[0].clientY-ty)*.007));tx=e.touches[0].clientX;ty=e.touches[0].clientY;bump();},{passive:true});
+  function viewerVisible(){
+    if(document.hidden) return false;          // anderer Tab / minimiert
+    if(cv.offsetParent===null) return false;   // Seite ausgeblendet (SPA display:none)
+    var r=cv.getBoundingClientRect();
+    return r.width>0 && r.bottom>0 && r.top<(window.innerHeight||document.documentElement.clientHeight);
+  }
   (function loop(){requestAnimationFrame(loop);
+    if(!viewerVisible()) return;   // nicht sichtbar -> gar nicht rendern (kein Hintergrund-Ruckeln)
     if(!reduce&&!isDrag&&!td&&nowMs()-last>3500){tTheta-=.0016;}   // sanftes Kreisen bei Inaktivität
     theta+=(tTheta-theta)*.09;phi+=(tPhi-phi)*.09;radius+=(tRad-radius)*.07;lx+=(tLx-lx)*.08;ly+=(tLy-ly)*.08;
     var sp=Math.sin(phi),cp=Math.cos(phi);
