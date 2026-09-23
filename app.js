@@ -45,21 +45,7 @@ function showTab(id) {
   if (window.__updProgress) setTimeout(function(){ requestAnimationFrame(window.__updProgress); }, 60);
   // Statistik: Tab-Aufruf zählen
   if (window.__track) window.__track(id);
-  // Transparente Kopfleiste nur auf der Startseite (ganz oben)
-  window.__onStart = (id === 'start');
-  if (window.__updNavClear) window.__updNavClear();
 }
-
-// Kopfleiste über dem Hero transparent halten, solange man auf der Startseite ganz oben ist
-(function(){
-  function upd(){ document.body.classList.toggle('nav-clear', !!window.__onStart && (window.scrollY||window.pageYOffset||0) < 60); }
-  window.__updNavClear = upd;
-  window.__onStart = true; // Start ist beim Laden aktiv
-  var raf=false;
-  window.addEventListener('scroll', function(){ if(raf) return; raf=true; requestAnimationFrame(function(){ raf=false; upd(); }); }, {passive:true});
-  window.addEventListener('resize', upd, {passive:true});
-  if(document.readyState!=='loading') upd(); else document.addEventListener('DOMContentLoaded', upd);
-})();
 
 function toggleMobTabbar() {
   // On mobile, hamburger toggles additional nav (aktivitaeten/einkaufen/ausstattung)
