@@ -109,6 +109,19 @@ img{display:block;max-width:100%}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500}
 .tab .tab-icon{width:15px;height:15px;flex-shrink:0}
 
+/* ── Transparente Kopfleiste über dem Hero (nur Desktop, Startseite ganz oben) ── */
+#topnav,#tabbar{transition:background .35s ease,border-color .35s ease}
+@media(min-width:768px){
+  #page-start .hero-wrap{margin-top:calc(-1 * (var(--nav-h) + var(--tab-h)))}
+  body.nav-clear #topnav{background:linear-gradient(to bottom,rgba(18,14,9,.6),rgba(18,14,9,.4));backdrop-filter:none;border-bottom-color:transparent}
+  body.nav-clear #tabbar{background:linear-gradient(to bottom,rgba(18,14,9,.4),rgba(18,14,9,.12));border-bottom-color:transparent}
+  body.nav-clear .tab{color:rgba(255,255,255,.82);text-shadow:0 1px 3px rgba(0,0,0,.55)}
+  body.nav-clear .tab:hover{color:#fff;background:rgba(255,255,255,.10)}
+  body.nav-clear .tab.active{color:#fff;border-bottom-color:var(--gold)}
+  body.nav-clear .tab::after{background:var(--gold)}
+  body.nav-clear .nav-live{color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.55)}
+}
+
 /* ═══════════════════════════════════════
    CONTENT AREA
 ═══════════════════════════════════════ */
