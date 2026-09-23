@@ -25,7 +25,8 @@ img{display:block;max-width:100%}
 #topnav{
   position:fixed;top:0;left:0;right:0;z-index:9000;
   height:var(--nav-h);
-  background:rgba(22,17,10,.96);backdrop-filter:blur(16px);
+  background:rgba(18,13,8,.5);backdrop-filter:blur(18px) saturate(1.2);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 2.5rem;
   border-bottom:1px solid rgba(255,255,255,.07);
@@ -38,7 +39,7 @@ img{display:block;max-width:100%}
 .nav-right{display:flex;align-items:center;gap:1rem}
 .nav-phone{display:none;font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.06em}
 .nav-phone strong{color:var(--gold)}
-.nav-live{display:none;align-items:center;gap:.55rem;font-size:.72rem;color:var(--ink3);letter-spacing:.04em;white-space:nowrap;margin-left:auto;padding:0 2rem 0 1.5rem;align-self:center;flex-shrink:0}
+.nav-live{display:none;align-items:center;gap:.55rem;font-size:.72rem;color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.5);letter-spacing:.04em;white-space:nowrap;margin-left:auto;padding:0 2rem 0 1.5rem;align-self:center;flex-shrink:0}
 
 /* Lang switcher */
 .lang-switcher{position:relative}
@@ -75,8 +76,8 @@ img{display:block;max-width:100%}
 ═══════════════════════════════════════ */
 #tabbar{
   position:fixed;top:var(--nav-h);left:0;right:0;z-index:8999;
-  height:var(--tab-h);background:var(--b0);
-  border-bottom:1.5px solid var(--b3);
+  height:var(--tab-h);background:rgba(18,13,8,.4);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  border-bottom:1px solid rgba(255,255,255,.08);
   display:none;align-items:stretch;overflow-x:auto;
   scrollbar-width:none;
 }
@@ -95,7 +96,7 @@ img{display:block;max-width:100%}
   display:flex;align-items:center;gap:.5rem;
   padding:0 1.4rem;
   font-size:.74rem;font-weight:400;letter-spacing:.06em;
-  color:var(--ink3);cursor:pointer;white-space:nowrap;
+  color:rgba(255,255,255,.82);cursor:pointer;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.5);
   border-bottom:2.5px solid transparent;
   transition:color .2s,border-color .2s,background .2s;
   flex-shrink:0;
@@ -103,23 +104,16 @@ img{display:block;max-width:100%}
   font-family:'DM Sans',sans-serif;
 }
 .tab{position:relative}
-.tab::after{content:'';position:absolute;left:50%;right:50%;bottom:-2.5px;height:2.5px;background:var(--teal);border-radius:2px;transition:left .3s cubic-bezier(.22,1,.36,1),right .3s cubic-bezier(.22,1,.36,1)}
-.tab:hover{color:var(--teal);background:var(--teal3)}
+.tab::after{content:'';position:absolute;left:50%;right:50%;bottom:-2.5px;height:2.5px;background:var(--gold);border-radius:2px;transition:left .3s cubic-bezier(.22,1,.36,1),right .3s cubic-bezier(.22,1,.36,1)}
+.tab:hover{color:#fff;background:rgba(255,255,255,.10)}
 .tab:hover:not(.active)::after{left:22%;right:22%}
-.tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500}
+.tab.active{color:#fff;border-bottom-color:var(--gold);font-weight:500}
 .tab .tab-icon{width:15px;height:15px;flex-shrink:0}
 
-/* ── Transparente Kopfleiste über dem Hero (nur Desktop, Startseite ganz oben) ── */
-#topnav,#tabbar{transition:background .35s ease,border-color .35s ease}
+/* ── Dauerhafte Glas-Kopfleiste; auf der Startseite (Desktop) reicht der Hero dahinter ── */
 @media(min-width:768px){
   #page-start .hero-wrap{margin-top:calc(-1 * (var(--nav-h) + var(--tab-h)))}
-  body.nav-clear #topnav{background:linear-gradient(to bottom,rgba(18,14,9,.6),rgba(18,14,9,.4));backdrop-filter:none;border-bottom-color:transparent}
-  body.nav-clear #tabbar{background:linear-gradient(to bottom,rgba(18,14,9,.4),rgba(18,14,9,.12));border-bottom-color:transparent}
-  body.nav-clear .tab{color:rgba(255,255,255,.82);text-shadow:0 1px 3px rgba(0,0,0,.55)}
-  body.nav-clear .tab:hover{color:#fff;background:rgba(255,255,255,.10)}
-  body.nav-clear .tab.active{color:#fff;border-bottom-color:var(--gold)}
-  body.nav-clear .tab::after{background:var(--gold)}
-  body.nav-clear .nav-live{color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.55)}
+  #page-start .hero-eyebrow{top:calc(var(--nav-h) + var(--tab-h) + 1.6rem)}
 }
 
 /* ═══════════════════════════════════════
@@ -170,11 +164,11 @@ img{display:block;max-width:100%}
   animation:heroKen 34s ease-in-out infinite alternate;
 }
 @keyframes heroKen{from{transform:scale(1.03)}to{transform:scale(1.14)}}
-.hero-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,10,8,.55) 0%,rgba(6,10,8,.04) 20%,rgba(6,10,8,.10) 55%,rgba(6,10,8,.93) 100%)}
+.hero-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,10,8,.62) 0%,rgba(6,10,8,.32) 15%,rgba(6,10,8,.1) 40%,rgba(6,10,8,.12) 60%,rgba(6,10,8,.93) 100%)}
 .hero-content{position:absolute;bottom:0;left:0;right:0;padding:0 2rem 5.5rem;text-align:center;z-index:3;opacity:0;will-change:transform,opacity;animation:risein 1.6s cubic-bezier(.22,1,.36,1) 1.7s both}
 @keyframes risein{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 /* Eyebrow — top-center, always visible */
-.hero-eyebrow{position:absolute;top:2.8rem;left:0;right:0;text-align:center;z-index:3;display:flex;align-items:center;justify-content:center;gap:.85rem;font-size:.63rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:0;animation:risein 1.3s cubic-bezier(.22,1,.36,1) .55s both}
+.hero-eyebrow{position:absolute;top:2.8rem;left:0;right:0;text-align:center;z-index:3;display:flex;align-items:center;justify-content:center;gap:.85rem;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#e7c583;text-shadow:0 2px 14px rgba(0,0,0,.75),0 1px 3px rgba(0,0,0,.9);opacity:0;animation:risein 1.3s cubic-bezier(.22,1,.36,1) .55s both}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:30px;height:1px;background:var(--gold);opacity:.65}
 /* Title block — center, scroll-revealed */
 .hero-title-block{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;z-index:3;opacity:0;will-change:transform,opacity;padding:0 2rem;animation:heroTitleIn 2.1s cubic-bezier(.16,.84,.26,1) .85s both}
