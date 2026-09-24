@@ -690,7 +690,8 @@ async function doPhotoUpload(slot,file){
   var thumb=card?card.querySelector('.photo-thumb'):null;
   if(thumb){ thumb.style.backgroundImage=''; thumb.textContent='Wird hochgeladen …'; }
   try{
-    var dataUrl=await resizePhoto(file,1600,0.82);
+    var big = /^bg_/.test(slot); // Hintergrundbilder größer/schärfer speichern als kleine Kacheln
+    var dataUrl=await resizePhoto(file, big?2560:1600, big?0.9:0.85);
     var base64=dataUrl.split(',')[1];
     var res=await fetch('/api/admin/photos',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({slot:slot,mimetype:'image/jpeg',data:base64})});
     if(res.status===401){ return forceLogout(); }
