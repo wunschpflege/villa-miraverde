@@ -159,7 +159,8 @@ img{display:block;max-width:100%}
 .hero-wrap{position:relative;height:100vh;min-height:640px;overflow:hidden}
 .hero-bg{
   position:absolute;inset:-12%;
-  background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=85') center 52%/cover no-repeat;
+  background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2560&q=90') center 52%/cover no-repeat;
+  filter:contrast(1.05) saturate(1.07);
   will-change:transform;transform-origin:center 52%;transform:scale(1.03);
   animation:heroKen 34s ease-in-out infinite alternate;
 }
@@ -175,7 +176,7 @@ img{display:block;max-width:100%}
 @keyframes heroTitleIn{from{opacity:0;transform:translateY(calc(-50% + 46px))}to{opacity:1;transform:translateY(-50%)}}
 .hero-rule{width:0;height:1px;margin:1.6rem auto 0;background:linear-gradient(to right,transparent,var(--gold),transparent);animation:heroRule 1.8s cubic-bezier(.22,1,.36,1) 1.7s both}
 @keyframes heroRule{from{width:0;opacity:0}to{width:220px;opacity:1}}
-.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:-.08em}
+.hero-pre-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,2rem);font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:rgba(255,255,255,.92);text-shadow:0 2px 14px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.75);margin-bottom:-.08em}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,14vw,11rem);font-weight:300;line-height:.92;color:#fff;letter-spacing:.04em;margin:0}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 /* Content — bottom, scroll-revealed */
